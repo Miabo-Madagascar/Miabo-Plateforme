@@ -1,13 +1,12 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, User } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import { useUser } from '../context/UserContext';
 import { motion } from 'framer-motion';
 
 const ProfilePage = () => {
   const { user } = useUser();
 
-  
+
   return (
     <div className="flex justify-center items-center bg-gray-100 p-4 pt-10">
       <motion.div
