@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Phone } from 'lucide-react';
 
 export type UserRole = 'student' | 'tutor' | 'parent' | null;
 

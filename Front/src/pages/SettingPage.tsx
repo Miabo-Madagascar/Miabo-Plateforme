@@ -1,19 +1,8 @@
 import React, { useState } from 'react';
-import { UserRole, useUser } from '../context/UserContext';
+import { useUser } from '../context/UserContext';
 import { motion } from 'framer-motion';
 import { CheckCircle, X } from 'lucide-react';
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: UserRole;
-  profileImage?: string;
-  bio?: string;
-  phone?: string;
-  location?: string;
-  password?: string;
-}
 const SettingPage = () => {
   const { user } = useUser();
   const [name, setName] = useState(user?.name || '');
