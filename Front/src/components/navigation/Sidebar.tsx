@@ -24,7 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose, userRole }) => {
       ...commonItems,
       { path: '/dashboard/tests', label: 'Tests & Évaluations', icon: <Lightbulb size={20} /> },
       { path: '/dashboard/matching', label: 'Trouver un tuteur', icon: <Users size={20} /> },
-      { path: '/profile', label: 'Mon profil', icon: <User size={20} /> },
+      { path: '/dashboard/profile', label: 'Mon profil', icon: <User size={20} /> },
     ];
 
     const tutorItems = [
@@ -32,14 +32,14 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose, userRole }) => {
       { path: '/dashboard/planning', label: 'Outils de planification', icon: <FileEdit size={20} /> },
       { path: '/dashboard/training', label: 'Espace formation', icon: <BookOpen size={20} /> },
       { path: '/dashboard/calendar', label: 'Calendrier', icon: <Calendar size={20} /> },
-      { path: '/profile', label: 'Mon profil', icon: <User size={20} /> },
+      { path: '/dashboard/profile', label: 'Mon profil', icon: <User size={20} /> },
     ];
 
     const parentItems = [
       ...commonItems,
       { path: '/dashboard/matching', label: 'Choisir un tuteur', icon: <Users size={20} /> },
       { path: '/dashboard/progress', label: 'Suivi des progrès', icon: <BarChart size={20} /> },
-      { path: '/profile', label: 'Mon profil', icon: <User size={20} /> },
+      { path: '/dashboard/profile', label: 'Mon profil', icon: <User size={20} /> },
     ];
 
     switch (userRole) {

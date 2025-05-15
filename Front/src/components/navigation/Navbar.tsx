@@ -130,7 +130,7 @@ const Navbar: React.FC = () => {
                       Tableau de bord
                     </Link>
                     <Link
-                      to="/profile"
+                      to="/dashboard/profile"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Mon profil
@@ -243,7 +243,7 @@ const Navbar: React.FC = () => {
                       Tableau de bord
                     </Link>
                     <Link
-                      to="/profile"
+                      to="/dashboard/profile"
                       className="block py-2 hover:text-primary-500"
                     >
                       Mon profil

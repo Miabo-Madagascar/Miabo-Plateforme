@@ -22,6 +22,7 @@ import NotFoundPage from './pages/NotFoundPage';
 
 // Context
 import { UserProvider } from './context/UserContext';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -67,6 +68,7 @@ function App() {
             <Route path="messaging" element={<MessagingPage />} />
             <Route path="training" element={<TutorTrainingPage />} />
             <Route path="planning" element={<PlanningToolsPage />} />
+			<Route path="profile" element={<ProfilePage />} />
           </Route>
 
           {/* 404 route */}
