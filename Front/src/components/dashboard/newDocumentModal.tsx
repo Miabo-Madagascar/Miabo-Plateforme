@@ -18,8 +18,8 @@ export default function NewDocumentModal({ isOpen, onClose }: NewDocumentModalPr
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md animate-fade-in">
+    <div className="fixed top-[-35px] inset-0 z-50 flex items-center justify-center bg-black/50" onClick={onClose}>
+      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg mx-4 animate-fade-in">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block font-medium mb-1">Titre</label>
