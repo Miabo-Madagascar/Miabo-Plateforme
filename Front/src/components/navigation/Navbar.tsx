@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronDown, GraduationCap } from 'lucide-react';
+import { Menu, X, ChevronDown, GraduationCap, User, LogOut, Layers } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
 import { motion } from 'framer-motion';
 
@@ -125,20 +125,23 @@ const Navbar: React.FC = () => {
                   <div className="py-1">
                     <Link
                       to={`/dashboard/${user?.role}`}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="flex gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
+						<Layers size={20} />
                       Tableau de bord
                     </Link>
                     <Link
                       to="/dashboard/profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="flex gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
+						<User size={20} />
                       Mon profil
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
+						<LogOut size={20}/>
                       Déconnexion
                     </button>
                   </div>
