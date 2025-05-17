@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   BookOpen,
-  GraduationCap,
   Users,
   Star,
-  ArrowRight,
   CheckCircle,
   ChevronRight,
   Calendar,

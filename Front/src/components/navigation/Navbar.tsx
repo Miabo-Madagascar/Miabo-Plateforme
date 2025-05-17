@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronDown, GraduationCap, User, LogOut, Layers } from 'lucide-react';
+import { Menu, X, ChevronDown, User, LogOut, Layers } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
 import { motion } from 'framer-motion';
 
@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
 
 	return (
 		<header
-			className={`fixed top-0 left-0 right-0 z-100 transition-all duration-300 ${navbarClass}`}
+			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navbarClass}`}
 		>
 			<div className="container mx-auto px-4 py-3 md:py-4">
 				<div className="flex items-center justify-between">
