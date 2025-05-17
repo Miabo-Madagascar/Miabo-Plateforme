@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
@@ -22,6 +22,8 @@ import NotFoundPage from './pages/NotFoundPage';
 
 // Context
 import { UserProvider } from './context/UserContext';
+import ProfilePage from './pages/ProfilePage';
+import SettingPage from './pages/SettingPage';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -67,6 +69,8 @@ function App() {
             <Route path="messaging" element={<MessagingPage />} />
             <Route path="training" element={<TutorTrainingPage />} />
             <Route path="planning" element={<PlanningToolsPage />} />
+			<Route path="profile" element={<ProfilePage />} />
+			<Route path="settings" element={<SettingPage />} />
           </Route>
 
           {/* 404 route */}

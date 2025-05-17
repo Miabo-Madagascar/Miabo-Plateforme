@@ -8,6 +8,9 @@ interface User {
   email: string;
   role: UserRole;
   profileImage?: string;
+  bio?: string;
+  phone?: string;
+  location?: string;
 }
 
 interface UserContextType {
@@ -27,6 +30,7 @@ export const useUser = (): UserContextType => {
   }
   return context;
 };
+
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);

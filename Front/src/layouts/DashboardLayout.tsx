@@ -41,20 +41,20 @@ const DashboardLayout: React.FC = () => {
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0 md:pl-72">
         <div className="fixed top-0 right-0 left-0 md:left-72 z-50 bg-white">
-          <DashboardHeader 
-            onMenuClick={toggleSidebar} 
-            user={user} 
+          <DashboardHeader
+            onMenuClick={toggleSidebar}
+            user={user}
           />
         </div>
-        
-        <main className="flex-1 p-4 md:p-6 mt-16">
+
+        <main className="flex-1 p-4 md:p-6 mt-24">
           <Outlet />
         </main>
       </div>
 
       {/* Overlay for mobile */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
           onClick={() => setSidebarOpen(false)}
         />
