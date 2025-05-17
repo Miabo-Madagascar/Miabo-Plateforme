@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Eye, Music, Activity, Calendar, CheckCircle2, ArrowRight, Book, Lightbulb, Layers } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { 
+  Brain, Eye, Music, Activity, Calendar, CheckCircle2, ArrowRight, Book, 
+  Lightbulb, Layers, Heart, Star
+} from 'lucide-react';
+import PersonalityTest, { PersonalityResults as PersonalityResultsType } from '../components/test/PersonalityTest';
+import PersonalityResults from '../components/test/PersonalityResults';
 
 const TestsPage: React.FC = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('learning');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [testCompleted, setTestCompleted] = useState(false);
   const [testStarted, setTestStarted] = useState(false);
+  const [personalityTestStarted, setPersonalityTestStarted] = useState(false);
+  const [personalityTestCompleted, setPersonalityTestCompleted] = useState(false);
+  const [personalityResults, setPersonalityResults] = useState<PersonalityResultsType | null>(null);
 
   // Mock learning style questions
   const learningStyleQuestions = [
@@ -88,6 +98,24 @@ const TestsPage: React.FC = () => {
     setTestCompleted(false);
     setCurrentQuestion(0);
     setAnswers([]);
+  };
+
+  // Handle personality test completion
+  const handlePersonalityTestComplete = (results: PersonalityResultsType) => {
+    setPersonalityResults(results);
+    setPersonalityTestCompleted(true);
+  };
+
+  // Reset personality test
+  const resetPersonalityTest = () => {
+    setPersonalityTestStarted(false);
+    setPersonalityTestCompleted(false);
+    setPersonalityResults(null);
+  };
+
+  // Navigate to matching page
+  const handleFindTutors = () => {
+    navigate('/dashboard/matching');
   };
 
   // Calculate learning style results (mock implementation)
@@ -453,7 +481,7 @@ const TestsPage: React.FC = () => {
                       Refaire le test
                     </button>
                     <button 
-                      onClick={() => {}}
+                      onClick={handleFindTutors}
                       className="btn btn-primary flex items-center"
                     >
                       Trouver des tuteurs compatibles
@@ -466,17 +494,112 @@ const TestsPage: React.FC = () => {
           )}
 
           {activeTab === 'personality' && (
-            <div className="text-center p-8">
-              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-primary-100 mb-4">
-                <Brain className="h-8 w-8 text-primary-600" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Test de personnalité</h3>
-              <p className="text-gray-500 mb-6 max-w-lg mx-auto">
-                Découvrez votre profil de personnalité pour mieux comprendre vos forces et vos domaines de développement.
-              </p>
-              <button className="btn btn-primary">
-                Commencer le test
-              </button>
+            <div>
+              {!personalityTestStarted ? (
+                <div className="max-w-3xl mx-auto">
+                  <h2 className="text-xl font-semibold mb-4">Test de personnalité</h2>
+                  <p className="text-gray-600 mb-6">
+                    Découvrez vos traits de personnalité dominants et comment ils influencent votre façon d'apprendre et d'interagir avec les autres.
+                    Ces informations nous aideront à vous associer avec des tuteurs compatibles avec votre profil.
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div className="bg-gray-50 rounded-lg p-4 flex items-start space-x-3">
+                      <div className="bg-yellow-100 p-2 rounded-full">
+                        <Star className="h-5 w-5 text-yellow-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium mb-1">Extraversion</h3>
+                        <p className="text-sm text-gray-600">
+                          Votre niveau d'énergie dans les interactions sociales et votre préférence pour l'apprentissage collaboratif.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4 flex items-start space-x-3">
+                      <div className="bg-blue-100 p-2 rounded-full">
+                        <Lightbulb className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium mb-1">Ouverture</h3>
+                        <p className="text-sm text-gray-600">
+                          Votre curiosité intellectuelle et votre capacité à explorer de nouvelles approches d'apprentissage.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4 flex items-start space-x-3">
+                      <div className="bg-purple-100 p-2 rounded-full">
+                        <Brain className="h-5 w-5 text-purple-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium mb-1">Conscience</h3>
+                        <p className="text-sm text-gray-600">
+                          Votre niveau d'organisation et votre approche méthodique dans vos études.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4 flex items-start space-x-3">
+                      <div className="bg-pink-100 p-2 rounded-full">
+                        <Heart className="h-5 w-5 text-pink-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium mb-1">Agréabilité</h3>
+                        <p className="text-sm text-gray-600">
+                          Votre style de communication et votre façon de collaborer avec les autres.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-primary-50 rounded-lg p-5 border border-primary-100 mb-8">
+                    <h3 className="flex items-center font-medium text-primary-800 mb-2">
+                      <Lightbulb className="h-5 w-5 mr-2 text-primary-600" />
+                      Important à savoir
+                    </h3>
+                    <ul className="text-sm text-primary-700 space-y-2">
+                      <li className="flex items-start">
+                        <span className="h-5 w-5 inline-flex items-center justify-center text-primary-600 mr-2">•</span>
+                        Le test prend environ 10 minutes à compléter.
+                      </li>
+                      <li className="flex items-start">
+                        <span className="h-5 w-5 inline-flex items-center justify-center text-primary-600 mr-2">•</span>
+                        Répondez le plus honnêtement possible - il n'y a pas de "bonne" personnalité.
+                      </li>
+                      <li className="flex items-start">
+                        <span className="h-5 w-5 inline-flex items-center justify-center text-primary-600 mr-2">•</span>
+                        Les résultats vous aideront à mieux comprendre votre style d'apprentissage optimal.
+                      </li>
+                      <li className="flex items-start">
+                        <span className="h-5 w-5 inline-flex items-center justify-center text-primary-600 mr-2">•</span>
+                        Nous utiliserons ces informations pour vous associer à des tuteurs compatibles.
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="text-center">
+                    <button 
+                      onClick={() => setPersonalityTestStarted(true)}
+                      className="btn btn-primary"
+                    >
+                      Commencer le test
+                    </button>
+                  </div>
+                </div>
+              ) : !personalityTestCompleted ? (
+                <PersonalityTest 
+                  onComplete={handlePersonalityTestComplete}
+                  onBack={() => setPersonalityTestStarted(false)}
+                />
+              ) : (
+                personalityResults && (
+                  <PersonalityResults
+                    results={personalityResults}
+                    onRestart={resetPersonalityTest}
+                  />
+                )
+              )}
             </div>
           )}
 
