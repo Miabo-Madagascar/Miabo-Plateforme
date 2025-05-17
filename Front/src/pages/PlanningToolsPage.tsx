@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Edit, Clock, File, Calendar, User, 
+import {
+  Edit, Clock, File, Calendar, User,
   Plus, BookOpen, Check, Upload, Download,
   Bookmark, Search, Filter, Trash, Copy
 } from 'lucide-react';
+import NewDocumentModal from '../components/dashboard/newDocumentModal';
+import ImportModal from '../components/dashboard/ImportModal';
 
 const PlanningToolsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('syllabus');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
-
+  const [showNewModal, setShowNewModal] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
   // Mock templates data
   const templates = [
     {
@@ -92,7 +95,7 @@ const PlanningToolsPage: React.FC = () => {
   // Filter documents based on type and search term
   const filteredDocuments = [...templates, ...documents].filter(doc => {
     const matchesType = selectedFilter === 'all' || doc.type === selectedFilter;
-    const matchesSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    const matchesSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          doc.description.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesType && matchesSearch;
   });
@@ -125,15 +128,25 @@ const PlanningToolsPage: React.FC = () => {
 
       {/* Action buttons */}
       <div className="flex flex-wrap gap-4">
-        <button className="btn btn-primary flex items-center">
+        <button
+          className="flex items-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+          onClick={() => setShowNewModal(true)}
+        >
           <Plus className="h-4 w-4 mr-2" />
           Nouveau document
         </button>
-        <button className="btn btn-outline flex items-center">
+        <button
+          className="flex items-center border border-blue-600 text-blue-600 px-4 py-2 rounded hover:bg-blue-50 transition"
+          onClick={() => setShowImportModal(true)}
+        >
           <Upload className="h-4 w-4 mr-2" />
           Importer
         </button>
       </div>
+
+      {/* Modales */}
+      <NewDocumentModal isOpen={showNewModal} onClose={() => setShowNewModal(false)} />
+      <ImportModal isOpen={showImportModal} onClose={() => setShowImportModal(false)} />
 
       {/* Search and filter */}
       <div className="bg-white rounded-xl shadow-sm p-6">
@@ -172,7 +185,7 @@ const PlanningToolsPage: React.FC = () => {
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         <div className="border-b border-gray-200">
           <div className="flex">
-            <button 
+            <button
               onClick={() => setActiveTab('syllabus')}
               className={`px-4 py-3 text-sm font-medium ${
                 activeTab === 'syllabus'
@@ -182,7 +195,7 @@ const PlanningToolsPage: React.FC = () => {
             >
               Mes documents
             </button>
-            <button 
+            <button
               onClick={() => setActiveTab('templates')}
               className={`px-4 py-3 text-sm font-medium ${
                 activeTab === 'templates'
@@ -192,7 +205,7 @@ const PlanningToolsPage: React.FC = () => {
             >
               Modèles
             </button>
-            <button 
+            <button
               onClick={() => setActiveTab('shared')}
               className={`px-4 py-3 text-sm font-medium ${
                 activeTab === 'shared'
@@ -232,16 +245,16 @@ const PlanningToolsPage: React.FC = () => {
                           <p className="text-sm text-gray-500 capitalize">{doc.type}</p>
                         </div>
                       </div>
-                      
+
                       <button className={`p-1 rounded-full hover:bg-gray-100 ${
                         doc.favorite ? 'text-yellow-500' : 'text-gray-400 hover:text-gray-600'
                       }`}>
                         <Bookmark className="h-5 w-5" fill={doc.favorite ? 'currentColor' : 'none'} />
                       </button>
                     </div>
-                    
+
                     <p className="text-sm text-gray-600 mt-3 line-clamp-2">{doc.description}</p>
-                    
+
                     <div className="mt-4 flex items-center text-xs text-gray-500">
                       {'student' in doc ? (
                         <div className="flex items-center">
@@ -261,7 +274,7 @@ const PlanningToolsPage: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="bg-gray-50 px-5 py-3 flex justify-between items-center">
                     {'student' in doc ? (
                       <div className="flex space-x-2">
@@ -282,7 +295,7 @@ const PlanningToolsPage: React.FC = () => {
                         </button>
                       </div>
                     )}
-                    
+
                     <button className="text-sm font-medium text-primary-600 hover:text-primary-700">
                       {'student' in doc ? 'Ouvrir' : 'Utiliser'}
                     </button>
@@ -297,8 +310,8 @@ const PlanningToolsPage: React.FC = () => {
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-1">Aucun document trouvé</h3>
               <p className="text-gray-500 mb-4">
-                {searchTerm 
-                  ? `Aucun résultat pour "${searchTerm}"` 
+                {searchTerm
+                  ? `Aucun résultat pour "${searchTerm}"`
                   : "Vous n'avez pas encore de documents de ce type"}
               </p>
               <button className="btn btn-primary flex items-center mx-auto">
@@ -325,7 +338,7 @@ const PlanningToolsPage: React.FC = () => {
               </p>
             </div>
           </div>
-          
+
           <div className="flex space-x-3">
             <div className="flex-shrink-0 h-8 w-8 rounded-full bg-white flex items-center justify-center text-primary-600 font-semibold">
               2
@@ -337,7 +350,7 @@ const PlanningToolsPage: React.FC = () => {
               </p>
             </div>
           </div>
-          
+
           <div className="flex space-x-3">
             <div className="flex-shrink-0 h-8 w-8 rounded-full bg-white flex items-center justify-center text-primary-600 font-semibold">
               3
