@@ -65,6 +65,44 @@ const RegisterPage: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Je suis
+            </label>
+            <div className="grid grid-cols-3 gap-3">
+              <button
+                type="button"
+                onClick={() => setRole('student')}
+                className={`px-4 py-2 text-sm font-medium rounded-lg border ${role === 'student'
+                    ? 'bg-primary-600 text-white border-primary-600'
+                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  }`}
+              >
+                Élève
+              </button>
+              <button
+                type="button"
+                onClick={() => setRole('tutor')}
+                className={`px-4 py-2 text-sm font-medium rounded-lg border ${role === 'tutor'
+                    ? 'bg-primary-600 text-white border-primary-600'
+                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  }`}
+              >
+                Tuteur
+              </button>
+              <button
+                type="button"
+                onClick={() => setRole('parent')}
+                className={`px-4 py-2 text-sm font-medium rounded-lg border ${role === 'parent'
+                    ? 'bg-primary-600 text-white border-primary-600'
+                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  }`}
+              >
+                Parent
+              </button>
+            </div>
+          </div>
+          
+          <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
               Nom complet
             </label>
@@ -149,47 +187,6 @@ const RegisterPage: React.FC = () => {
                 className="input pl-10"
                 placeholder="••••••••"
               />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Je suis
-            </label>
-            <div className="grid grid-cols-3 gap-3">
-              <button
-                type="button"
-                onClick={() => setRole('student')}
-                className={`px-4 py-2 text-sm font-medium rounded-lg border ${
-                  role === 'student'
-                    ? 'bg-primary-600 text-white border-primary-600'
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                }`}
-              >
-                Élève
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('tutor')}
-                className={`px-4 py-2 text-sm font-medium rounded-lg border ${
-                  role === 'tutor'
-                    ? 'bg-primary-600 text-white border-primary-600'
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                }`}
-              >
-                Tuteur
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('parent')}
-                className={`px-4 py-2 text-sm font-medium rounded-lg border ${
-                  role === 'parent'
-                    ? 'bg-primary-600 text-white border-primary-600'
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                }`}
-              >
-                Parent
-              </button>
             </div>
           </div>
 
