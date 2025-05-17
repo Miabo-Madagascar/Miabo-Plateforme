@@ -1,104 +1,153 @@
 import React, { useState } from 'react';
 import { useUser } from '../context/UserContext';
 import { motion } from 'framer-motion';
-import { CheckCircle, X } from 'lucide-react';
+import { CheckCircle, X, User, Lock, Bell, CreditCard } from 'lucide-react';
+
+const tabs = [
+	{ id: 'personal', label: 'Profil', icon: User },
+	{ id: 'security', label: 'Sécurité', icon: Lock },
+	{ id: 'notifications', label: 'Notifications', icon: Bell },
+	{ id: 'payment', label: 'Paiement', icon: CreditCard },
+];
 
 const SettingPage = () => {
 	const { user } = useUser();
+	const [activeTab, setActiveTab] = useState('personal');
+
+	// Champs communs
 	const [name, setName] = useState(user?.name || '');
 	const [email, setEmail] = useState(user?.email || '');
-	const [profileImage, setProfileImage] = useState(user?.profileImage || '');
+
+	// Champs sécurité
 	const [newPassword, setNewPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 
-
-	const setUser = () => {
-		alert('User updated successfully');
-	};
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
 		if (newPassword !== confirmPassword) {
-			alert('Passwords do not match');
+			alert('Les mots de passe ne correspondent pas');
 			return;
 		}
-
-		setUser();
+		alert('Paramètres mis à jour avec succès !');
 	};
 
 	return (
-		<div className="flex justify-center items-center bg-gray-100 p-4 pt-10">
+		<div className=" bg-gray-100 py-4 px-4">
 			<motion.div
-				initial={{ opacity: 0, scale: 0.95 }}
-				animate={{ opacity: 1, scale: 1 }}
-				transition={{ duration: 0.4 }}
-				className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-xl"
+				initial={{ opacity: 0, y: 30 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.6 }}
+				className=" mx-auto bg-white shadow-lg rounded-2xl overflow-hidden p-4"
 			>
-				<form onSubmit={handleSubmit} className="bg-white p-8 w-full max-w-xl">
-					<h1 className="text-3xl font-semibold text-gray-800">Paramètres</h1>
-					<div className="mt-4">
-						<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-							Nom
-						</label>
-						<input
-							type="text"
-							id="name"
-							value={name}
-							onChange={e => setName(e.target.value)}
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						/>
-					</div>
-					<div className="mt-4">
-						<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-							Email
-						</label>
-						<input
-							type="email"
-							id="email"
-							value={email}
-							onChange={e => setEmail(e.target.value)}
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						/>
-					</div>
-
-					<div className="mt-4">
-						<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="newPassword">
-							Nouveau mot de passe
-						</label>
-						<input
-							type="password"
-							id="newPassword"
-							value={newPassword}
-							onChange={e => setNewPassword(e.target.value)}
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						/>
-					</div>
-					<div className="mt-4">
-						<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">
-							Confirmer le mot de passe
-						</label>
-						<input
-							type="password"
-							id="confirmPassword"
-							value={confirmPassword}
-							onChange={e => setConfirmPassword(e.target.value)}
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-						/>
-					</div>
-					<div className="flex items-center justify-center mt-4">
+				<div className="flex border-b max-w-xl ">
+					{tabs.map(tab => (
 						<button
-							type="submit"
-							className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded flex"
+							key={tab.id}
+							onClick={() => setActiveTab(tab.id)}
+							className={`flex-1 bg-gray-50 py-4 px-2 mb-1 text-sm mx-1 font-semibold flex items-center justify-center text-center transition-colors ${
+								activeTab === tab.id
+									? 'text-primary-600 border-b-2 border-primary-600 bg-gray-200'
+									: 'text-gray-500 hover:bg-gray-100'
+							}`}
 						>
-							<CheckCircle className="w-5 h-5 mr-2" />
-							Enregistrer
+							<span className="flex items-center gap-2">
+								<tab.icon className="w-5 h-5" />
+								{tab.label}
+							</span>
 						</button>
+					))}
+				</div>
+
+				<form onSubmit={handleSubmit} className="p-6 space-y-6">
+					{activeTab === 'personal' && (
+						<div>
+							<h2 className="text-lg font-semibold text-gray-800 mb-4">Informations personnelles</h2>
+							<div className="space-y-4">
+								<div>
+									<label className="block text-sm font-medium text-gray-700">Nom</label>
+									<input
+										type="text"
+										value={name}
+										onChange={e => setName(e.target.value)}
+										className="w-1/2 border rounded px-3 py-2 mt-1 focus:ring-primary-500 focus:border-primary-500"
+									/>
+								</div>
+								<div>
+									<label className="block text-sm font-medium text-gray-700">Email</label>
+									<input
+										type="email"
+										value={email}
+										onChange={e => setEmail(e.target.value)}
+										className="w-1/2 border rounded px-3 py-2 mt-1 focus:ring-primary-500 focus:border-primary-500"
+									/>
+								</div>
+							</div>
+						</div>
+					)}
+
+					{activeTab === 'security' && (
+						<div>
+							<h2 className="text-lg font-semibold text-gray-800 mb-4">Sécurité</h2>
+							<div className="space-y-4">
+								<div>
+									<label className="block text-sm font-medium text-gray-700">Nouveau mot de passe</label>
+									<input
+										type="password"
+										value={newPassword}
+										onChange={e => setNewPassword(e.target.value)}
+										className="w-1/2 border rounded px-3 py-2 mt-1"
+									/>
+								</div>
+								<div>
+									<label className="block text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
+									<input
+										type="password"
+										value={confirmPassword}
+										onChange={e => setConfirmPassword(e.target.value)}
+										className="w-1/2 border rounded px-3 py-2 mt-1"
+									/>
+								</div>
+							</div>
+						</div>
+					)}
+
+					{activeTab === 'notifications' && (
+						<div>
+							<h2 className="text-lg font-semibold text-gray-800 mb-4">Notifications</h2>
+							<div className="space-y-4 text-sm text-gray-600">
+								<label className="flex items-center space-x-2">
+									<input type="checkbox" className="accent-primary-600" />
+									<span>Recevoir les notifications par email</span>
+								</label>
+								<label className="flex items-center space-x-2">
+									<input type="checkbox" className="accent-primary-600" />
+									<span>Notifications push sur l’application</span>
+								</label>
+							</div>
+						</div>
+					)}
+
+					{activeTab === 'payment' && (
+						<div>
+							<h2 className="text-lg font-semibold text-gray-800 mb-4">Méthodes de paiement</h2>
+							<p className="text-sm text-gray-600">Aucune méthode enregistrée. Fonctionnalité à venir.</p>
+						</div>
+					)}
+
+					<div className="flex justify-end pt-6 space-x-3 border-t">
 						<button
 							type="button"
-							className="bg-transparent hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 rounded ml-2 flex"
+							className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded flex items-center"
 						>
-							<X className="w-5 h-5 mr-2" />
+							<X className="w-4 h-4 mr-1" />
 							Annuler
+						</button>
+						<button
+							type="submit"
+							className="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded flex items-center"
+						>
+							<CheckCircle className="w-4 h-4 mr-1" />
+							Enregistrer
 						</button>
 					</div>
 				</form>
@@ -108,3 +157,4 @@ const SettingPage = () => {
 };
 
 export default SettingPage;
+
