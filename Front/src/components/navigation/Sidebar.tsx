@@ -69,8 +69,9 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose, userRole }) => {
 				{/* Logo and close button */}
 				<div className="flex items-center justify-between p-4 border-b">
 					<div className="flex items-center space-x-2">
-						<GraduationCap className="h-7 w-7 text-primary-600" />
-						<span className="text-xl font-bold text-gray-800">MIABO</span>
+						{/* <GraduationCap className="h-7 w-7 text-primary-600" />
+						<span className="text-xl font-bold text-gray-800">MIABO</span> */}
+						<img src="/logo.png" alt="" className='h-[64px]'/>
 					</div>
 					<button
 						onClick={onClose}

@@ -34,7 +34,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ onMenuClick, user }) 
 	};
 	return (
 		<header className="bg-white shadow-sm sticky top-0">
-			<div className="px-4 sm:px-6 h-16 flex items-center justify-between">
+			<div className="px-4 sm:px-6 h-24 flex items-center justify-between">
 				{/* Left section */}
 				<div className="flex items-center">
 					<button
@@ -88,7 +88,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ onMenuClick, user }) 
 							<img
 								src={user?.profileImage || 'https://i.pravatar.cc/150?img=1'}
 								alt="Profile"
-								className="w-8 h-8 rounded-full object-cover"
+								className="w-16 h-16 rounded-full object-cover"
 							/>
 							<span className={`font-medium ${textClass}`}>{user?.name}</span>
 							<ChevronDown className={`h-4 w-4 ${textClass}`} />

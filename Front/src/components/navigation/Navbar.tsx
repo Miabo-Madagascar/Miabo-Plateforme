@@ -117,7 +117,7 @@ const Navbar: React.FC = () => {
 									<img
 										src={user?.profileImage || 'https://i.pravatar.cc/150?img=1'}
 										alt="Profile"
-										className="w-8 h-8 rounded-full object-cover"
+										className="w-16 h-16 rounded-full object-cover"
 									/>
 									<span className={`font-medium ${textClass}`}>{user?.name}</span>
 									<ChevronDown className={`h-4 w-4 ${textClass}`} />
