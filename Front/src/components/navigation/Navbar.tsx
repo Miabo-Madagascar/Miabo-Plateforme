@@ -49,14 +49,15 @@ const Navbar: React.FC = () => {
 
 	return (
 		<header
-			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navbarClass}`}
+			className={`fixed top-0 left-0 right-0 z-100 transition-all duration-300 ${navbarClass}`}
 		>
 			<div className="container mx-auto px-4 py-3 md:py-4">
 				<div className="flex items-center justify-between">
 					{/* Logo */}
 					<Link to="/" className="flex items-center space-x-2">
-						<GraduationCap className={`h-8 w-8 ${textClass}`} />
-						<span className={`text-xl font-bold ${textClass}`}>MIABO</span>
+						{/* <GraduationCap className={`h-8 w-8 ${textClass}`} />
+						<span className={`text-xl font-bold ${textClass}`}>MIABO</span> */}
+						<img src="/logo.png" alt="" className='h-[64px]'/>
 					</Link>
 
 					{/* Desktop Navigation */}

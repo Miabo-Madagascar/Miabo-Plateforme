@@ -98,19 +98,19 @@ const Footer: React.FC = () => {
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-primary-400 mr-2 mt-0.5" />
                 <span className="text-gray-400">
-                  123 Rue de l'Éducation, Antananarivo, Madagascar
+                  Antananarivo, Madagascar
                 </span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-primary-400 mr-2" />
-                <a href="tel:+2610123456789" className="text-gray-400 hover:text-primary-400 transition">
-                  +261 01 234 56 789
+                <a href="tel:+261340924165" className="text-gray-400 hover:text-primary-400 transition">
+				+261 34 09 241 65
                 </a>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-primary-400 mr-2" />
-                <a href="mailto:contact@miabo.mg" className="text-gray-400 hover:text-primary-400 transition">
-                  contact@miabo.mg
+                <a href="mailto:miabo.madagascar@outlook.com" className="text-gray-400 hover:text-primary-400 transition">
+				miabo.madagascar@outlook.com
                 </a>
               </li>
             </ul>

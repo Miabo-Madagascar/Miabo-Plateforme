@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  BookOpen, 
-  GraduationCap, 
-  Users, 
-  Star, 
-  ArrowRight, 
+import {
+  BookOpen,
+  GraduationCap,
+  Users,
+  Star,
+  ArrowRight,
   CheckCircle,
   ChevronRight,
   Calendar,
@@ -17,27 +17,28 @@ import {
   Phone,
   MapPin,
   Clock,
-  Send
+  Send,
+  Gamepad2
 } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   return (
-    <div className="pt-16">
+    <div className="pt-24">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary-600 to-primary-800 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/6936325/pexels-photo-6936325.jpeg?auto=compress&cs=tinysrgb&w=1600')] opacity-10 bg-center bg-cover"></div>
         <div className="container mx-auto px-4 py-20 md:py-28 relative">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
-                L'éducation personnalisée pour réussir
+                Excellons ensemble
               </h1>
               <p className="text-lg mb-8 max-w-lg opacity-90">
-                MIABO Madagascar propose un accompagnement éducatif sur mesure avec des tuteurs qualifiés et passionnés pour révéler le potentiel de chaque élève.
+                MIABO Madagascar est une entreprise sociale innovante qui modernise l'education a Madagascar et au-dela, grace a une platforme technologique, la pedagogie scoute et l'accompagnement psycho-social.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link to="/register" className="btn bg-white text-primary-700 hover:bg-gray-100">
@@ -47,14 +48,14 @@ const HomePage: React.FC = () => {
                   En savoir plus
                 </Link>
               </div>
-              
+
               <div className="mt-10 flex items-center space-x-8">
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4].map((num) => (
-                    <img 
+                    <img
                       key={num}
-                      src={`https://i.pravatar.cc/100?img=${num + 10}`} 
-                      alt="Student" 
+                      src={`https://i.pravatar.cc/100?img=${num + 10}`}
+                      alt="Student"
                       className="w-10 h-10 rounded-full border-2 border-white object-cover"
                     />
                   ))}
@@ -69,7 +70,7 @@ const HomePage: React.FC = () => {
                 </div>
               </div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -77,16 +78,16 @@ const HomePage: React.FC = () => {
               className="relative hidden md:block"
             >
               <div className="bg-white rounded-xl shadow-xl overflow-hidden rotate-3 transform hover:rotate-0 transition-transform duration-300">
-                <img 
-                  src="https://images.pexels.com/photos/5905857/pexels-photo-5905857.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                  alt="Students learning" 
+                <img
+                  src="https://images.pexels.com/photos/5905857/pexels-photo-5905857.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  alt="Students learning"
                   className="w-full object-cover h-80"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
                   <p className="text-white font-medium">Des cours adaptés à tous les niveaux</p>
                 </div>
               </div>
-              
+
               <div className="glass-card absolute -bottom-10 -left-10 p-4 rounded-lg max-w-xs">
                 <div className="flex items-center space-x-3">
                   <div className="bg-primary-100 p-2 rounded-full">
@@ -119,7 +120,7 @@ const HomePage: React.FC = () => {
               </p>
             </motion.div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
@@ -197,7 +198,7 @@ const HomePage: React.FC = () => {
               </p>
             </motion.div>
           </div>
-          
+
           <div className="grid md:grid-cols-4 gap-8">
             {[
               {
@@ -246,7 +247,7 @@ const HomePage: React.FC = () => {
               </motion.div>
             ))}
           </div>
-          
+
           <div className="text-center mt-12">
             <Link to="/register" className="btn btn-primary">
               Commencer maintenant
@@ -272,25 +273,27 @@ const HomePage: React.FC = () => {
             </motion.div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                title: "Tutorat Personnalisé",
-                description: "Des sessions individuelles adaptées au rythme et au style d'apprentissage de chaque élève.",
-                icon: <Users className="h-6 w-6 text-primary-600" />,
-                features: ["Suivi personnalisé", "Adaptation au niveau", "Évaluation régulière"]
+                title: "Soutien scolaire à domicile",
+                description: "Des sessions individuelles adaptées au rythme et au style d'apprentissage de chaque élève, pour toutes les matières et tous les niveaux.",
+                icon: <Users className="h-6 w-6 text-primary-600" />
               },
               {
-                title: "Soutien Scolaire",
-                description: "Un accompagnement régulier pour renforcer les acquis et améliorer les résultats scolaires.",
-                icon: <BookOpen className="h-6 w-6 text-primary-600" />,
-                features: ["Aide aux devoirs", "Préparation aux examens", "Méthodologie"]
+                title: "Babysitting ludique",
+                description: "Garde d'enfant, éveil, jeux éducatifs et sécurité des enfants.",
+                icon: <Gamepad2 className="h-6 w-6 text-primary-600" />
               },
               {
-                title: "Cours en Ligne",
-                description: "Des sessions d'apprentissage flexibles et accessibles depuis n'importe où.",
-                icon: <Brain className="h-6 w-6 text-primary-600" />,
-                features: ["Flexibilité horaire", "Ressources numériques", "Suivi en temps réel"]
+                title: "Encadrement et activités extrascolaires",
+                description: "Ateliers ludique, créativité, culture, sport, lecture, informatique, etc.",
+                icon: <BookOpen className="h-6 w-6 text-primary-600" />
+              },
+              {
+                title: "Assistance de vie psycho-sociale",
+                description: "Accompagnement émotionnel, motivation, écoute active, et soutien adapté pour les enfants à besoins spécifiques (par exemple : enfants en situation de trisomie, troubles de l’apprentissage, etc.)",
+                icon: <Brain className="h-6 w-6 text-primary-600" />
               }
             ].map((service, index) => (
               <motion.div
@@ -306,14 +309,14 @@ const HomePage: React.FC = () => {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>
-                <ul className="space-y-2">
+                {/* <ul className="space-y-2">
                   {service.features.map((feature, i) => (
                     <li key={i} className="flex items-center text-gray-700">
                       <CheckCircle className="h-4 w-4 text-primary-600 mr-2" />
                       {feature}
                     </li>
                   ))}
-                </ul>
+                </ul> */}
                 <button className="mt-6 text-primary-600 font-medium flex items-center hover:text-primary-700">
                   En savoir plus <ChevronRight className="h-4 w-4 ml-1" />
                 </button>
@@ -374,9 +377,9 @@ const HomePage: React.FC = () => {
               viewport={{ once: true }}
               className="relative"
             >
-              <img 
-                src="https://images.pexels.com/photos/8199562/pexels-photo-8199562.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                alt="MIABO Team" 
+              <img
+                src="https://images.pexels.com/photos/8199562/pexels-photo-8199562.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                alt="MIABO Team"
                 className="rounded-xl shadow-lg"
               />
               <div className="absolute -bottom-6 -right-6 bg-white rounded-lg shadow-lg p-4 max-w-xs">
@@ -411,7 +414,7 @@ const HomePage: React.FC = () => {
               </p>
             </motion.div>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
@@ -481,7 +484,7 @@ const HomePage: React.FC = () => {
               <p className="text-gray-600 mb-8">
                 Une question ? N'hésitez pas à nous contacter. Notre équipe est là pour vous répondre et vous accompagner dans votre parcours éducatif.
               </p>
-              
+
               <div className="space-y-6">
                 <div className="flex items-start">
                   <div className="bg-primary-100 p-2 rounded-full mr-4">
@@ -489,34 +492,34 @@ const HomePage: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Notre adresse</h3>
-                    <p className="text-gray-600">123 Rue de l'Éducation, Antananarivo, Madagascar</p>
+                    <p className="text-gray-600">Antananarivo, Madagascar</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="bg-primary-100 p-2 rounded-full mr-4">
                     <Mail className="h-5 w-5 text-primary-600" />
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
-                    <a href="mailto:contact@miabo.mg" className="text-gray-600 hover:text-primary-600">
-                      contact@miabo.mg
+                    <a href="mailto:miabo.madagascar@outlook.com" className="text-gray-600 hover:text-primary-600">
+                      miabo.madagascar@outlook.com
                     </a>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="bg-primary-100 p-2 rounded-full mr-4">
                     <Phone className="h-5 w-5 text-primary-600" />
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Téléphone</h3>
-                    <a href="tel:+2610123456789" className="text-gray-600 hover:text-primary-600">
-                      +261 01 234 56 789
+                    <a href="tel:+261340924165" className="text-gray-600 hover:text-primary-600">
+                      +261 34 09 241 65
                     </a>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="bg-primary-100 p-2 rounded-full mr-4">
                     <Clock className="h-5 w-5 text-primary-600" />
@@ -528,7 +531,7 @@ const HomePage: React.FC = () => {
                 </div>
               </div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -549,7 +552,7 @@ const HomePage: React.FC = () => {
                     placeholder="Votre nom"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     Email
@@ -561,7 +564,7 @@ const HomePage: React.FC = () => {
                     placeholder="votre@email.com"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
                     Sujet
@@ -573,7 +576,7 @@ const HomePage: React.FC = () => {
                     placeholder="Sujet de votre message"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                     Message
@@ -585,7 +588,7 @@ const HomePage: React.FC = () => {
                     placeholder="Votre message..."
                   ></textarea>
                 </div>
-                
+
                 <button type="submit" className="btn btn-primary w-full flex items-center justify-center">
                   <Send className="h-4 w-4 mr-2" />
                   Envoyer le message
@@ -619,14 +622,14 @@ const HomePage: React.FC = () => {
                     Nous contacter
                   </Link>
                 </div>
-                
+
                 <div className="mt-8 space-y-3">
                   {[
                     "7 jours d'essai gratuit",
                     "Annulation facile à tout moment",
                     "Garantie satisfaction ou remboursé"
                   ].map((item, index) => (
-                    
+
                     <div key={index} className="flex items-center">
                       <CheckCircle className="h-5 w-5 text-secondary-500 mr-2" />
                       <span className="text-gray-700">{item}</span>
@@ -634,7 +637,7 @@ const HomePage: React.FC = () => {
                   ))}
                 </div>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -642,19 +645,19 @@ const HomePage: React.FC = () => {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <img 
-                  src="https://images.pexels.com/photos/5212703/pexels-photo-5212703.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                  alt="Students learning together" 
+                <img
+                  src="https://images.pexels.com/photos/5212703/pexels-photo-5212703.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  alt="Students learning together"
                   className="rounded-xl shadow-lg w-full object-cover h-80"
                 />
                 <div className="glass-card absolute -bottom-6 -right-6 p-4 rounded-lg max-w-xs shadow-lg">
                   <div className="flex items-center space-x-3">
                     <div className="flex -space-x-2">
                       {[1, 2, 3].map((num) => (
-                        <img 
+                        <img
                           key={num}
-                          src={`https://i.pravatar.cc/100?img=${num + 20}`} 
-                          alt="Student" 
+                          src={`https://i.pravatar.cc/100?img=${num + 20}`}
+                          alt="Student"
                           className="w-8 h-8 rounded-full border-2 border-white object-cover"
                         />
                       ))}
