@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><title>Part4</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #1E40AF; --primary-light: #3B82F6; --primary-pale: #EFF6FF;
+  --secondary: #059669; --secondary-pale: #ECFDF5;
+  --accent: #DC2626; --accent-pale: #FEF2F2;
+  --orange: #D97706; --orange-pale: #FFFBEB;
+  --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB; --gray-500: #6B7280; --gray-700: #374151;
+  --gray-900: #111827; --text: #1F2937; --text-light: #6B7280; --border: #E5E7EB;
+}
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10.5pt; line-height: 1.6; color: var(--text); background: white; }
+pre, code { font-family: 'Courier New', Courier, monospace; }
+.page-break { page-break-after: always; break-after: page; }
+.section { padding: 50px 60px; max-width: 1100px; margin: 0 auto; }
+.section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 3px solid var(--primary); }
+.section-number { background: var(--primary); color: white; width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18pt; font-weight: 800; flex-shrink: 0; }
+.section-title { font-size: 22pt; font-weight: 700; color: var(--gray-900); }
+.section-subtitle { font-size: 11pt; color: var(--text-light); margin-top: 3px; }
+h3 { font-size: 14pt; font-weight: 700; color: var(--primary); margin: 28px 0 12px 0; padding-left: 12px; border-left: 4px solid var(--primary-light); }
+h4 { font-size: 11pt; font-weight: 600; color: var(--gray-700); margin: 16px 0 6px 0; }
+p { margin-bottom: 10px; }
+.callout { border-radius: 10px; padding: 16px 20px; margin: 16px 0; border-left: 5px solid; }
+.callout-info { background: var(--primary-pale); border-color: var(--primary-light); }
+.callout-success { background: var(--secondary-pale); border-color: var(--secondary); }
+.callout-warning { background: var(--orange-pale); border-color: var(--orange); }
+.callout-title { font-weight: 700; font-size: 10pt; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.callout-info .callout-title { color: var(--primary); }
+.callout-success .callout-title { color: var(--secondary); }
+.callout-warning .callout-title { color: var(--orange); }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 9.5pt; }
+thead th { background: var(--primary); color: white; padding: 9px 10px; text-align: left; font-weight: 600; font-size: 8.5pt; text-transform: uppercase; }
+tbody tr:nth-child(even) { background: var(--gray-50); }
+tbody td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tbody tr:last-child td { border-bottom: none; }
+code { font-size: 8pt; background: var(--gray-100); padding: 1px 4px; border-radius: 3px; color: var(--accent); }
+ul { padding-left: 18px; margin-bottom: 8px; }
+li { margin-bottom: 4px; font-size: 9.5pt; }
+.badge { display: inline-block; padding: 2px 7px; border-radius: 12px; font-size: 7.5pt; font-weight: 700; white-space: nowrap; }
+.badge-mvp { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+.badge-v2 { background: #DBEAFE; color: #1E40AF; border: 1px solid #93C5FD; }
+.role { display: inline-block; padding: 1px 5px; border-radius: 4px; font-size: 7pt; font-weight: 700; }
+.role-eleve { background: #EDE9FE; color: #5B21B6; }
+.role-tuteur { background: #D1FAE5; color: #065F46; }
+.role-parent { background: #FEE2E2; color: #991B1B; }
+/* FLOW */
+.flow-step { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 4px; page-break-inside: avoid; }
+.flow-num { background: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 10pt; flex-shrink: 0; margin-top: 2px; }
+.flow-num.green { background: var(--secondary); }
+.flow-num.orange { background: var(--orange); }
+.flow-num.red { background: var(--accent); }
+.flow-content { flex: 1; padding: 8px 14px; background: var(--primary-pale); border-radius: 8px; border-left: 3px solid var(--primary-light); }
+.flow-content.green { background: var(--secondary-pale); border-color: var(--secondary); }
+.flow-content.orange { background: var(--orange-pale); border-color: var(--orange); }
+.flow-content.red { background: var(--accent-pale); border-color: var(--accent); }
+.flow-title { font-weight: 600; font-size: 10pt; color: var(--gray-900); }
+.flow-desc { font-size: 9pt; color: var(--text-light); margin-top: 2px; }
+.flow-actor { font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary); }
+.flow-arrow { color: var(--gray-300); font-size: 14pt; margin: 2px 0 2px 14px; }
+/* SPRINT */
+.sprint { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 14px; page-break-inside: avoid; }
+.sprint-header { padding: 12px 16px; color: white; display: flex; justify-content: space-between; align-items: center; }
+.sprint-1 .sprint-header { background: #1E3A8A; }
+.sprint-2 .sprint-header { background: #1E40AF; }
+.sprint-3 .sprint-header { background: #2563EB; }
+.sprint-4 .sprint-header { background: #3B82F6; }
+.sprint-5 .sprint-header { background: #059669; }
+.sprint-6 .sprint-header { background: #047857; }
+.sprint-name { font-weight: 700; font-size: 11pt; }
+.sprint-dates { font-size: 9pt; opacity: 0.8; }
+.sprint-body { padding: 12px 16px; }
+.sprint-items { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+.sprint-item { font-size: 9pt; display: flex; align-items: baseline; gap: 6px; }
+.sprint-item::before { content: '\25B8'; color: var(--primary-light); flex-shrink: 0; }
+.sprint-goal { font-size: 9.5pt; font-style: italic; color: var(--text-light); margin-bottom: 8px; padding: 8px 12px; background: var(--gray-50); border-radius: 6px; }
+/* MOSCOW */
+.moscow { border-radius: 10px; overflow: hidden; margin-bottom: 16px; page-break-inside: avoid; }
+.moscow-header { padding: 12px 16px; color: white; font-weight: 700; font-size: 12pt; }
+.must .moscow-header { background: #DC2626; }
+.should .moscow-header { background: #D97706; }
+.could .moscow-header { background: #059669; }
+.wont .moscow-header { background: #6B7280; }
+.moscow-body { padding: 12px 16px; border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; }
+.moscow-items { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; }
+.moscow-item { font-size: 9.5pt; padding: 3px 0; display: flex; align-items: baseline; gap: 6px; }
+.moscow-item::before { content: '\2713'; font-weight: 700; flex-shrink: 0; }
+.must .moscow-item::before { color: #DC2626; }
+.should .moscow-item::before { color: #D97706; }
+.could .moscow-item::before { color: #059669; }
+.wont .moscow-item::before { color: #9CA3AF; }
+/* UX */
+.ux-card { border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 14px; page-break-inside: avoid; }
+.ux-screen { font-size: 10pt; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+.ux-problem { background: var(--accent-pale); border-radius: 6px; padding: 8px 12px; margin-bottom: 6px; font-size: 9pt; }
+.ux-problem-label { font-weight: 700; color: var(--accent); font-size: 8pt; text-transform: uppercase; margin-bottom: 3px; }
+.ux-solution { background: var(--secondary-pale); border-radius: 6px; padding: 8px 12px; font-size: 9pt; }
+.ux-solution-label { font-weight: 700; color: var(--secondary); font-size: 8pt; text-transform: uppercase; margin-bottom: 3px; }
+/* GLOSSAIRE */
+.glossary-item { padding: 10px 0; border-bottom: 1px solid var(--gray-100); display: flex; gap: 16px; align-items: baseline; }
+.glossary-item:last-child { border-bottom: none; }
+.glossary-term { font-weight: 700; color: var(--primary); min-width: 160px; font-size: 10pt; }
+.glossary-def { font-size: 9.5pt; color: var(--text); flex: 1; }
+</style></head><body>
+
+<!-- SECTION 5 : USER FLOWS -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">5</div>
+    <div><div class="section-title">User Flows Clés</div><div class="section-subtitle">5 scénarios principaux — parcours complets de bout en bout</div></div>
+  </div>
+
+  <h3>Flow 1 — Élève trouve et réserve un tuteur (avec validation parent)</h3>
+  <div class="callout callout-info"><div class="callout-title">Acteurs</div><span class="role role-eleve">Élève (mineur)</span> · <span class="role role-parent">Parent</span> · <span class="role role-tuteur">Tuteur</span> · Système MIABO</div>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-content"><div class="flow-actor">Élève</div><div class="flow-title">Complétion du profil &amp; test VARK</div><div class="flow-desc">L'élève complète son profil (classe, matières, localisation) et passe le test VARK. Les scores (V:70, A:20, R:10, K:0) sont sauvegardés et activent le matching personnalisé.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-content"><div class="flow-actor">Élève</div><div class="flow-title">Recherche &amp; filtrage de tuteurs</div><div class="flow-desc">Recherche "mathématiques 3ème". Filtre : disponible samedi matin, &lt;15 000 Ar/h, note ≥ 4/5. Le système affiche 6 tuteurs triés par score de compatibilité VARK.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-content"><div class="flow-actor">Élève</div><div class="flow-title">Consultation profil tuteur &amp; sélection créneau</div><div class="flow-desc">Visite profil de "Rakoto Jean" (93% compatibilité). Lecture des avis, certifications CANOPE. Sélection créneau : samedi 09h-11h. Créneau verrouillé 10 minutes.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-content"><div class="flow-actor">Système</div><div class="flow-title">Détection mineur → demande validation parent</div><div class="flow-desc">Date de naissance &lt;18 ans détectée. Statut session → <code>pending_parent</code>. Notification push + email envoyés au parent lié.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">5</div><div class="flow-content green"><div class="flow-actor">Parent</div><div class="flow-title">Validation &amp; paiement MVola</div><div class="flow-desc">Parent reçoit notification. Clique "Approuver". Redirigé vers formulaire de paiement MVola. Saisit son numéro (+261 34 XX XX XX). Valide sur son téléphone. Paiement confirmé par webhook.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">6</div><div class="flow-content orange"><div class="flow-actor">Tuteur</div><div class="flow-title">Acceptation de la session</div><div class="flow-desc">Tuteur reçoit notification. Consulte le profil élève. Clique "Accepter". Statut → <code>confirmed</code>. URL Jitsi Meet générée et envoyée aux deux parties.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">7</div><div class="flow-content"><div class="flow-actor">Système</div><div class="flow-title">Rappels automatiques</div><div class="flow-desc">J-1 et H-1 : push + email à l'élève, au parent et au tuteur avec lien direct vers la salle de visio.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">8</div><div class="flow-content green"><div class="flow-actor">Tuteur + Élève</div><div class="flow-title">Session &amp; complétion</div><div class="flow-desc">Session via Jitsi Meet. Tuteur clique "Terminer" → statut <code>completed</code>. Escrow programmé pour déblocage dans 24h. Les deux parties invitées à noter la session.</div></div></div>
+
+  <h3>Flow 2 — Tuteur s'inscrit et obtient sa certification CANOPE</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-content"><div class="flow-actor">Tuteur</div><div class="flow-title">Inscription et complétion du profil</div><div class="flow-desc">Sélection rôle "Tuteur". Complétion : bio, matières (Maths, Physique), niveaux (3ème, Lycée), tarif (12 000 Ar/h), localisation (Antananarivo-Ampefiloha), photo.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-content"><div class="flow-actor">Tuteur</div><div class="flow-title">Upload des justificatifs</div><div class="flow-desc">Upload diplôme (PDF), CNI (image), extrait casier judiciaire (PDF). Stockés Supabase Storage, visibles Admin/CANOPE uniquement.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-content orange"><div class="flow-actor">Admin / CANOPE</div><div class="flow-title">Vérification &amp; validation (délai max 72h)</div><div class="flow-desc">Interface de review : documents, profil, vérification identité. Clic "Valider". Email automatique au tuteur. Statut → <code>validated</code>.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-content"><div class="flow-actor">Tuteur</div><div class="flow-title">Parcours de formation CANOPE (4 modules)</div><div class="flow-desc">4 modules : Introduction MIABO, Méthodes pédagogiques, Évaluation des élèves, Communication parents. Vidéos + quiz (score ≥ 70% requis).</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">5</div><div class="flow-content green"><div class="flow-actor">Système / CANOPE</div><div class="flow-title">Certification &amp; badge profil</div><div class="flow-desc">100% modules validés → certificat PDF généré (QR code vérifiable), badge "Certifié CANOPE" sur profil public, boost de classement dans les résultats de recherche.</div></div></div>
+</div>
+
+<div class="section page-break">
+  <h3>Flow 3 — Parent suit la progression de son enfant</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-content"><div class="flow-actor">Parent</div><div class="flow-title">Accès dashboard parent</div><div class="flow-desc">Connexion, dashboard multi-enfants avec onglets. KPIs : 8h tutorat ce mois, 3 sessions à venir, 1 facture en attente.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-content"><div class="flow-actor">Parent</div><div class="flow-title">Consultation progression par matière</div><div class="flow-desc">Clic sur "Rabe Feno" → graphique progression Maths sur 3 mois (50% → 72%). Détail sessions : dates, durées, notes tuteur.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-content green"><div class="flow-actor">Parent</div><div class="flow-title">Contact direct du tuteur</div><div class="flow-desc">Clic "Contacter Rakoto Jean" → canal messagerie parent-tuteur dédié (séparé du chat élève). Échange sur les objectifs du mois.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-content"><div class="flow-actor">Système</div><div class="flow-title">Réception rapport mensuel automatique</div><div class="flow-desc">Fin du mois : rapport PDF généré, validé par le tuteur, envoyé par email au parent. Accessible aussi dans l'espace "Documents".</div></div></div>
+
+  <h3>Flow 4 — Admin modère un tuteur et gère un litige</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-content red"><div class="flow-actor">Élève</div><div class="flow-title">Signalement d'un problème post-session</div><div class="flow-desc">Élève ouvre un litige : "Le tuteur ne s'est pas connecté". Formulaire : motif, description, captures d'écran optionnelles.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-content"><div class="flow-actor">Système</div><div class="flow-title">Gel des fonds escrow</div><div class="flow-desc">Statut escrow → <code>disputed</code>. Fonds bloqués. Notification au tuteur et à l'Admin. Délai réponse tuteur : 48h.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-content orange"><div class="flow-actor">Admin</div><div class="flow-title">Review du litige</div><div class="flow-desc">Interface Admin : timeline de la session (logs connexion Jitsi), échanges messages. Admin décide : remboursement total élève (tuteur absent confirmé).</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-content green"><div class="flow-actor">Système</div><div class="flow-title">Remboursement &amp; sanctions</div><div class="flow-desc">Remboursement déclenché vers le payeur (MVola/Orange Money, délai 24h). Alerte au tuteur : 1ère absence non justifiée. Récidive : suspension 30 jours.</div></div></div>
+
+  <h3>Flow 5 — Élève obtient un bilan d'orientation COSP</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-content"><div class="flow-actor">Élève (Terminale)</div><div class="flow-title">Découverte du module COSP</div><div class="flow-desc">Depuis le dashboard, bannière "Orientation : Prépare ton avenir" → espace COSP. Présentation du service, calendrier conseillers.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-content"><div class="flow-actor">Élève</div><div class="flow-title">Test d'orientation RIASEC</div><div class="flow-desc">Questionnaire 30 questions. Résultats : profil "Social-Investigatif". Filières suggérées : Médecine, Sciences de l'Éducation, Psychologie.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-content"><div class="flow-actor">Élève + Parent</div><div class="flow-title">Réservation bilan avec conseiller</div><div class="flow-desc">Sélection conseiller COSP. Créneau : mercredi 14h-15h (visio). Validation parent. Gratuit pour élèves de Terminale.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-content green"><div class="flow-actor">Conseiller COSP</div><div class="flow-title">Bilan + recommandations tuteurs</div><div class="flow-desc">Session visio 45 minutes. Rapport rédigé. Recommande 2 tuteurs spécialisés : SVT + Philosophie. Liens directs vers leurs profils.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">5</div><div class="flow-content"><div class="flow-actor">Système</div><div class="flow-title">Rapport &amp; suivi</div><div class="flow-desc">Rapport PDF envoyé à l'élève et au parent. Tuteurs recommandés apparaissent en haut du dashboard élève. Suivi trimestriel proposé.</div></div></div>
+</div>
+
+<!-- SECTION 6 : UX -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">6</div>
+    <div><div class="section-title">Corrections UX &amp; Écrans Manquants</div><div class="section-subtitle">Audit des maquettes v1 — problèmes identifiés et solutions v2</div></div>
+  </div>
+
+  <h3>6.1 Corrections des Écrans Existants (v1 → v2)</h3>
+  <div class="ux-card">
+    <div class="ux-screen">🔐 LoginPage — Connexion</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>Boutons démo exposent des identifiants fictifs à l'interface. Pas de feedback visuel sur les erreurs. Pas d'option "Continuer avec Google". Formulaire non accessible (labels manquants).</div>
+    <div class="ux-solution"><div class="ux-solution-label">Solution v2</div>Supprimer les boutons démo en production. Erreurs spécifiques ("Email invalide", "Mot de passe incorrect"). Bouton OAuth Google. Labels accessibles (aria-label). Indicateur de force du mot de passe à l'inscription.</div>
+  </div>
+  <div class="ux-card">
+    <div class="ux-screen">🔍 MatchingPage — Recherche de tuteurs</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>4 tuteurs hardcodés sans pagination. Filtres ne persistent pas après navigation. Pas de message "Aucun résultat". Score de compatibilité affiché sans explication. Sur mobile, cartes tuteurs mal lisibles.</div>
+    <div class="ux-solution"><div class="ux-solution-label">Solution v2</div>Pagination curseur (12 tuteurs/page). Filtres persistants en URL. Empty state explicite avec suggestions. Tooltip "Comment ce score est calculé". Cartes mobile full-width. Skeleton loader pendant chargement.</div>
+  </div>
+  <div class="ux-card">
+    <div class="ux-screen">📅 Réservation — Formulaire de session (manquant en v1)</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>Le flow de réservation est entièrement absent. Après le clic "Réserver" sur la carte tuteur, aucune page n'existe.</div>
+    <div class="ux-solution"><div class="ux-solution-label">Solution v2 — Écran à créer</div><strong>Étape 1</strong> : Sélection créneau (calendrier visuel). <strong>Étape 2</strong> : Détails session (matière, durée, mode, objectif). <strong>Étape 3</strong> : Récapitulatif + paiement. <strong>Étape 4</strong> : Confirmation avec numéro de réservation. Progress stepper en haut.</div>
+  </div>
+  <div class="ux-card">
+    <div class="ux-screen">💬 MessagingPage — Messagerie</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>Données 100% mock. Sur mobile, panneau latéral et zone de chat se superposent. Pas de gestion des messages longs. Réactions déclenchent un re-render complet. Pas d'indication "Message envoyé/lu".</div>
+    <div class="ux-solution"><div class="ux-solution-label">Solution v2</div>Connexion Supabase Realtime. Layout mobile avec tabs (Conversations / Chat). Scroll infini. Optimistic updates. Statut double tick WhatsApp-style.</div>
+  </div>
+  <div class="ux-card">
+    <div class="ux-screen">📊 StudentDashboard — Dashboard élève</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>Toutes les données hardcodées. Graphique affiche Maths/Français uniquement. Tuteur recommandé fixe. Sur mobile, StatCards en grille 4 colonnes (illisible).</div>
+    <div class="ux-solution"><div class="ux-solution-label">Solution v2</div>Données Supabase temps réel. Graphique dynamique avec sélection de matières. Recommandations basées sur profil VARK réel. StatCards en grille 2x2 sur mobile. Section "Prochaine session" avec compte à rebours.</div>
+  </div>
+  <div class="ux-card">
+    <div class="ux-screen">💳 Paiement — Écran manquant en v1</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>L'onglet "Paiement" dans les paramètres est un placeholder vide. Aucun flow de paiement n'existe.</div>
+    <div class="ux-solution"><div class="ux-solution-label">Écrans à créer en v2</div><strong>PaymentPage</strong> : Choix MVola/Orange Money, saisie numéro, confirmation push. <strong>WalletPage (tuteur)</strong> : Solde, historique, bouton "Virer mes gains". <strong>HistoryPage (parent)</strong> : Factures, téléchargement PDF.</div>
+  </div>
+
+  <h3>6.2 Nouveaux Écrans Requis pour v2</h3>
+  <table>
+    <thead><tr><th>Écran</th><th>Rôle(s)</th><th>Description</th><th>Priorité</th></tr></thead>
+    <tbody>
+      <tr><td>Profil tuteur public</td><td>Tous (public)</td><td>Page SEO avec avis, certifications, calendrier, bouton réservation</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td>Réservation step-by-step</td><td>Élève / Parent</td><td>Wizard 4 étapes : créneau → détails → paiement → confirmation</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td>Dashboard Admin back-office</td><td>Admin</td><td>KPIs globaux, file modération tuteurs, gestion litiges, banissement</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td>Espace CANOPE</td><td>CANOPE</td><td>Upload ressources, gestion tuteurs à valider, stats utilisation</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td>Wallet tuteur</td><td>Tuteur</td><td>Solde, historique transactions, demande virement Mobile Money</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td>Paramètres notifications</td><td>Tous</td><td>Granularité par type d'événement et par canal</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td>Espace COSP</td><td>COSP</td><td>Calendrier bilans, gestion rapports, recommandation tuteurs</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td>Module orientation RIASEC</td><td>Élève</td><td>Questionnaire, résultats, filières suggérées, lien vers COSP</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td>Rapport mensuel PDF preview</td><td>Tuteur / Parent</td><td>Interface création/validation du rapport mensuel élève</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td>Page onboarding interactive</td><td>Nouveau utilisateur</td><td>Wizard de bienvenue 3 steps par rôle</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 7 : PLANNING -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">7</div>
+    <div><div class="section-title">Planning MoSCoW &amp; Sprints MVP</div><div class="section-subtitle">MVP 3 mois en 6 sprints de 2 semaines — priorisé MoSCoW</div></div>
+  </div>
+
+  <h3>7.1 Priorisation MoSCoW</h3>
+  <div class="moscow must"><div class="moscow-header">M — Must Have (bloquant pour le MVP)</div><div class="moscow-body"><div class="moscow-items">
+    <div class="moscow-item">Inscription multi-rôle (élève, tuteur, parent)</div>
+    <div class="moscow-item">Authentification email + JWT Supabase</div>
+    <div class="moscow-item">Profil élève avec test VARK</div>
+    <div class="moscow-item">Profil tuteur avec disponibilités</div>
+    <div class="moscow-item">Validation tuteur par Admin/CANOPE</div>
+    <div class="moscow-item">Recherche &amp; filtres tuteurs</div>
+    <div class="moscow-item">Score de compatibilité VARK</div>
+    <div class="moscow-item">Réservation de session (wizard 4 étapes)</div>
+    <div class="moscow-item">Validation réservation par le parent</div>
+    <div class="moscow-item">Paiement MVola</div>
+    <div class="moscow-item">Paiement Orange Money</div>
+    <div class="moscow-item">Système d'escrow</div>
+    <div class="moscow-item">Messagerie temps réel (Supabase Realtime)</div>
+    <div class="moscow-item">Canal parent-tuteur dédié</div>
+    <div class="moscow-item">Dashboard élève (données réelles)</div>
+    <div class="moscow-item">Dashboard tuteur</div>
+    <div class="moscow-item">Dashboard parent (multi-enfants)</div>
+    <div class="moscow-item">Dashboard Admin back-office</div>
+    <div class="moscow-item">Notifications in-app + email transactionnel</div>
+    <div class="moscow-item">Push Web (PWA)</div>
+    <div class="moscow-item">Rappels de session automatiques</div>
+    <div class="moscow-item">Notation bidirectionnelle post-session</div>
+    <div class="moscow-item">Bibliothèque ressources CANOPE</div>
+    <div class="moscow-item">Formation tuteur CANOPE (4 modules)</div>
+    <div class="moscow-item">RLS Supabase sur toutes les tables</div>
+    <div class="moscow-item">i18n FR/MG (next-intl)</div>
+    <div class="moscow-item">Mobile-first responsive</div>
+  </div></div></div>
+
+  <div class="moscow should"><div class="moscow-header">S — Should Have (forte valeur, post-MVP immédiat)</div><div class="moscow-body"><div class="moscow-items">
+    <div class="moscow-item">SSO Google (OAuth)</div>
+    <div class="moscow-item">2FA par SMS pour parents</div>
+    <div class="moscow-item">Sessions récurrentes (abonnement)</div>
+    <div class="moscow-item">Session visio Jitsi Meet intégrée</div>
+    <div class="moscow-item">Wallet tuteur + virements</div>
+    <div class="moscow-item">Factures PDF automatiques</div>
+    <div class="moscow-item">Gestion des litiges</div>
+    <div class="moscow-item">Rapport mensuel élève PDF</div>
+    <div class="moscow-item">Partage de fichiers en messagerie</div>
+    <div class="moscow-item">Paramètres notifications granulaires</div>
+    <div class="moscow-item">Ressources CANOPE offline (cache PWA)</div>
+    <div class="moscow-item">Stats utilisation ressources CANOPE</div>
+    <div class="moscow-item">Évaluation compétences élève par tuteur</div>
+    <div class="moscow-item">Tuteurs favoris</div>
+  </div></div></div>
+
+  <div class="moscow could"><div class="moscow-header">C — Could Have (valeur ajoutée, si temps disponible)</div><div class="moscow-body"><div class="moscow-items">
+    <div class="moscow-item">Module orientation COSP (RIASEC)</div>
+    <div class="moscow-item">RDV bilan COSP</div>
+    <div class="moscow-item">Recommandation tuteurs par IA</div>
+    <div class="moscow-item">Quiz CANOPE intégrés dans ressources</div>
+    <div class="moscow-item">SMS fallback pour zones offline</div>
+    <div class="moscow-item">Onboarding interactif par rôle</div>
+    <div class="moscow-item">Export analytics CSV Admin</div>
+    <div class="moscow-item">Page profil tuteur SEO (ISR)</div>
+  </div></div></div>
+
+  <div class="moscow wont"><div class="moscow-header">W — Won't Have (hors périmètre v2)</div><div class="moscow-body"><div class="moscow-items">
+    <div class="moscow-item">Application mobile native (iOS/Android)</div>
+    <div class="moscow-item">Tableau blanc collaboratif temps réel</div>
+    <div class="moscow-item">IA générative de contenu pédagogique</div>
+    <div class="moscow-item">Paiement carte bancaire internationale</div>
+    <div class="moscow-item">Forum communautaire tuteurs</div>
+    <div class="moscow-item">Marketplace de cours enregistrés</div>
+    <div class="moscow-item">Intégration ENT établissements scolaires</div>
+    <div class="moscow-item">Gamification (points, classements)</div>
+  </div></div></div>
+
+  <h3>7.2 Sprints MVP (6 × 2 semaines)</h3>
+  <div class="sprint sprint-1"><div class="sprint-header"><div class="sprint-name">Sprint 1 — Fondations</div><div class="sprint-dates">Semaines 1-2</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Architecture en place, authentification fonctionnelle, profils créables</div><div class="sprint-items"><div class="sprint-item">Setup Next.js 14 App Router + FastAPI + Supabase</div><div class="sprint-item">Migration schéma BDD (20 tables + RLS)</div><div class="sprint-item">Inscription/connexion multi-rôle (email + JWT)</div><div class="sprint-item">Middleware auth Next.js + route protection</div><div class="sprint-item">Profil élève complet (VARK inclus)</div><div class="sprint-item">Profil tuteur (infos + disponibilités)</div><div class="sprint-item">Design system Tailwind + Shadcn/ui</div><div class="sprint-item">PWA manifest + Service Worker de base</div><div class="sprint-item">i18n next-intl FR/MG (structure)</div><div class="sprint-item">CI/CD GitHub Actions (lint, test, deploy)</div></div></div></div>
+
+  <div class="sprint sprint-2"><div class="sprint-header"><div class="sprint-name">Sprint 2 — Matching &amp; Recherche</div><div class="sprint-dates">Semaines 3-4</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Un élève peut trouver et consulter des tuteurs pertinents</div><div class="sprint-items"><div class="sprint-item">Recherche full-text tuteurs (PostgreSQL tsvector)</div><div class="sprint-item">Filtres avancés (matière, tarif, dispo, note)</div><div class="sprint-item">Algorithme scoring VARK (FastAPI endpoint)</div><div class="sprint-item">Carte tuteur avec % compatibilité</div><div class="sprint-item">Page profil public tuteur (SSR + slug)</div><div class="sprint-item">Calendrier disponibilités temps réel</div><div class="sprint-item">Test VARK (migration mock → BDD)</div><div class="sprint-item">Validation tuteur Admin/CANOPE interface</div><div class="sprint-item">Dashboards élève/tuteur/parent (données réelles)</div><div class="sprint-item">StatCards + graphiques progression (Recharts)</div></div></div></div>
+
+  <div class="sprint sprint-3"><div class="sprint-header"><div class="sprint-name">Sprint 3 — Réservation &amp; Validation Parent</div><div class="sprint-dates">Semaines 5-6</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Flow de réservation complet, validation parent, confirmation tuteur</div><div class="sprint-items"><div class="sprint-item">Wizard réservation 4 étapes</div><div class="sprint-item">Verrouillage créneau 10 min (Supabase Realtime)</div><div class="sprint-item">Détection mineur → demande validation parent</div><div class="sprint-item">Interface validation/refus parent</div><div class="sprint-item">Interface acceptation/refus tuteur</div><div class="sprint-item">États session (machine à états)</div><div class="sprint-item">Politique d'annulation avec remboursement auto</div><div class="sprint-item">Rappels automatiques J-1 et H-1 (APScheduler)</div><div class="sprint-item">Notifications in-app (Supabase Realtime)</div><div class="sprint-item">Emails transactionnels (SendGrid / Resend)</div></div></div></div>
+
+  <div class="sprint sprint-4"><div class="sprint-header"><div class="sprint-name">Sprint 4 — Paiement Mobile Money</div><div class="sprint-dates">Semaines 7-8</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Paiement MVola et Orange Money opérationnel avec escrow</div><div class="sprint-items"><div class="sprint-item">Intégration API MVola marchands</div><div class="sprint-item">Intégration API Orange Money MG</div><div class="sprint-item">UI paiement (saisie numéro, confirmation push)</div><div class="sprint-item">Système escrow (hold → released/disputed)</div><div class="sprint-item">Déblocage automatique 24h post-session</div><div class="sprint-item">Webhooks paiement (Supabase Edge Functions)</div><div class="sprint-item">Wallet tuteur (solde en temps réel)</div><div class="sprint-item">Dashboard Admin (KPIs + litiges)</div><div class="sprint-item">Push Web (PWA) pour paiements</div><div class="sprint-item">Tests intégration paiement (sandbox MVola)</div></div></div></div>
+
+  <div class="sprint sprint-5"><div class="sprint-header"><div class="sprint-name">Sprint 5 — Messagerie &amp; Ressources CANOPE</div><div class="sprint-dates">Semaines 9-10</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Messagerie temps réel opérationnelle, bibliothèque CANOPE accessible</div><div class="sprint-items"><div class="sprint-item">Migration messagerie Zustand mock → Supabase Realtime</div><div class="sprint-item">Canal parent-tuteur dédié</div><div class="sprint-item">Partage fichiers (Supabase Storage)</div><div class="sprint-item">Read receipts (table message_reads)</div><div class="sprint-item">Réactions emoji (table message_reactions)</div><div class="sprint-item">Bibliothèque ressources CANOPE (filtres, search)</div><div class="sprint-item">Interface publication ressources (rôle CANOPE)</div><div class="sprint-item">Formation tuteur 4 modules (migration BDD)</div><div class="sprint-item">Certification tuteur (badge profil + PDF)</div><div class="sprint-item">Espace CANOPE complet</div></div></div></div>
+
+  <div class="sprint sprint-6"><div class="sprint-header"><div class="sprint-name">Sprint 6 — Notation, QA &amp; Lancement</div><div class="sprint-dates">Semaines 11-12</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Système d'évaluation complet, corrections bugs, optimisation, déploiement production</div><div class="sprint-items"><div class="sprint-item">Notation bidirectionnelle post-session</div><div class="sprint-item">Modération avis (workflow Admin)</div><div class="sprint-item">Rapport mensuel élève PDF (WeasyPrint/FastAPI)</div><div class="sprint-item">Optimisation performances (Lighthouse ≥ 85)</div><div class="sprint-item">Tests E2E Playwright (flows critiques)</div><div class="sprint-item">Tests de charge (paiement, recherche)</div><div class="sprint-item">Audit sécurité RLS (revue complète)</div><div class="sprint-item">Traductions MG complètes (validation native speakers)</div><div class="sprint-item">Déploiement production (Vercel + Railway/Render)</div><div class="sprint-item">Documentation API (Swagger FastAPI)</div></div></div></div>
+
+  <div class="callout callout-success"><div class="callout-title">Définition de "Done" pour le MVP</div>Un élève peut s'inscrire, passer le test VARK, trouver un tuteur compatible, réserver une session, payer en MVola ou Orange Money, échanger des messages avec le tuteur, et suivre sa progression. Le parent peut valider et payer. Le tuteur reçoit ses gains en escrow. L'Admin peut modérer.</div>
+</div>
+
+<!-- SECTION 8 : GLOSSAIRE -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">8</div>
+    <div><div class="section-title">Glossaire</div><div class="section-subtitle">Termes métier, techniques et réglementaires utilisés dans ce CDC</div></div>
+  </div>
+
+  <h3>8.1 Termes Métier</h3>
+  <div class="glossary-item"><div class="glossary-term">MIABO</div><div class="glossary-def">Plateforme malgache de tutorat personnalisé. Le nom évoque le soutien, l'accompagnement et la croissance en malgache.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Tuteur</div><div class="glossary-def">Enseignant ou étudiant avancé proposant des sessions de soutien scolaire individuel ou en petit groupe. Doit être validé par CANOPE/Admin avant de pratiquer sur la plateforme.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Élève</div><div class="glossary-def">Utilisateur inscrit sur MIABO pour recevoir un soutien scolaire. Peut être mineur (nécessite validation parentale) ou majeur.</div></div>
+  <div class="glossary-item"><div class="glossary-term">CANOPE</div><div class="glossary-def">Réseau de Création et d'Accompagnement Pédagogique. À Madagascar, structure officielle produisant des ressources pédagogiques et certifiant les tuteurs MIABO.</div></div>
+  <div class="glossary-item"><div class="glossary-term">COSP</div><div class="glossary-def">Centre d'Orientation Scolaire et Professionnelle. Structure proposant des bilans d'orientation aux élèves malgaches, intégrée à MIABO pour les recommandations tuteurs.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Session</div><div class="glossary-def">Séance de tutorat planifiée entre un élève et un tuteur. Peut être en présentiel ou en visioconférence. Durée : 1h à 3h.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Escrow</div><div class="glossary-def">Mécanisme de séquestre des fonds. Le paiement est retenu par MIABO entre le moment du paiement et la confirmation de fin de session, protégeant les deux parties.</div></div>
+  <div class="glossary-item"><div class="glossary-term">MVola</div><div class="glossary-def">Service de mobile banking de Telma Madagascar. Principal moyen de paiement mobile au Madagascar.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Orange Money</div><div class="glossary-def">Service de mobile banking d'Orange Madagascar. Deuxième opérateur de mobile money après MVola.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Ariary (Ar)</div><div class="glossary-def">Monnaie nationale malgache. Toutes les transactions MIABO sont en Ariary. 1 EUR ≈ 4 700 Ar (2026).</div></div>
+  <div class="glossary-item"><div class="glossary-term">Score de compatibilité</div><div class="glossary-def">Pourcentage (0-100%) calculé par l'algorithme MIABO indiquant l'adéquation entre le profil d'apprentissage d'un élève et la méthode pédagogique d'un tuteur.</div></div>
+  <div class="glossary-item"><div class="glossary-term">KYC</div><div class="glossary-def">Know Your Customer. Vérification d'identité des tuteurs avant qu'ils puissent effectuer des virements de leur wallet MIABO.</div></div>
+
+  <h3>8.2 Termes Techniques</h3>
+  <div class="glossary-item"><div class="glossary-term">VARK</div><div class="glossary-def">Visual, Auditory, Read/Write, Kinesthetic. Modèle de styles d'apprentissage de Neil Fleming utilisé pour le matching élève-tuteur sur MIABO.</div></div>
+  <div class="glossary-item"><div class="glossary-term">RIASEC</div><div class="glossary-def">Modèle d'orientation de John Holland (Réaliste, Investigateur, Artistique, Social, Entreprenant, Conventionnel). Utilisé dans le module COSP pour les bilans d'orientation.</div></div>
+  <div class="glossary-item"><div class="glossary-term">RLS</div><div class="glossary-def">Row Level Security. Mécanisme PostgreSQL/Supabase permettant de définir des règles d'accès ligne par ligne. Garantit qu'un utilisateur ne voit que les données autorisées.</div></div>
+  <div class="glossary-item"><div class="glossary-term">SSR / SSG / ISR</div><div class="glossary-def">Server-Side Rendering / Static Site Generation / Incremental Static Regeneration. Modes de rendu Next.js 14 choisis selon le besoin SEO et la fraîcheur des données.</div></div>
+  <div class="glossary-item"><div class="glossary-term">PWA</div><div class="glossary-def">Progressive Web App. Application web installable sur mobile comme une app native, fonctionnant partiellement hors connexion grâce au Service Worker.</div></div>
+  <div class="glossary-item"><div class="glossary-term">JWT</div><div class="glossary-def">JSON Web Token. Token signé utilisé par Supabase Auth pour authentifier les requêtes API. Validé par FastAPI à chaque endpoint protégé.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Supabase Realtime</div><div class="glossary-def">Fonctionnalité Supabase permettant d'écouter les changements de BDD en temps réel via WebSocket. Utilisé pour la messagerie, notifications et disponibilités.</div></div>
+  <div class="glossary-item"><div class="glossary-term">App Router</div><div class="glossary-def">Système de routage de Next.js 14 basé sur le système de fichiers dans le dossier <code>app/</code>. Remplace le Pages Router des versions antérieures.</div></div>
+  <div class="glossary-item"><div class="glossary-term">next-intl</div><div class="glossary-def">Bibliothèque d'internationalisation pour Next.js App Router. Gère les traductions FR/MG, la détection de langue et le routage localisé.</div></div>
+  <div class="glossary-item"><div class="glossary-term">APScheduler</div><div class="glossary-def">Bibliothèque Python pour la planification de tâches. Utilisée dans FastAPI pour les rappels de sessions, déblocages d'escrow et rapports mensuels.</div></div>
+  <div class="glossary-item"><div class="glossary-term">tsvector</div><div class="glossary-def">Type PostgreSQL pour la recherche full-text. Utilisé sur les profils tuteurs (nom, matières, bio) pour la recherche instantanée.</div></div>
+
+  <h3>8.3 Abréviations du CDC</h3>
+  <div class="glossary-item"><div class="glossary-term">CDC</div><div class="glossary-def">Cahier des Charges. Document de référence définissant les besoins fonctionnels et techniques d'un projet informatique.</div></div>
+  <div class="glossary-item"><div class="glossary-term">MVP</div><div class="glossary-def">Minimum Viable Product. Version minimale de la plateforme suffisamment complète pour être lancée. Correspond aux 6 premiers sprints (3 mois).</div></div>
+  <div class="glossary-item"><div class="glossary-term">MoSCoW</div><div class="glossary-def">Must/Should/Could/Won't. Méthode de priorisation des fonctionnalités utilisée en gestion de projet agile.</div></div>
+  <div class="glossary-item"><div class="glossary-term">RBAC</div><div class="glossary-def">Role-Based Access Control. Chaque rôle MIABO (élève, tuteur, parent, admin, canope, cosp) a des permissions distinctes.</div></div>
+  <div class="glossary-item"><div class="glossary-term">KPI</div><div class="glossary-def">Key Performance Indicator. Sur MIABO : taux d'occupation tuteurs, taux de complétion sessions, NPS, chiffre d'affaires mensuel.</div></div>
+
+  <!-- FOOTER -->
+  <div style="margin-top: 50px; padding: 24px; background: #111827; color: white; border-radius: 12px; text-align: center;">
+    <div style="font-size: 18pt; font-weight: 800; letter-spacing: -1px; margin-bottom: 4px;">MIABO <span style="color: #FCD34D;">v2</span></div>
+    <div style="font-size: 9pt; opacity: 0.6; margin-bottom: 8px;">Cahier des Charges Fonctionnel &amp; Technique — Refonte Totale</div>
+    <div style="font-size: 8.5pt; opacity: 0.5;">Version 2.0.0 · Mars 2026 · Equipe Dev MIABO · Confidentiel — Usage interne</div>
+    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 8pt; opacity: 0.4;">Stack : Next.js 14 · FastAPI · Supabase · PWA · FR/MG · Mobile-first · Madagascar</div>
+  </div>
+</div>
+</body></html>

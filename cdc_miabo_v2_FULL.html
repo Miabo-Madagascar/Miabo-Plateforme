@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cahier des Charges MIABO v2</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --primary: #1E40AF;
+    --primary-light: #3B82F6;
+    --primary-pale: #EFF6FF;
+    --secondary: #059669;
+    --secondary-pale: #ECFDF5;
+    --accent: #DC2626;
+    --accent-pale: #FEF2F2;
+    --orange: #D97706;
+    --orange-pale: #FFFBEB;
+    --gray-50: #F9FAFB;
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-300: #D1D5DB;
+    --gray-500: #6B7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --text: #1F2937;
+    --text-light: #6B7280;
+    --border: #E5E7EB;
+  }
+
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.6;
+    color: var(--text);
+    background: white;
+  }
+
+  pre, code { font-family: 'Courier New', Courier, monospace; }
+
+  .page-break { page-break-after: always; break-after: page; }
+  .no-break { page-break-inside: avoid; break-inside: avoid; }
+
+  .cover {
+    min-height: 800px;
+    background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 40%, #2563EB 70%, #3B82F6 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 60px 40px;
+    color: white;
+  }
+  .cover-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 30px;
+    padding: 8px 24px;
+    font-size: 11pt;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+  .cover-logo {
+    font-size: 72pt;
+    font-weight: 800;
+    letter-spacing: -3px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .cover-logo span { color: #FCD34D; }
+  .cover-tagline {
+    font-size: 16pt;
+    font-weight: 300;
+    opacity: 0.85;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+  }
+  .cover-title {
+    font-size: 28pt;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    max-width: 700px;
+  }
+  .cover-subtitle {
+    font-size: 14pt;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-bottom: 50px;
+    max-width: 600px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 30px;
+    width: 100%;
+    max-width: 700px;
+  }
+  .cover-meta-item { text-align: center; }
+  .cover-meta-item .label { font-size: 9pt; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
+  .cover-meta-item .value { font-size: 13pt; font-weight: 600; margin-top: 4px; }
+  .cover-version {
+    margin-top: 30px;
+    font-size: 9pt;
+    opacity: 0.5;
+  }
+
+  .document { padding: 0; }
+
+  .section {
+    padding: 50px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 3px solid var(--primary);
+  }
+  .section-number {
+    background: var(--primary);
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18pt;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 22pt;
+    font-weight: 700;
+    color: var(--gray-900);
+    line-height: 1.2;
+  }
+  .section-subtitle {
+    font-size: 11pt;
+    color: var(--text-light);
+    margin-top: 3px;
+  }
+
+  h3 {
+    font-size: 14pt;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 28px 0 12px 0;
+    padding-left: 12px;
+    border-left: 4px solid var(--primary-light);
+  }
+  h4 {
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin: 20px 0 8px 0;
+  }
+
+  p { margin-bottom: 10px; color: var(--text); }
+
+  .callout {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-left: 5px solid;
+  }
+  .callout-info { background: var(--primary-pale); border-color: var(--primary-light); }
+  .callout-success { background: var(--secondary-pale); border-color: var(--secondary); }
+  .callout-warning { background: var(--orange-pale); border-color: var(--orange); }
+  .callout-danger { background: var(--accent-pale); border-color: var(--accent); }
+  .callout-title { font-weight: 700; font-size: 10pt; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .callout-info .callout-title { color: var(--primary); }
+  .callout-success .callout-title { color: var(--secondary); }
+  .callout-warning .callout-title { color: var(--orange); }
+  .callout-danger .callout-title { color: var(--accent); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 9.5pt;
+    page-break-inside: auto;
+  }
+  thead th {
+    background: var(--primary);
+    color: white;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  tbody tr:nth-child(even) { background: var(--gray-50); }
+  tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 8pt;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-mvp { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+  .badge-v2 { background: #DBEAFE; color: #1E40AF; border: 1px solid #93C5FD; }
+  .badge-v3 { background: #F3F4F6; color: #6B7280; border: 1px solid #D1D5DB; }
+
+  .role {
+    display: inline-block; padding: 1px 6px; border-radius: 4px;
+    font-size: 7.5pt; font-weight: 600; margin: 1px;
+  }
+  .role-eleve { background: #EDE9FE; color: #5B21B6; }
+  .role-tuteur { background: #D1FAE5; color: #065F46; }
+  .role-parent { background: #FEE2E2; color: #991B1B; }
+  .role-admin { background: #1F2937; color: white; }
+  .role-canope { background: #FEF3C7; color: #92400E; }
+  .role-cosp { background: #E0F2FE; color: #0C4A6E; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    page-break-inside: avoid;
+  }
+  .card-title { font-size: 11pt; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; }
+  .card-icon { font-size: 22pt; margin-bottom: 8px; }
+
+  .stats-row { display: flex; gap: 16px; flex-wrap: wrap; margin: 20px 0; }
+  .stat-box {
+    flex: 1; min-width: 150px;
+    background: var(--primary);
+    color: white;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .stat-box.green { background: var(--secondary); }
+  .stat-box.orange { background: #D97706; }
+  .stat-box.dark { background: var(--gray-900); }
+  .stat-value { font-size: 24pt; font-weight: 800; line-height: 1; }
+  .stat-label { font-size: 8.5pt; opacity: 0.85; margin-top: 4px; }
+
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px dotted var(--gray-200);
+    font-size: 10.5pt;
+  }
+  .toc-item:last-child { border-bottom: none; }
+  .toc-section { font-weight: 700; color: var(--primary); }
+  .toc-page { color: var(--text-light); font-size: 9.5pt; }
+  .toc-sub { padding-left: 20px; font-size: 9.5pt; color: var(--gray-700); }
+
+  pre {
+    background: #1E2937;
+    color: #E2E8F0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 8.5pt;
+    line-height: 1.5;
+    overflow: auto;
+    margin: 12px 0;
+    page-break-inside: avoid;
+  }
+  code {
+    font-size: 8.5pt;
+    background: var(--gray-100);
+    padding: 2px 5px;
+    border-radius: 4px;
+    color: var(--accent);
+  }
+
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { margin-bottom: 4px; }
+  ul li::marker { color: var(--primary-light); }
+
+  /* DB SCHEMA */
+  .db-table { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 18px; page-break-inside: avoid; }
+  .db-table-header { background: var(--gray-900); color: white; padding: 10px 14px; font-weight: 700; font-size: 10pt; display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+  .db-table-desc { opacity: 0.5; font-size: 8.5pt; font-weight: 400; }
+  .db-col { display: flex; gap: 8px; padding: 7px 14px; border-bottom: 1px solid var(--gray-100); font-size: 8.5pt; align-items: baseline; }
+  .db-col:last-child { border-bottom: none; }
+  .db-col:nth-child(even) { background: var(--gray-50); }
+  .db-col-name { font-weight: 600; color: var(--primary); min-width: 200px; }
+  .db-col-type { color: var(--secondary); min-width: 130px; font-size: 8pt; }
+  .db-col-notes { color: var(--text-light); font-size: 8.5pt; flex: 1; }
+  .db-pk { background: #FCD34D; color: #78350F; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+  .db-fk { background: #A5F3FC; color: #0C4A6E; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+  .db-idx { background: #BBF7D0; color: #14532D; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+  .db-nn { background: #FEE2E2; color: #991B1B; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+
+  /* SPRINT */
+  .sprint { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 14px; page-break-inside: avoid; }
+  .sprint-header { padding: 12px 16px; color: white; display: flex; justify-content: space-between; align-items: center; }
+  .sprint-1 .sprint-header { background: #1E3A8A; }
+  .sprint-2 .sprint-header { background: #1E40AF; }
+  .sprint-3 .sprint-header { background: #2563EB; }
+  .sprint-4 .sprint-header { background: #3B82F6; }
+  .sprint-5 .sprint-header { background: #059669; }
+  .sprint-6 .sprint-header { background: #047857; }
+  .sprint-name { font-weight: 700; font-size: 11pt; }
+  .sprint-dates { font-size: 9pt; opacity: 0.8; }
+  .sprint-body { padding: 12px 16px; }
+  .sprint-items { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+  .sprint-item { font-size: 9pt; display: flex; align-items: baseline; gap: 6px; }
+  .sprint-item::before { content: '▸'; color: var(--primary-light); flex-shrink: 0; }
+  .sprint-goal { font-size: 9.5pt; font-style: italic; color: var(--text-light); margin-bottom: 8px; padding: 8px 12px; background: var(--gray-50); border-radius: 6px; }
+
+  /* MOSCOW */
+  .moscow { border-radius: 10px; overflow: hidden; margin-bottom: 16px; page-break-inside: avoid; }
+  .moscow-header { padding: 12px 16px; color: white; font-weight: 700; font-size: 12pt; }
+  .must .moscow-header { background: #DC2626; }
+  .should .moscow-header { background: #D97706; }
+  .could .moscow-header { background: #059669; }
+  .wont .moscow-header { background: #6B7280; }
+  .moscow-body { padding: 12px 16px; border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; }
+  .moscow-items { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; }
+  .moscow-item { font-size: 9.5pt; padding: 3px 0; display: flex; align-items: baseline; gap: 6px; }
+  .moscow-item::before { content: '✓'; font-weight: 700; flex-shrink: 0; }
+  .must .moscow-item::before { color: #DC2626; }
+  .should .moscow-item::before { color: #D97706; }
+  .could .moscow-item::before { color: #059669; }
+  .wont .moscow-item::before { color: #9CA3AF; }
+
+  /* FLOW */
+  .flow-step { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 4px; page-break-inside: avoid; }
+  .flow-num { background: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 10pt; flex-shrink: 0; margin-top: 2px; }
+  .flow-num.green { background: var(--secondary); }
+  .flow-num.orange { background: var(--orange); }
+  .flow-num.red { background: var(--accent); }
+  .flow-content { flex: 1; padding: 8px 14px; background: var(--primary-pale); border-radius: 8px; border-left: 3px solid var(--primary-light); }
+  .flow-content.green { background: var(--secondary-pale); border-color: var(--secondary); }
+  .flow-content.orange { background: var(--orange-pale); border-color: var(--orange); }
+  .flow-content.red { background: var(--accent-pale); border-color: var(--accent); }
+  .flow-title { font-weight: 600; font-size: 10pt; color: var(--gray-900); }
+  .flow-desc { font-size: 9pt; color: var(--text-light); margin-top: 2px; }
+  .flow-actor { font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary); }
+  .flow-arrow { color: var(--gray-300); font-size: 14pt; margin: 2px 0 2px 14px; }
+
+  /* UX */
+  .ux-card { border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 14px; page-break-inside: avoid; }
+  .ux-screen { font-size: 10pt; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+  .ux-problem { background: var(--accent-pale); border-radius: 6px; padding: 8px 12px; margin-bottom: 6px; font-size: 9pt; }
+  .ux-problem-label { font-weight: 700; color: var(--accent); font-size: 8pt; text-transform: uppercase; margin-bottom: 3px; }
+  .ux-solution { background: var(--secondary-pale); border-radius: 6px; padding: 8px 12px; font-size: 9pt; }
+  .ux-solution-label { font-weight: 700; color: var(--secondary); font-size: 8pt; text-transform: uppercase; margin-bottom: 3px; }
+
+  /* ARCH */
+  .arch-box { background: var(--primary-pale); border: 2px solid var(--primary-light); border-radius: 10px; padding: 16px; margin: 8px 0; page-break-inside: avoid; }
+  .arch-box h4 { color: var(--primary); margin: 0 0 8px 0; }
+  .arch-arrow { text-align: center; font-size: 18pt; color: var(--primary-light); margin: 4px 0; }
+
+  /* GLOSSAIRE */
+  .glossary-item { padding: 10px 0; border-bottom: 1px solid var(--gray-100); display: flex; gap: 16px; align-items: baseline; }
+  .glossary-item:last-child { border-bottom: none; }
+  .glossary-term { font-weight: 700; color: var(--primary); min-width: 160px; font-size: 10pt; }
+  .glossary-def { font-size: 9.5pt; color: var(--text); flex: 1; }
+
+  @media print {
+    body { font-size: 10pt; }
+    .section { padding: 40px 50px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======== PART 1 ======== -->
+<div class="document">
+
+<!-- ===== COVER ===== -->
+<div class="cover page-break">
+  <div class="cover-badge">Cahier des Charges — Version 2.0</div>
+  <div class="cover-logo">MI<span>A</span>BO</div>
+  <div class="cover-tagline">Plateforme de tutorat personnalisé · Madagascar</div>
+  <div class="cover-title">Cahier des Charges Fonctionnel &amp; Technique — Refonte Totale v2</div>
+  <div class="cover-subtitle">Next.js 14 · FastAPI · Supabase · PWA · Bilingue FR/MG</div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="label">Version</div><div class="value">2.0.0</div></div>
+    <div class="cover-meta-item"><div class="label">Date</div><div class="value">Mars 2026</div></div>
+    <div class="cover-meta-item"><div class="label">Statut</div><div class="value">Draft — Review</div></div>
+    <div class="cover-meta-item"><div class="label">Équipe</div><div class="value">Dev MIABO</div></div>
+    <div class="cover-meta-item"><div class="label">MVP cible</div><div class="value">3 mois</div></div>
+  </div>
+  <div class="cover-version">CONFIDENTIEL — usage interne équipe dev</div>
+</div>
+
+<!-- ===== TABLE DES MATIÈRES ===== -->
+<div class="section page-break">
+  <div class="section-header">
+    <div style="width:44px;height:44px;background:var(--gray-900);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:18pt;font-weight:800;flex-shrink:0;">≡</div>
+    <div><div class="section-title">Table des Matières</div><div class="section-subtitle">Cahier des Charges MIABO v2 — Structure complète</div></div>
+  </div>
+  <div class="toc-item"><span class="toc-section">1. Présentation &amp; Proposition de Valeur</span><span class="toc-page">3</span></div>
+  <div class="toc-item toc-sub"><span>1.1 Contexte &amp; genèse du projet</span><span class="toc-page">3</span></div>
+  <div class="toc-item toc-sub"><span>1.2 Problèmes résolus</span><span class="toc-page">3</span></div>
+  <div class="toc-item toc-sub"><span>1.3 Proposition de valeur par rôle</span><span class="toc-page">3</span></div>
+  <div class="toc-item toc-sub"><span>1.4 Périmètre v1 → v2</span><span class="toc-page">4</span></div>
+  <div class="toc-item"><span class="toc-section">2. Fonctionnalités par Module</span><span class="toc-page">5</span></div>
+  <div class="toc-item toc-sub"><span>Auth &amp; Profils · Recherche &amp; Matching · Réservation · Paiement</span><span class="toc-page">5</span></div>
+  <div class="toc-item toc-sub"><span>Ressources CANOPE · Orientation COSP · Messagerie · Dashboards</span><span class="toc-page">9</span></div>
+  <div class="toc-item toc-sub"><span>Évaluations · Notifications</span><span class="toc-page">12</span></div>
+  <div class="toc-item"><span class="toc-section">3. Spécifications Techniques</span><span class="toc-page">15</span></div>
+  <div class="toc-item toc-sub"><span>Architecture · Sécurité RLS · PWA · i18n · API</span><span class="toc-page">15</span></div>
+  <div class="toc-item"><span class="toc-section">4. Schéma BDD Amélioré</span><span class="toc-page">19</span></div>
+  <div class="toc-item"><span class="toc-section">5. User Flows Clés</span><span class="toc-page">25</span></div>
+  <div class="toc-item"><span class="toc-section">6. Corrections UX &amp; Écrans Manquants</span><span class="toc-page">28</span></div>
+  <div class="toc-item"><span class="toc-section">7. Planning MoSCoW &amp; Sprints MVP</span><span class="toc-page">31</span></div>
+  <div class="toc-item"><span class="toc-section">8. Glossaire</span><span class="toc-page">35</span></div>
+</div>
+
+<!-- ===== SECTION 1 ===== -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">1</div>
+    <div><div class="section-title">Présentation &amp; Proposition de Valeur</div><div class="section-subtitle">Contexte, vision stratégique et périmètre de la refonte</div></div>
+  </div>
+
+  <h3>1.1 Contexte &amp; Genèse du Projet</h3>
+  <p>MIABO est une plateforme malgache de tutorat personnalisé, née du constat que <strong>78% des élèves malgaches à besoins de soutien scolaire</strong> n'y ont pas accès faute de disponibilité, d'information ou de moyens financiers adaptés. La v1 (React + Vite + Supabase) a validé les concepts clés : matching tuteur-élève, tests VARK, messagerie. La v2 constitue une refonte totale vers une architecture production-ready (Next.js 14 + FastAPI + Supabase), PWA mobile-first, bilingue français/malgache.</p>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-value">6</div><div class="stat-label">Rôles utilisateurs</div></div>
+    <div class="stat-box green"><div class="stat-value">10</div><div class="stat-label">Modules fonctionnels</div></div>
+    <div class="stat-box orange"><div class="stat-value">3</div><div class="stat-label">Mois MVP</div></div>
+    <div class="stat-box dark"><div class="stat-value">FR/MG</div><div class="stat-label">Bilinguisme natif</div></div>
+  </div>
+
+  <h3>1.2 Problèmes Résolus</h3>
+  <div class="grid-2">
+    <div class="card"><div class="card-icon">🔍</div><div class="card-title">Accès opaque aux tuteurs</div><p style="font-size:9.5pt">Aucun annuaire structuré. La v2 introduit une recherche géolocalisée avec matching intelligent (VARK + style pédagogique + disponibilités).</p></div>
+    <div class="card"><div class="card-icon">💳</div><div class="card-title">Paiement informel non sécurisé</div><p style="font-size:9.5pt">Les règlements se font en cash. La v2 intègre MVola &amp; Orange Money avec escrow et facturation automatique.</p></div>
+    <div class="card"><div class="card-icon">👨‍👩‍👧</div><div class="card-title">Parents exclus du suivi</div><p style="font-size:9.5pt">Pas de visibilité sur la progression. La v2 donne aux parents un dashboard dédié avec validation et paiement.</p></div>
+    <div class="card"><div class="card-icon">📚</div><div class="card-title">Ressources pédagogiques dispersées</div><p style="font-size:9.5pt">CANOPE Madagascar produit des ressources non centralisées. La v2 intègre un espace ressources certifié.</p></div>
+    <div class="card"><div class="card-icon">🧭</div><div class="card-title">Orientation scolaire absente</div><p style="font-size:9.5pt">Le COSP n'a pas de canal numérique. La v2 intègre bilans d'orientation et recommandations tuteurs.</p></div>
+    <div class="card"><div class="card-icon">📶</div><div class="card-title">Faible bande passante</div><p style="font-size:9.5pt">Réseau 2G/3G majoritaire. La v2 est PWA avec cache offline, images compressées et lazy loading agressif.</p></div>
+  </div>
+
+  <h3>1.3 Proposition de Valeur par Rôle</h3>
+  <table>
+    <thead><tr><th>Rôle</th><th>Problème principal</th><th>Valeur MIABO v2</th></tr></thead>
+    <tbody>
+      <tr><td><span class="role role-eleve">Élève</span></td><td>Trouver un tuteur adapté à son style d'apprentissage</td><td>Matching IA VARK, progression visible, accès ressources CANOPE, orientation COSP</td></tr>
+      <tr><td><span class="role role-tuteur">Tuteur</span></td><td>Gérer son activité, être payé sécurisé, se former</td><td>Agenda intégré, paiement escrow, modules de formation CANOPE, certification officielle</td></tr>
+      <tr><td><span class="role role-parent">Parent</span></td><td>Payer en confiance, suivre la progression enfant</td><td>Paiement Mobile Money, validation réservation, dashboard progression, messagerie tuteur</td></tr>
+      <tr><td><span class="role role-admin">Admin</span></td><td>Modérer la plateforme et analyser les KPIs</td><td>Back-office complet, modération tuteurs, analytics temps réel, gestion litiges</td></tr>
+      <tr><td><span class="role role-canope">CANOPE</span></td><td>Administrer les tests VAK/RIASEC/DISC et orienter les jeunes <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td><td>Dashboard dédié, création tests (élève MIABO ou jeune externe), rapport consolidé PDF, contenu de formation, calendrier séances, charte SESAME <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td></tr>
+      <tr><td><span class="role role-cosp">COSP</span></td><td>Toutes fonctionnalités CANOPE + bilans d'orientation personnalisés <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td><td>Hérite de toutes les fonctionnalités CANOPE + bilans personnalisés, recommandation tuteurs, rapports accessibles élèves/parents <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.4 Delta v1 → v2</h3>
+  <table>
+    <thead><tr><th>Composant</th><th>v1 (actuel)</th><th>v2 (cible)</th></tr></thead>
+    <tbody>
+      <tr><td>Framework frontend</td><td>React 18 + Vite</td><td><strong>Next.js 14 App Router + SSR/SSG</strong></td></tr>
+      <tr><td>Backend</td><td>Aucun (mock localStorage)</td><td><strong>FastAPI (Python) — REST + WebSocket</strong></td></tr>
+      <tr><td>Base de données</td><td>Supabase migrations partielles (4 tables)</td><td><strong>Supabase PostgreSQL — 20+ tables, RLS complet</strong></td></tr>
+      <tr><td>Authentification</td><td>Mock (3 comptes démo)</td><td><strong>Supabase Auth + JWT + RBAC + 2FA parents</strong></td></tr>
+      <tr><td>Rôles</td><td>3 (élève, tuteur, parent)</td><td><strong>6 (+ admin, CANOPE, COSP)</strong></td></tr>
+      <tr><td>Paiement</td><td>Placeholder</td><td><strong>MVola + Orange Money + escrow</strong></td></tr>
+      <tr><td>Temps réel</td><td>State Zustand local</td><td><strong>Supabase Realtime + FastAPI WebSocket</strong></td></tr>
+      <tr><td>PWA / Offline</td><td>Non</td><td><strong>Service Worker + cache stratégique</strong></td></tr>
+      <tr><td>i18n</td><td>Français uniquement</td><td><strong>next-intl FR + MG</strong></td></tr>
+      <tr><td>Notifications</td><td>Non</td><td><strong>Push Web + SMS (Twilio/Nexmo)</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">⚠️ Décision d'architecture critique</div>
+    La migration de Vite vers Next.js 14 nécessite une réécriture complète du routage (React Router → App Router). Le contexte d'auth (UserContext.tsx) sera remplacé par Supabase Auth + middleware Next.js. Les composants UI peuvent être réutilisés avec adaptation des imports.
+  </div>
+</div>
+
+</div>
+
+<!-- ======== PART 2 ======== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">2</div>
+    <div><div class="section-title">Fonctionnalités par Module</div><div class="section-subtitle">Tableau exhaustif — ID · Feature · Rôles · Description · Règles métier · Priorité</div></div>
+  </div>
+  <div class="callout callout-info">
+    <div class="callout-title">Convention de priorité</div>
+    <strong>MVP</strong> = Sprint 1-6 (3 mois) · <strong>V2</strong> = Sprint 7-12 · <strong>V3</strong> = Backlog futur. Les IDs suivent le format <code>MOD-NNN</code>.
+  </div>
+
+  <h3>Module AUTH — Authentification &amp; Profils</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>AUTH-001</code></td><td>Inscription multi-rôle <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span><span class="role role-parent">Parent</span><span class="role role-canope">CANOPE</span><span class="role role-cosp">COSP</span></td><td>Formulaire avec sélection de rôle en step 1. Champs communs : nom, prénom, email, mot de passe. Champs spécifiques selon rôle (voir AUTH-008/AUTH-009 pour CANOPE/COSP). Validation email obligatoire avant accès.</td><td>JWT Supabase Auth. CANOPE/COSP : code d'identification SESAME requis (format CANOPE-XXXX / COSP-XXXX) pour activer le compte. Sans ce code, le compte reste en attente.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-008</code></td><td>Profil CANOPE complet <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></td><td><span class="role role-canope">CANOPE</span></td><td>Champs obligatoires : nom, prénom, date de naissance, âge, sexe, adresse email, ville, région, téléphone, profession, photo de profil. Champ facultatif : niveau d'étude / diplôme. Code d'identification SESAME attribué : format CANOPE-XXXX.</td><td>Code SESAME vérifié côté serveur avant activation. Profil non activable sans code valide. Données stockées dans table <code>canope_profiles</code>.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-009</code></td><td>Profil COSP complet <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></td><td><span class="role role-cosp">COSP</span></td><td>Mêmes champs obligatoires que CANOPE + champ dédié pour les dates de formation COSP (champ multiple, plusieurs entrées possibles). Code d'identification SESAME : format COSP-XXXX.</td><td>COSP hérite de tous les droits CANOPE. Dates de formation stockées en tableau JSON. Code COSP vérifié indépendamment du code CANOPE.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-002</code></td><td>Connexion sécurisée</td><td>Tous</td><td>Login email/password avec option "se souvenir de moi". Redirection vers dashboard rôle-specific.</td><td>JWT Supabase Auth. Session 7j si "remember me", 24h sinon. Lockout après 5 tentatives (15 min).</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-003</code></td><td>Récupération mot de passe</td><td>Tous</td><td>Lien de réinitialisation par email. Formulaire de nouveau mot de passe sécurisé.</td><td>Lien valide 1h. Invalidation après usage. Notification email de confirmation.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-004</code></td><td>2FA pour Parents</td><td><span class="role role-parent">Parent</span></td><td>Authentification deux facteurs par SMS/email pour toute action de paiement ou validation impliquant un mineur.</td><td>TOTP ou OTP SMS (Twilio). Obligatoire pour montants > 10 000 Ar. Conformité RGPD enfants.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>AUTH-005</code></td><td>Profil élève complet</td><td><span class="role role-eleve">Élève</span></td><td>Classe, matières, établissement, style d'apprentissage (VARK), photo, objectifs.</td><td>Profil 80% minimum pour accéder au matching. VARK mis à jour après chaque test.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-006</code></td><td>Profil tuteur complet</td><td><span class="role role-tuteur">Tuteur</span></td><td>Matières, niveaux, tarif horaire, disponibilités, bio, diplômes, photo, méthodes pédagogiques, localisation.</td><td>Publication conditionnée à validation Admin/CANOPE. Tarif min 2 000 Ar/h.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-007</code></td><td>Profil parent</td><td><span class="role role-parent">Parent</span></td><td>Informations personnelles, liste des enfants liés, méthode de paiement préférée, préférences de notification.</td><td>Un parent peut gérer N enfants. Lien enfant-parent vérifié par email.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-008</code></td><td>SSO Google</td><td>Tous (sauf Admin)</td><td>Connexion via compte Google pour simplifier l'onboarding.</td><td>Supabase OAuth Google. Rôle choisi au premier login. Compte existant fusionné si même email.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>AUTH-009</code></td><td>Validation tuteur Admin</td><td><span class="role role-admin">Admin</span><span class="role role-canope">CANOPE</span></td><td>File de tuteurs en attente. Vérification diplômes, identité, casier judiciaire. Approbation ou rejet avec motif.</td><td>Statut : pending → validated/rejected. Email auto à chaque changement. Délai max 72h.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-010</code></td><td>Suspension de compte</td><td><span class="role role-admin">Admin</span></td><td>Désactivation temporaire ou permanente avec motif. Notifications des parties impactées.</td><td>Sessions en cours annulées et remboursées. Historique conservé 5 ans.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module MATCH — Recherche &amp; Matching Intelligent</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>MATCH-001</code></td><td>Recherche tuteur</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Barre de recherche full-text par matière, nom, niveau, localisation. Résultats paginés.</td><td>Full-text search PostgreSQL (tsvector). Tuteurs non validés exclus. Filtres persistants en session.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MATCH-002</code></td><td>Filtres avancés</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Filtres : matière, niveau, tarif (fourchette), disponibilité, style pédagogique, note minimale, distance, genre.</td><td>Filtres combinables. Cache Redis 5min. Pas de filtre ethnique ou religieux.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MATCH-003</code></td><td>Score de compatibilité</td><td><span class="role role-eleve">Élève</span></td><td>Algorithme calculant un score (0–100%) basé sur : style VARK, matières, disponibilités, note tuteur, budget.</td><td>Score = 40% style + 25% matières + 20% disponibilité + 15% note. Recalculé si profil modifié.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MATCH-004</code></td><td>Profil tuteur public</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Page publique : bio, matières, tarifs, disponibilités, avis, ressources publiées, certifications CANOPE.</td><td>URL canonique <code>/tuteurs/[slug]</code>. Meta SEO générée. Avis visibles après session terminée.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MATCH-005</code></td><td>Tuteurs recommandés IA</td><td><span class="role role-eleve">Élève</span></td><td>Bandeau "Recommandés pour vous" basé sur historique sessions, résultats tests, matières en difficulté.</td><td>Collaborative filtering (FastAPI). Mise à jour hebdomadaire. Min 3 sessions pour activer.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>MATCH-006</code></td><td>Favoris tuteurs</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Bookmark tuteurs pour accès rapide. Liste "Mes tuteurs favoris" dans le profil.</td><td>Max 20 favoris. Notification si tuteur favori modifie disponibilités ou tarifs.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>MATCH-007</code></td><td>Disponibilités temps réel</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Calendrier tuteur mis à jour en temps réel. Créneaux disponibles en vert, occupés en gris.</td><td>Supabase Realtime sur table <code>availabilities</code>. Créneau verrouillé 10min lors d'une demande.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module RES — Réservation de Sessions</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>RES-001</code></td><td>Demande de réservation</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Sélection créneau via calendrier tuteur. Choix matière, durée (1h-3h), mode (présentiel/visio), objectif. Message optionnel au tuteur.</td><td>Créneau bloqué 10min. Tuteur doit accepter sous 24h. Élève &lt;18 ans : validation parent obligatoire.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>RES-002</code></td><td>Validation parent</td><td><span class="role role-parent">Parent</span></td><td>Notification push/email au parent avec détails. Boutons Approuver / Refuser avec commentaire.</td><td>Obligatoire si élève &lt;18 ans. Parent a 12h sinon demande annulée. Paiement déclenché après validation.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>RES-003</code></td><td>Acceptation tuteur</td><td><span class="role role-tuteur">Tuteur</span></td><td>Dashboard tuteur : liste demandes entrantes. Accepter, Décliner (motif), Proposer autre créneau.</td><td>Taux d'acceptation impacte classement. 3 refus consécutifs = notification Admin. Réponse sous 24h.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>RES-004</code></td><td>Annulation &amp; politique</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span><span class="role role-parent">Parent</span></td><td>Annulation libre jusqu'à 24h avant. 24h-2h : remboursement 50%. Moins 2h : pas de remboursement.</td><td>Politique paramétrable Admin. Remboursement automatique Mobile Money.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>RES-005</code></td><td>Sessions récurrentes</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Planification abonnement hebdomadaire ou bi-hebdomadaire sur 1 à 3 mois.</td><td>Paiement mensuel par abonnement. Annulation préavis 7 jours. Max 3 abonnements actifs.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>RES-006</code></td><td>Rappels automatiques</td><td>Tous</td><td>Notification 24h et 1h avant la session. Canal configurable : push, email, SMS.</td><td>Cron FastAPI (APScheduler). SMS via Twilio pour zones à faible connectivité.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>RES-007</code></td><td>Session visio intégrée</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Lien visioconférence généré automatiquement (Jitsi Meet). Accessible depuis le dashboard 30min avant.</td><td>Jitsi Meet self-hosted. Enregistrement optionnel (consentement requis). Liens expirés après 2h post-session.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section page-break">
+  <h3>Module PAY — Paiement Mobile Money</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>PAY-001</code></td><td>Paiement MVola</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Initiation paiement via API MVola (Telma). L'utilisateur reçoit une notification push sur son téléphone MVola pour valider.</td><td>API MVola marchands. Montant min 1 000 Ar, max 500 000 Ar/transaction. Commission MIABO 10%.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>PAY-002</code></td><td>Paiement Orange Money</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Initiation paiement via API Orange Money Madagascar.</td><td>Mêmes plafonds que MVola. Fallback manuel si API indisponible.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>PAY-003</code></td><td>Escrow &amp; déblocage</td><td><span class="role role-tuteur">Tuteur</span><span class="role role-admin">Admin</span></td><td>Fonds retenus en escrow après paiement. Déblocage automatique 24h après confirmation de fin de session.</td><td>Auto-déblocage si aucun litige après 48h. Commission prélevée au déblocage.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>PAY-004</code></td><td>Wallet tuteur</td><td><span class="role role-tuteur">Tuteur</span></td><td>Solde disponible en temps réel. Historique transactions. Virement vers compte Mobile Money à la demande.</td><td>Virement min 5 000 Ar. Max 2 virements/semaine. KYC obligatoire avant premier virement.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>PAY-005</code></td><td>Factures automatiques</td><td>Tous</td><td>Génération PDF de facture pour chaque transaction. Accès dans l'historique. Envoi email auto.</td><td>Numérotation <code>MIABO-YYYY-NNNN</code>. Conservation 10 ans (conformité fiscale MG).</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>PAY-006</code></td><td>Gestion des litiges</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span><span class="role role-admin">Admin</span></td><td>Formulaire de litige avec preuves. Admin arbitre. Remboursement ou déblocage selon décision.</td><td>Litige ouvert sous 48h post-session. Admin répond sous 72h. Fonds gelés pendant procédure.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module CANOPE — Ressources Pédagogiques</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>CAN-001</code></td><td>Dashboard CANOPE <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td><td><span class="role role-canope">CANOPE</span></td><td>Interface principale CANOPE : photo + nom complet (haut droite), bouton "Créer un nouveau test" (milieu gauche), compteur total jeunes enregistrés (milieu centre), sessions à venir reliées au calendrier (milieu droit), tableau récapitulatif des tests en bas.</td><td>Tableau récap colonnes : Nom complet | Date &amp; heure | VAK | RIASEC | DISC | Modification. Fonctions : filtrage, tri, barre de recherche. Bouton Modification = voir/éditer infos du jeune.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>CAN-002</code></td><td>Création test — Option A (élève MIABO) <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></td><td><span class="role role-canope">CANOPE</span><span class="role role-cosp">COSP</span></td><td>Recherche et sélection d'un élève déjà inscrit sur MIABO. Infos pré-remplies depuis son profil. L'acteur complète les champs manquants : série (L/S), carrière envisagée (facultatif), commentaire final (facultatif). Déclenchement des 3 tests dans l'ordre VAK → RIASEC → DISC.</td><td>Résultats visibles pour : l'acteur CANOPE/COSP (tableau de bord), l'élève (dashboard MIABO), le parent lié (dashboard parent). Données liées au profil MIABO existant.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>CAN-003</code></td><td>Création test — Option B (jeune externe) <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></td><td><span class="role role-canope">CANOPE</span><span class="role role-cosp">COSP</span></td><td>Saisie manuelle complète pour un jeune sans compte MIABO : nom complet, date de naissance, âge, sexe, région, quartier, série (L/S), école/lycée, carrière envisagée (facultatif), commentaire final (facultatif). Déclenchement des 3 tests.</td><td>Ce jeune n'a pas de compte MIABO. Résultats visibles uniquement par CANOPE/COSP dans leur tableau de bord. Données stockées en table <code>external_young_profiles</code>. Pas d'accès élève/parent.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>CAN-004</code></td><td>Rapport consolidé VAK/RIASEC/DISC <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></td><td><span class="role role-canope">CANOPE</span><span class="role role-cosp">COSP</span></td><td>Après les 3 tests, génération d'un rapport unique : identité du jeune, résultat VAK (profil dominant + description), résultat RIASEC (code 2 lettres + champs métiers recommandés), résultat DISC (profil dominant + description), commentaire de l'acteur. Boutons : exporter PDF / imprimer.</td><td>Charte graphique SESAME appliquée sur le rapport. Un test commencé peut être sauvegardé et repris. Un test validé ne peut plus être modifié (sauf Admin). PDF généré via FastAPI/WeasyPrint.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>CAN-005</code></td><td>Contenu de formation CANOPE <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td><td><span class="role role-canope">CANOPE</span><span class="role role-cosp">COSP</span></td><td>Accès à la bibliothèque de contenu de formation (vidéos, PDF). Envoi ciblé par code d'identification SESAME d'un jeune ou d'un groupe.</td><td>Contenu stocké Supabase Storage. Envoi ciblé = notification au destinataire avec lien direct. Traçabilité des envois. Formats : PDF, MP4, MP3.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>CAN-006</code></td><td>Calendrier séances CANOPE <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></td><td><span class="role role-canope">CANOPE</span><span class="role role-cosp">COSP</span></td><td>Planification de séances : saisie du nom de l'activité, date/heure, lieu. Vue calendrier mensuelle/hebdomadaire. Synchronisation avec le widget "Sessions à venir" du dashboard.</td><td>Séances liées à la table <code>canope_sessions</code>. Rappels automatiques J-1. Possibilité de lier une séance à un test existant.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>CAN-007</code></td><td>Certification tuteurs CANOPE</td><td><span class="role role-canope">CANOPE</span><span class="role role-tuteur">Tuteur</span></td><td>Parcours de formation tuteur : modules vidéo + quiz. Badge de certification sur profil public.</td><td>4 modules. Validation quiz &gt;= 70%. Certificat PDF avec QR code. Renouvellement annuel.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>CAN-008</code></td><td>Ressources offline PWA</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Téléchargement ressources pour consultation hors ligne. Gestion cache Service Worker.</td><td>Max 200 MB en cache. Priorité aux PDF et images. Synchronisation à la reconnexion.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module COSP — Orientation Scolaire &amp; Professionnelle <span style="font-size:9pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>COSP-001</code></td><td>Héritage fonctionnalités CANOPE <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></td><td><span class="role role-cosp">COSP</span></td><td>Le rôle COSP hérite intégralement de toutes les fonctionnalités CANOPE (CAN-001 à CAN-008) : dashboard, création tests Option A/B, rapport consolidé VAK/RIASEC/DISC, contenu de formation, calendrier séances, certification tuteurs.</td><td>Même interface que CANOPE avec les fonctionnalités supplémentaires COSP en plus. Code d'identification format COSP-XXXX. Profil avec champ dédié aux dates de formations COSP (multiple).</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>COSP-002</code></td><td>Bilans d'orientation personnalisés <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td><td><span class="role role-cosp">COSP</span></td><td>Au-delà des tests standardisés, le conseiller COSP rédige un bilan d'orientation personnalisé prenant en compte les résultats VAK/RIASEC/DISC, le contexte familial, les aspirations et les contraintes du jeune.</td><td>Bilan rédigé dans un éditeur de texte enrichi intégré. Accessible à l'élève (Option A) dans son dashboard MIABO et au parent lié. Conservé 3 ans. Confidentialité RGPD.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>COSP-003</code></td><td>Recommandation tuteurs COSP <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td><td><span class="role role-cosp">COSP</span></td><td>Suite au bilan complet, le conseiller COSP recommande des tuteurs spécialisés dans les matières identifiées comme prioritaires selon le profil RIASEC et les objectifs du jeune.</td><td>Recommandation manuelle via interface COSP. Notification élève/parent avec lien direct vers profil tuteur. Max 5 tuteurs recommandés. Tuteurs doivent être validés sur MIABO.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>COSP-004</code></td><td>Rapport d'orientation PDF <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td><td><span class="role role-cosp">COSP</span><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Rapport final d'orientation comprenant : résultats des 3 tests (VAK/RIASEC/DISC), bilan personnalisé, tuteurs recommandés, filières suggérées. Accessible à l'élève et au parent. Export PDF avec charte SESAME.</td><td>Rapport partagé automatiquement à l'élève (Option A) et au parent lié après validation par le COSP. Conservé 3 ans. Génération PDF via FastAPI/WeasyPrint.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module MSG — Messagerie Temps Réel</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>MSG-001</code></td><td>Messagerie directe</td><td>Tous</td><td>Chat 1:1 entre élève/tuteur, parent/tuteur. Interface type WhatsApp migrée vers Supabase Realtime.</td><td>Conversation créée automatiquement lors d'une réservation. Messages chiffrés en transit. Archivage après 1 an.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MSG-002</code></td><td>Partage de fichiers</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Upload et partage fichiers en conversation : PDF, images, documents. Aperçu inline.</td><td>Taille max 10 MB/fichier. Formats : PDF, JPG, PNG, DOCX. Suppression après 90 jours si non épinglé.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MSG-003</code></td><td>Indicateurs de présence</td><td>Tous</td><td>Statut en ligne/hors ligne. Indicateur de frappe. Lu/non lu avec horodatage.</td><td>Supabase Realtime presence. Statut "en ligne" si activité &lt;5 min. Option "mode discret".</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MSG-004</code></td><td>Réactions aux messages</td><td>Tous</td><td>Réactions emoji sur les messages (👍❤️😊✅). Compteur visible. Retrait possible.</td><td>Max 6 types. Stockées en table <code>message_reactions</code>. Pas de notification pour les réactions.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MSG-005</code></td><td>Modération messages</td><td><span class="role role-admin">Admin</span></td><td>Signalement messages par les utilisateurs. Interface Admin de review. Suppression et blocage.</td><td>Signalement >3 fois = review automatique. Blocage = fin de toutes les conversations actives.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>MSG-006</code></td><td>Canal parent-tuteur</td><td><span class="role role-parent">Parent</span><span class="role role-tuteur">Tuteur</span></td><td>Conversation dédiée entre parent et tuteur, indépendante du chat élève-tuteur.</td><td>Créée à la première réservation validée par le parent. L'élève n'y a pas accès.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module DASH — Dashboards &amp; Progression</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>DASH-001</code></td><td>Dashboard élève</td><td><span class="role role-eleve">Élève</span></td><td>KPIs : heures, sessions, matières, prochaine session. Graphique progression. Style VARK. Tuteurs recommandés.</td><td>Données réelles Supabase. Migration depuis mock. Mise à jour post-session automatique.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>DASH-002</code></td><td>Dashboard tuteur</td><td><span class="role role-tuteur">Tuteur</span></td><td>Sessions à venir, revenus du mois, taux d'occupation, avis reçus, élèves actifs, demandes en attente.</td><td>Revenu affiché net (après commission). Taux occupation = sessions confirmées / disponibilités.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>DASH-003</code></td><td>Dashboard parent</td><td><span class="role role-parent">Parent</span></td><td>Progression de chaque enfant, sessions à venir, factures, messages non lus, réservations à valider.</td><td>Multi-enfants avec onglets. Alertes prioritaires. Vue synthétique et détaillée.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>DASH-004</code></td><td>Dashboard Admin</td><td><span class="role role-admin">Admin</span></td><td>KPIs globaux, tuteurs en validation, sessions du jour, revenus plateforme, litiges ouverts.</td><td>Supabase Realtime. Accès IP whitelist. Export CSV/Excel. Audit log de toutes les actions Admin.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>DASH-005</code></td><td>Rapport progression élève</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span><span class="role role-parent">Parent</span></td><td>Rapport mensuel PDF : sessions, objectifs atteints, évaluation tuteur, points forts, recommandations.</td><td>Généré si >= 2 sessions/mois. Tuteur valide avant envoi. Partagé automatiquement au parent si mineur.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module EVAL — Évaluations &amp; Tests</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>EVAL-001</code></td><td>Test VAK (Style d'apprentissage) <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td><td><span class="role role-canope">CANOPE</span><span class="role role-cosp">COSP</span></td><td><strong>Source : "Test VAKOG - Style d'apprentissage" SESAME.</strong> 30 affirmations (réponse Oui/Non). Répartition : V (Visuel) questions 1,7,8,9,14,16,19,24,28,30 · A (Auditif) questions 2,6,11,12,15,20,23,25,27 · K (Kinesthésique) questions 3,4,5,10,13,17,18,21,22,26,29. Scoring : compter les "Oui" par colonne → profil dominant = colonne avec score le plus élevé. Résultats affichés avec interprétation.</td><td>Administré par CANOPE/COSP pendant la session. Le jeune ne remplit pas seul. <strong>Interprétations :</strong> VISUEL = sensible aux détails, schémas, notes ; AUDITIF = apprend en écoutant, récite à voix haute ; KINESTHÉSIQUE = apprend par expérience, participe activement. Résultats persistés dans <code>assessments</code>. Charte graphique SESAME.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>EVAL-002</code></td><td>Test RIASEC (Intérêts professionnels) <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></td><td><span class="role role-canope">CANOPE</span><span class="role role-cosp">COSP</span></td><td><strong>Source : "Test RIASEC U-MAGIS".</strong> 66 activités à cocher (aime/aimerait faire). 11 activités par lettre. R=Réaliste (mécanique, plein air, animaux) · I=Investigateur (sciences, maths, recherche) · A=Artistique (art, musique, théâtre) · S=Social (aide aux autres, soins, éducation) · E=Entreprenant (leadership, gestion, vente) · C=Conventionnel (classement, ordre, bureautique). Scoring : compter les cases cochées par lettre. Résultat : code à 2 lettres (les 2 scores les plus élevés, ex: "SE").</td><td>Interprétation : afficher pour chaque lettre du code les intérêts, aptitudes, traits de personnalité et champs de métiers correspondants (basé sur grille SESAME). Résultats persistés dans <code>assessments</code>. Passé en 2ème après le VAK.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>EVAL-002b</code></td><td>Test DISC (Profil de communication) <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></td><td><span class="role role-canope">CANOPE</span><span class="role role-cosp">COSP</span></td><td><strong>Source : "PROFIL DISC" SESAME (questions sous forme d'images scannées — implémenter visuellement).</strong> 4 profils : D=Dominant (énergie, action, pragmatisme, orienté résultats, direct) · I=Influent (relations fortes, convaincant, enthousiaste, extraverti) · S=Stable (sérieux, fiable, constant, peut être réservé) · C=Consciencieux (réflexion avant action, recherche de connaissance, préfère l'écrit). Scoring : selon logique du document scanné. Résultat : profil dominant parmi D, I, S, C.</td><td>Passé en 3ème et dernier. Questions rendues visuellement fidèles au document source SESAME. Résultats persistés dans <code>assessments</code>. Combinaison avec VAK + RIASEC dans le rapport final consolidé. Charte graphique SESAME. Administré par CANOPE/COSP uniquement.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>EVAL-003</code></td><td>Notation bidirectionnelle</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Post-session : élève note tuteur (1-5 étoiles + commentaire). Tuteur évalue élève (note privée + commentaire parent).</td><td>Notation disponible sous 24h. Obligatoire avant session suivante. Avis publiés après modération (48h).</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>EVAL-004</code></td><td>Évaluation compétences élève</td><td><span class="role role-tuteur">Tuteur</span></td><td>Grille d'évaluation par matière. Tuteur renseigne après chaque session : niveau, progrès observés.</td><td>Alimentent le graphique de progression. Partagés au parent. Format JSON structuré.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>EVAL-005</code></td><td>Quiz CANOPE intégrés</td><td><span class="role role-eleve">Élève</span></td><td>Accès aux quiz attachés aux ressources CANOPE. Résultats sauvegardés. Badges de réussite.</td><td>QCM et vrai/faux. Score >= 60% = badge. Max 3 tentatives par quiz.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module NOTIF — Notifications Multi-Canal</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>NOTIF-001</code></td><td>Notifications in-app</td><td>Tous</td><td>Centre de notifications en haut de l'interface. Badge compteur. Clic redirige vers l'élément. Marquer lu.</td><td>Supabase Realtime sur table <code>notifications</code>. Conservation 30 jours.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>NOTIF-002</code></td><td>Email transactionnel</td><td>Tous</td><td>Emails pour : inscription, confirmation réservation, rappel session, paiement, annulation. Templates FR et MG.</td><td>SendGrid ou Resend. Unsubscribe conforme CAN-SPAM. Emails critiques non désactivables.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>NOTIF-003</code></td><td>Push Web (PWA)</td><td>Tous</td><td>Notifications push via Service Worker même quand l'app est fermée. Opt-in à la première connexion.</td><td>Web Push API. VAPID keys sécurisées. Silencieux entre 22h et 7h (heure Madagascar).</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>NOTIF-004</code></td><td>SMS pour zones offline</td><td>Tous</td><td>SMS de fallback pour rappels session et confirmations paiement.</td><td>Twilio/Vonage. &lt;160 caractères. Numéro Madagascar (+261). Opt-in explicite.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>NOTIF-005</code></td><td>Préférences notification</td><td>Tous</td><td>Paramétrage fin par type d'événement et par canal (push, email, SMS).</td><td>Certains types non désactivables (paiement, sécurité). Paramètres stockés en BDD.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ======== PART 3 ======== -->
+<!-- SECTION 3 -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">3</div>
+    <div><div class="section-title">Spécifications Techniques</div><div class="section-subtitle">Architecture, sécurité, PWA, i18n, API — Stack Next.js 14 · FastAPI · Supabase</div></div>
+  </div>
+
+  <h3>3.1 Architecture Globale</h3>
+  <div class="arch-box">
+    <h4>Couche Client (Next.js 14 App Router)</h4>
+    <ul>
+      <li><strong>Framework :</strong> Next.js 14 avec App Router, Server Components + Client Components</li>
+      <li><strong>Rendu :</strong> SSR pour pages SEO-sensibles (profils tuteurs, landing) · SSG pour pages statiques · CSR pour dashboards dynamiques</li>
+      <li><strong>Styling :</strong> Tailwind CSS 3.x · Shadcn/ui (remplacement UI custom v1)</li>
+      <li><strong>State Management :</strong> Zustand (messaging) + TanStack Query (server state)</li>
+      <li><strong>i18n :</strong> next-intl avec dictionnaires FR / MG</li>
+      <li><strong>PWA :</strong> next-pwa (Service Worker, manifest, cache stratégique)</li>
+    </ul>
+  </div>
+  <div class="arch-arrow">&#x21D5;</div>
+  <div class="arch-box" style="background: #ECFDF5; border-color: #059669;">
+    <h4 style="color: #059669;">Couche API (FastAPI Python)</h4>
+    <ul>
+      <li><strong>Framework :</strong> FastAPI 0.110+ · Python 3.12 · Uvicorn/Gunicorn</li>
+      <li><strong>Endpoints REST :</strong> Logique métier complexe (scoring matching, calcul escrow, analytics)</li>
+      <li><strong>WebSocket :</strong> Signaling pour la visioconférence (Jitsi Meet integration)</li>
+      <li><strong>Tâches asynchrones :</strong> APScheduler (rappels session, rapports mensuels, nettoyage escrow)</li>
+      <li><strong>Auth :</strong> Validation JWT Supabase en middleware FastAPI</li>
+      <li><strong>Paiement :</strong> Intégration MVola API + Orange Money API</li>
+    </ul>
+  </div>
+  <div class="arch-arrow">&#x21D5;</div>
+  <div class="arch-box" style="background: #F5F3FF; border-color: #7C3AED;">
+    <h4 style="color: #5B21B6;">Couche Données (Supabase)</h4>
+    <ul>
+      <li><strong>PostgreSQL 15 :</strong> 20+ tables, Row Level Security (RLS) sur toutes les tables sensibles</li>
+      <li><strong>Auth :</strong> Supabase Auth (JWT, sessions, email confirm, OAuth Google)</li>
+      <li><strong>Realtime :</strong> WebSocket Supabase pour messagerie, notifications, présence</li>
+      <li><strong>Storage :</strong> Supabase Storage pour avatars, ressources CANOPE, fichiers messages</li>
+      <li><strong>Edge Functions :</strong> Webhooks paiement Mobile Money, triggers post-session</li>
+    </ul>
+  </div>
+
+  <h3>3.2 Structure de Projet Next.js 14</h3>
+  <pre>miabo-frontend/
+&#9500;&#9472;&#9472; app/
+&#9474;   &#9500;&#9472;&#9472; [locale]/                 # i18n routing (fr / mg)
+&#9474;   &#9474;   &#9500;&#9472;&#9472; (public)/             # Landing, profils tuteurs, auth
+&#9474;   &#9474;   &#9492;&#9472;&#9472; (dashboard)/          # Dashboards proteges par middleware
+&#9474;   &#9474;       &#9500;&#9472;&#9472; eleve/
+&#9474;   &#9474;       &#9500;&#9472;&#9472; tuteur/
+&#9474;   &#9474;       &#9500;&#9472;&#9472; parent/
+&#9474;   &#9474;       &#9500;&#9472;&#9472; admin/
+&#9474;   &#9474;       &#9500;&#9472;&#9472; canope/
+&#9474;   &#9474;       &#9492;&#9472;&#9472; cosp/
+&#9500;&#9472;&#9472; components/
+&#9474;   &#9500;&#9472;&#9472; ui/           # Shadcn/ui primitives
+&#9474;   &#9500;&#9472;&#9472; dashboard/    # StatCard, ProgressChart, TutorCard
+&#9474;   &#9500;&#9472;&#9472; matching/     # SearchBar, FilterPanel, TutorGrid
+&#9474;   &#9500;&#9472;&#9472; messaging/    # ChatWindow, MessageBubble, Presence
+&#9474;   &#9492;&#9472;&#9472; payment/      # MVolaForm, OrangeMoneyForm, Wallet
+&#9500;&#9472;&#9472; lib/
+&#9474;   &#9500;&#9472;&#9472; supabase/     # Client browser + server + middleware
+&#9474;   &#9500;&#9472;&#9472; api/          # Wrappers FastAPI
+&#9474;   &#9492;&#9472;&#9472; utils/        # Formatters, validators, i18n helpers
+&#9500;&#9472;&#9472; messages/
+&#9474;   &#9500;&#9472;&#9472; fr.json
+&#9474;   &#9492;&#9472;&#9472; mg.json
+&#9500;&#9472;&#9472; stores/
+&#9474;   &#9500;&#9472;&#9472; messageStore.ts       # (migre depuis v1)
+&#9474;   &#9492;&#9472;&#9472; notificationStore.ts
+&#9500;&#9472;&#9472; middleware.ts              # Auth guard + locale detection
+&#9492;&#9472;&#9472; public/
+    &#9500;&#9472;&#9472; manifest.json            # PWA manifest
+    &#9492;&#9472;&#9472; sw.js                    # Service Worker</pre>
+
+  <h3>3.3 Sécurité &amp; Row Level Security (RLS)</h3>
+  <div class="callout callout-danger">
+    <div class="callout-title">Principe de sécurité fondamental</div>
+    Toutes les tables Supabase ont RLS activé. Aucune table n'est accessible sans politique explicite. Les données des mineurs bénéficient d'une protection renforcée. Le backend FastAPI valide le JWT Supabase sur chaque requête.
+  </div>
+  <table>
+    <thead><tr><th>Table</th><th>Politique RLS</th><th>Règle</th></tr></thead>
+    <tbody>
+      <tr><td><code>profiles</code></td><td>SELECT, UPDATE</td><td>Utilisateur voit/modifie uniquement son propre profil. Admin peut tout voir.</td></tr>
+      <tr><td><code>tutor_profiles</code></td><td>SELECT public, INSERT/UPDATE propriétaire</td><td>Profil validé = visible par tous. Non validé = tuteur + Admin/CANOPE seulement.</td></tr>
+      <tr><td><code>sessions</code></td><td>SELECT élève+tuteur+parent, INSERT élève/parent</td><td>Session visible uniquement par les participants (élève, tuteur, parent lié).</td></tr>
+      <tr><td><code>messages</code></td><td>SELECT participants, INSERT participant</td><td>Message visible uniquement par les participants de la conversation.</td></tr>
+      <tr><td><code>payments</code></td><td>SELECT payeur+tuteur+Admin</td><td>Transaction visible par le payeur, tuteur bénéficiaire et Admin.</td></tr>
+      <tr><td><code>minor_profiles</code></td><td>SELECT parent+tuteur actif+Admin</td><td>Données élève mineur visibles uniquement par le parent lié ET tuteur avec session active.</td></tr>
+      <tr><td><code>notifications</code></td><td>SELECT destinataire uniquement</td><td>Notification strictement privée.</td></tr>
+      <tr><td><code>admin_*</code></td><td>SELECT/UPDATE Admin seulement</td><td>Tables d'administration inaccessibles sans rôle Admin.</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Exemple politique RLS — table sessions</h4>
+  <pre>-- SELECT : visible par les participants directs
+CREATE POLICY "sessions_select_participants"
+ON sessions FOR SELECT
+USING (
+  auth.uid() = student_id
+  OR auth.uid() = tutor_id
+  OR auth.uid() IN (
+    SELECT parent_id FROM parent_student_links
+    WHERE student_id = sessions.student_id
+  )
+  OR EXISTS (
+    SELECT 1 FROM profiles
+    WHERE id = auth.uid() AND role = 'admin'
+  )
+);
+
+-- INSERT : eleve ou parent uniquement
+CREATE POLICY "sessions_insert_student_parent"
+ON sessions FOR INSERT
+WITH CHECK (
+  auth.uid() = student_id
+  OR auth.uid() IN (
+    SELECT parent_id FROM parent_student_links
+    WHERE student_id = sessions.student_id
+  )
+);</pre>
+
+  <h3>3.4 Progressive Web App (PWA)</h3>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Cache Strategy</div>
+      <ul>
+        <li><strong>Network First</strong> : API calls (sessions, messages)</li>
+        <li><strong>Cache First</strong> : assets statiques (images, fonts, CSS)</li>
+        <li><strong>Stale While Revalidate</strong> : ressources CANOPE</li>
+        <li><strong>Background Sync</strong> : messages envoyés offline</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Optimisations Bande Passante</div>
+      <ul>
+        <li>Images WebP + lazy loading (next/image)</li>
+        <li>Code splitting automatique (App Router)</li>
+        <li>Compression Brotli/GZIP (Nginx)</li>
+        <li>Pagination curseur (pas d'offset SQL)</li>
+        <li>Debounce 300ms sur recherche tuteurs</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>3.5 Internationalisation (FR/MG)</h3>
+  <pre>// messages/fr.json
+{
+  "nav": { "search": "Rechercher un tuteur", "login": "Connexion" },
+  "dashboard": {
+    "welcome": "Bonjour, {name} !",
+    "next_session": "Prochaine session",
+    "stats": { "hours": "Heures de tutorat", "sessions": "Sessions completees" }
+  }
+}
+
+// messages/mg.json
+{
+  "nav": { "search": "Hikaroka mpampianatra", "login": "Hiditra" },
+  "dashboard": {
+    "welcome": "Manao ahoana, {name}!",
+    "next_session": "Fihaonana manaraka",
+    "stats": { "hours": "Ora fanampiana", "sessions": "Fihaonana vita" }
+  }
+}</pre>
+
+  <h3>3.6 API FastAPI — Endpoints Clés</h3>
+  <table>
+    <thead><tr><th>Endpoint</th><th>Méthode</th><th>Description</th><th>Auth</th></tr></thead>
+    <tbody>
+      <tr><td><code>/api/v1/matching/score</code></td><td>POST</td><td>Calcul score compatibilité élève-tuteur</td><td>JWT élève</td></tr>
+      <tr><td><code>/api/v1/matching/recommendations</code></td><td>GET</td><td>Tuteurs recommandés pour l'élève connecté</td><td>JWT élève</td></tr>
+      <tr><td><code>/api/v1/sessions</code></td><td>POST</td><td>Créer une demande de réservation</td><td>JWT élève/parent</td></tr>
+      <tr><td><code>/api/v1/sessions/{id}/confirm</code></td><td>PUT</td><td>Tuteur accepte/refuse la session</td><td>JWT tuteur</td></tr>
+      <tr><td><code>/api/v1/sessions/{id}/complete</code></td><td>PUT</td><td>Marquer session terminée (débloque escrow)</td><td>JWT tuteur</td></tr>
+      <tr><td><code>/api/v1/payments/mvola/initiate</code></td><td>POST</td><td>Initier paiement MVola</td><td>JWT payeur</td></tr>
+      <tr><td><code>/api/v1/payments/mvola/callback</code></td><td>POST</td><td>Webhook confirmation MVola</td><td>HMAC signé</td></tr>
+      <tr><td><code>/api/v1/payments/orange/initiate</code></td><td>POST</td><td>Initier paiement Orange Money</td><td>JWT payeur</td></tr>
+      <tr><td><code>/api/v1/wallet/withdraw</code></td><td>POST</td><td>Demande virement tuteur</td><td>JWT tuteur KYC</td></tr>
+      <tr><td><code>/api/v1/analytics/platform</code></td><td>GET</td><td>KPIs plateforme pour Admin</td><td>JWT admin</td></tr>
+      <tr><td><code>/api/v1/canope/resources</code></td><td>GET</td><td>Liste ressources CANOPE avec filtres</td><td>Public / JWT</td></tr>
+      <tr><td><code>/api/v1/tutors/{id}/validate</code></td><td>PUT</td><td>Validation/rejet tuteur</td><td>JWT admin/canope</td></tr>
+      <tr><td><code>/api/v1/reports/monthly/{student_id}</code></td><td>GET</td><td>Génération rapport mensuel PDF</td><td>JWT tuteur/parent</td></tr>
+      <tr><td><code>/ws/presence</code></td><td>WS</td><td>Présence en ligne (messagerie)</td><td>JWT via param</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">4</div>
+    <div><div class="section-title">Schéma BDD Amélioré</div><div class="section-subtitle">PostgreSQL via Supabase — reprise + corrections + nouvelles tables (20 tables)</div></div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Corrections apportées au schéma v1</div>
+    <ul>
+      <li>Ajout rôles <code>admin</code>, <code>canope</code>, <code>cosp</code> dans l'enum <code>user_role</code></li>
+      <li>Séparation <code>profiles</code> (auth) et <code>tutor_profiles</code> / <code>student_profiles</code> (données métier)</li>
+      <li>Tables manquantes créées : <code>sessions</code>, <code>payments</code>, <code>escrow_transactions</code>, <code>availabilities</code></li>
+      <li>Correction : <code>messages.read</code> (booléen) → table <code>message_reads</code> séparée (multi-utilisateurs)</li>
+      <li>Ajout <code>ON DELETE CASCADE</code> manquants et indexes sur toutes les clés étrangères</li>
+      <li>Colonne <code>updated_at</code> + trigger automatique sur toutes les tables</li>
+    </ul>
+  </div>
+
+  <h3>4.1 Tables Utilisateurs</h3>
+  <div class="db-table">
+    <div class="db-table-header"><span>profiles <span class="db-table-desc">— Table centrale utilisateurs (liée à auth.users)</span></span><span style="font-size:8pt;opacity:0.5;">Existante · Améliorée</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references auth.users(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">role<span class="db-nn">NN</span></span><span class="db-col-type">user_role ENUM</span><span class="db-col-notes">'student' | 'tutor' | 'parent' | 'admin' | 'canope' | 'cosp'</span></div>
+    <div class="db-col"><span class="db-col-name">full_name<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Nom complet de l'utilisateur</span></div>
+    <div class="db-col"><span class="db-col-name">email<span class="db-nn">NN</span></span><span class="db-col-type">text UNIQUE</span><span class="db-col-notes">Synchronisé avec auth.users.email</span></div>
+    <div class="db-col"><span class="db-col-name">phone</span><span class="db-col-type">text</span><span class="db-col-notes">Format international +261XXXXXXXXX</span></div>
+    <div class="db-col"><span class="db-col-name">avatar_url</span><span class="db-col-type">text</span><span class="db-col-notes">URL Supabase Storage. Redimensionné à 200x200.</span></div>
+    <div class="db-col"><span class="db-col-name">preferred_language</span><span class="db-col-type">text</span><span class="db-col-notes">'fr' | 'mg' — default 'fr'</span></div>
+    <div class="db-col"><span class="db-col-name">is_active</span><span class="db-col-type">boolean</span><span class="db-col-notes">default true. false = compte suspendu</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+    <div class="db-col"><span class="db-col-name">updated_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">auto-updated via trigger</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>student_profiles <span class="db-table-desc">— Données métier élève</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle · Améliorée [MODIFIÉ]</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">profile_id<span class="db-fk">FK</span><span class="db-nn">NN</span></span><span class="db-col-type">uuid UNIQUE</span><span class="db-col-notes">references profiles(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">grade_level<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">'6eme'|'5eme'|'4eme'|'3eme'|'2nde'|'1ere'|'Tle'|'superieur'</span></div>
+    <div class="db-col"><span class="db-col-name">school_name</span><span class="db-col-type">text</span><span class="db-col-notes">Nom de l'établissement scolaire</span></div>
+    <div class="db-col"><span class="db-col-name">serie</span><span class="db-col-type">text</span><span class="db-col-notes">'L'|'S' — série baccalauréat. Renseigné par CANOPE/COSP à la création du test. [AJOUTÉ]</span></div>
+    <div class="db-col"><span class="db-col-name">date_of_birth</span><span class="db-col-type">date</span><span class="db-col-notes">Pour déterminer statut mineur (&lt;18 ans)</span></div>
+    <div class="db-col"><span class="db-col-name">vak_visual</span><span class="db-col-type">integer</span><span class="db-col-notes">Score VAK Visuel — nombre de "Oui" aux questions V [MODIFIÉ : renommé vark→vak, supprimé Read/Write]</span></div>
+    <div class="db-col"><span class="db-col-name">vak_auditory</span><span class="db-col-type">integer</span><span class="db-col-notes">Score VAK Auditif — nombre de "Oui" aux questions A [MODIFIÉ]</span></div>
+    <div class="db-col"><span class="db-col-name">vak_kinesthetic</span><span class="db-col-type">integer</span><span class="db-col-notes">Score VAK Kinesthésique — nombre de "Oui" aux questions K [MODIFIÉ]</span></div>
+    <div class="db-col"><span class="db-col-name">vak_dominant</span><span class="db-col-type">text</span><span class="db-col-notes">'V'|'A'|'K' — profil dominant calculé automatiquement. [AJOUTÉ]</span></div>
+    <div class="db-col"><span class="db-col-name">riasec_code</span><span class="db-col-type">text</span><span class="db-col-notes">Code RIASEC 2 lettres (ex: 'SE', 'RI'). Calculé automatiquement. [AJOUTÉ]</span></div>
+    <div class="db-col"><span class="db-col-name">disc_profile</span><span class="db-col-type">text</span><span class="db-col-notes">'D'|'I'|'S'|'C' — profil DISC dominant. [AJOUTÉ]</span></div>
+    <div class="db-col"><span class="db-col-name">subjects_needed</span><span class="db-col-type">text[]</span><span class="db-col-notes">Matières nécessitant soutien ['maths','francais',...]</span></div>
+    <div class="db-col"><span class="db-col-name">location</span><span class="db-col-type">text</span><span class="db-col-notes">Ville/quartier pour matching géographique</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>canope_profiles <span class="db-table-desc">— Données spécifiques acteurs CANOPE et COSP</span></span><span style="font-size:8pt;color:#2563EB;opacity:0.9;">Nouvelle [AJOUTÉ]</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">profile_id<span class="db-fk">FK</span><span class="db-nn">NN</span></span><span class="db-col-type">uuid UNIQUE</span><span class="db-col-notes">references profiles(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">sesame_code<span class="db-nn">NN</span><span class="db-idx">IDX</span></span><span class="db-col-type">text UNIQUE</span><span class="db-col-notes">Code d'identification SESAME (CANOPE-XXXX ou COSP-XXXX). Vérifié avant activation.</span></div>
+    <div class="db-col"><span class="db-col-name">first_name<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Prénom</span></div>
+    <div class="db-col"><span class="db-col-name">last_name<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Nom de famille</span></div>
+    <div class="db-col"><span class="db-col-name">date_of_birth<span class="db-nn">NN</span></span><span class="db-col-type">date</span><span class="db-col-notes">Date de naissance</span></div>
+    <div class="db-col"><span class="db-col-name">gender<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">'M'|'F'|'autre'</span></div>
+    <div class="db-col"><span class="db-col-name">city<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Ville de résidence</span></div>
+    <div class="db-col"><span class="db-col-name">region<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Région administrative Madagascar</span></div>
+    <div class="db-col"><span class="db-col-name">phone<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Numéro de téléphone professionnel</span></div>
+    <div class="db-col"><span class="db-col-name">profession<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Profession actuelle</span></div>
+    <div class="db-col"><span class="db-col-name">education_level</span><span class="db-col-type">text</span><span class="db-col-notes">Niveau d'étude / diplôme (facultatif)</span></div>
+    <div class="db-col"><span class="db-col-name">cosp_training_dates</span><span class="db-col-type">date[]</span><span class="db-col-notes">Tableau de dates de formation COSP (pour rôle COSP uniquement, multiple). NULL pour CANOPE.</span></div>
+    <div class="db-col"><span class="db-col-name">is_cosp</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false. true = hérite des fonctionnalités COSP en plus de CANOPE.</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>external_young_profiles <span class="db-table-desc">— Jeunes hors MIABO (Option B — sans compte)</span></span><span style="font-size:8pt;color:#2563EB;opacity:0.9;">Nouvelle [AJOUTÉ]</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">created_by<span class="db-fk">FK</span><span class="db-nn">NN</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references canope_profiles(id) — acteur CANOPE/COSP créateur</span></div>
+    <div class="db-col"><span class="db-col-name">full_name<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Nom complet du jeune</span></div>
+    <div class="db-col"><span class="db-col-name">date_of_birth<span class="db-nn">NN</span></span><span class="db-col-type">date</span><span class="db-col-notes">Date de naissance</span></div>
+    <div class="db-col"><span class="db-col-name">gender<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">'M'|'F'|'autre'</span></div>
+    <div class="db-col"><span class="db-col-name">region<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Région du jeune</span></div>
+    <div class="db-col"><span class="db-col-name">quartier</span><span class="db-col-type">text</span><span class="db-col-notes">Quartier / localité</span></div>
+    <div class="db-col"><span class="db-col-name">serie</span><span class="db-col-type">text</span><span class="db-col-notes">'L'|'S'</span></div>
+    <div class="db-col"><span class="db-col-name">school_name</span><span class="db-col-type">text</span><span class="db-col-notes">Nom de l'école / lycée</span></div>
+    <div class="db-col"><span class="db-col-name">career_interest</span><span class="db-col-type">text</span><span class="db-col-notes">Carrière envisagée (facultatif)</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>assessments <span class="db-table-desc">— Résultats des tests VAK/RIASEC/DISC</span></span><span style="font-size:8pt;color:#2563EB;opacity:0.9;">Nouvelle [AJOUTÉ]</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">administered_by<span class="db-fk">FK</span><span class="db-nn">NN</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references canope_profiles(id) — acteur CANOPE/COSP</span></div>
+    <div class="db-col"><span class="db-col-name">student_profile_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references student_profiles(id) — NULL si jeune externe (Option B)</span></div>
+    <div class="db-col"><span class="db-col-name">external_young_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references external_young_profiles(id) — NULL si élève MIABO (Option A)</span></div>
+    <div class="db-col"><span class="db-col-name">serie</span><span class="db-col-type">text</span><span class="db-col-notes">'L'|'S'</span></div>
+    <div class="db-col"><span class="db-col-name">career_interest</span><span class="db-col-type">text</span><span class="db-col-notes">Carrière envisagée (facultatif)</span></div>
+    <div class="db-col"><span class="db-col-name">vak_v_score</span><span class="db-col-type">integer</span><span class="db-col-notes">Nombre de "Oui" aux questions Visuel (max 10)</span></div>
+    <div class="db-col"><span class="db-col-name">vak_a_score</span><span class="db-col-type">integer</span><span class="db-col-notes">Nombre de "Oui" aux questions Auditif (max 9)</span></div>
+    <div class="db-col"><span class="db-col-name">vak_k_score</span><span class="db-col-type">integer</span><span class="db-col-notes">Nombre de "Oui" aux questions Kinesthésique (max 11)</span></div>
+    <div class="db-col"><span class="db-col-name">vak_dominant</span><span class="db-col-type">text</span><span class="db-col-notes">'V'|'A'|'K' — profil VAK dominant calculé</span></div>
+    <div class="db-col"><span class="db-col-name">riasec_scores</span><span class="db-col-type">jsonb</span><span class="db-col-notes">{"R":4,"I":7,"A":2,"S":9,"E":5,"C":3} — scores bruts par lettre</span></div>
+    <div class="db-col"><span class="db-col-name">riasec_code</span><span class="db-col-type">text</span><span class="db-col-notes">Code 2 lettres ex: 'SI', 'RI', 'SE' — calculé automatiquement</span></div>
+    <div class="db-col"><span class="db-col-name">disc_scores</span><span class="db-col-type">jsonb</span><span class="db-col-notes">{"D":12,"I":18,"S":9,"C":15} — scores bruts DISC</span></div>
+    <div class="db-col"><span class="db-col-name">disc_dominant</span><span class="db-col-type">text</span><span class="db-col-notes">'D'|'I'|'S'|'C' — profil dominant calculé</span></div>
+    <div class="db-col"><span class="db-col-name">actor_comment</span><span class="db-col-type">text</span><span class="db-col-notes">Commentaire final de l'acteur CANOPE/COSP (facultatif)</span></div>
+    <div class="db-col"><span class="db-col-name">status</span><span class="db-col-type">text</span><span class="db-col-notes">'draft'|'in_progress'|'validated' — Un test validé ne peut plus être modifié (sauf Admin).</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+    <div class="db-col"><span class="db-col-name">validated_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">NULL si pas encore validé</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>tutor_profiles <span class="db-table-desc">— Données métier tuteur</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">profile_id<span class="db-fk">FK</span><span class="db-nn">NN</span></span><span class="db-col-type">uuid UNIQUE</span><span class="db-col-notes">references profiles(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">validation_status</span><span class="db-col-type">tutor_status ENUM</span><span class="db-col-notes">'pending'|'validated'|'rejected'|'suspended' — default 'pending'</span></div>
+    <div class="db-col"><span class="db-col-name">bio</span><span class="db-col-type">text</span><span class="db-col-notes">Présentation du tuteur (max 1000 caractères)</span></div>
+    <div class="db-col"><span class="db-col-name">subjects</span><span class="db-col-type">text[]</span><span class="db-col-notes">Matières enseignées</span></div>
+    <div class="db-col"><span class="db-col-name">grade_levels</span><span class="db-col-type">text[]</span><span class="db-col-notes">Niveaux enseignés</span></div>
+    <div class="db-col"><span class="db-col-name">hourly_rate<span class="db-nn">NN</span></span><span class="db-col-type">integer</span><span class="db-col-notes">Tarif en Ariary. Min 2000.</span></div>
+    <div class="db-col"><span class="db-col-name">teaching_methods</span><span class="db-col-type">text[]</span><span class="db-col-notes">Méthodes pédagogiques ['visuel','pratique','magistral',...]</span></div>
+    <div class="db-col"><span class="db-col-name">location</span><span class="db-col-type">text</span><span class="db-col-notes">Ville/quartier (Antananarivo, Toamasina, etc.)</span></div>
+    <div class="db-col"><span class="db-col-name">avg_rating</span><span class="db-col-type">numeric(3,2)</span><span class="db-col-notes">Note moyenne calculée. Mise à jour via trigger.</span></div>
+    <div class="db-col"><span class="db-col-name">total_sessions</span><span class="db-col-type">integer</span><span class="db-col-notes">Compteur sessions confirmées. default 0.</span></div>
+    <div class="db-col"><span class="db-col-name">canope_certified</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false. Mis à jour par CANOPE après formation.</span></div>
+    <div class="db-col"><span class="db-col-name">kyc_verified</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false. Requis pour virements wallet.</span></div>
+    <div class="db-col"><span class="db-col-name">wallet_balance</span><span class="db-col-type">integer</span><span class="db-col-notes">Solde en Ariary. default 0.</span></div>
+    <div class="db-col"><span class="db-col-name">slug<span class="db-idx">IDX</span></span><span class="db-col-type">text UNIQUE</span><span class="db-col-notes">URL-friendly : "nom-prenom-123". Généré automatiquement.</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>parent_student_links <span class="db-table-desc">— Lien parent-enfant</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">parent_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id) — rôle 'parent'</span></div>
+    <div class="db-col"><span class="db-col-name">student_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id) — PK composite (parent_id, student_id)</span></div>
+    <div class="db-col"><span class="db-col-name">relationship</span><span class="db-col-type">text</span><span class="db-col-notes">'parent'|'tuteur_legal'|'autre'</span></div>
+    <div class="db-col"><span class="db-col-name">verified</span><span class="db-col-type">boolean</span><span class="db-col-notes">Lien vérifié par email. default false.</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+
+  <h3>4.2 Tables Sessions &amp; Réservations</h3>
+  <div class="db-table">
+    <div class="db-table-header"><span>sessions <span class="db-table-desc">— Réservations et sessions de tutorat</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle · Critique</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">student_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id)</span></div>
+    <div class="db-col"><span class="db-col-name">tutor_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id)</span></div>
+    <div class="db-col"><span class="db-col-name">status</span><span class="db-col-type">session_status ENUM</span><span class="db-col-notes">'pending_parent'|'pending_tutor'|'confirmed'|'in_progress'|'completed'|'cancelled'|'disputed'</span></div>
+    <div class="db-col"><span class="db-col-name">subject<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Matière de la session</span></div>
+    <div class="db-col"><span class="db-col-name">mode</span><span class="db-col-type">text</span><span class="db-col-notes">'in_person'|'online' — default 'online'</span></div>
+    <div class="db-col"><span class="db-col-name">scheduled_at<span class="db-nn">NN</span><span class="db-idx">IDX</span></span><span class="db-col-type">timestamptz</span><span class="db-col-notes">Date/heure de début planifiée</span></div>
+    <div class="db-col"><span class="db-col-name">duration_minutes<span class="db-nn">NN</span></span><span class="db-col-type">integer</span><span class="db-col-notes">CHECK (IN (60, 90, 120, 180))</span></div>
+    <div class="db-col"><span class="db-col-name">amount_ariary<span class="db-nn">NN</span></span><span class="db-col-type">integer</span><span class="db-col-notes">Montant = tarif_horaire × (durée/60)</span></div>
+    <div class="db-col"><span class="db-col-name">student_objectives</span><span class="db-col-type">text</span><span class="db-col-notes">Objectifs définis par l'élève à la réservation</span></div>
+    <div class="db-col"><span class="db-col-name">tutor_notes</span><span class="db-col-type">text</span><span class="db-col-notes">Notes du tuteur (privées pour le parent)</span></div>
+    <div class="db-col"><span class="db-col-name">meeting_url</span><span class="db-col-type">text</span><span class="db-col-notes">URL Jitsi Meet générée à la confirmation</span></div>
+    <div class="db-col"><span class="db-col-name">cancelled_by</span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id). NULL si non annulée.</span></div>
+    <div class="db-col"><span class="db-col-name">parent_approved_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">Horodatage validation parent. NULL si non requis.</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+    <div class="db-col"><span class="db-col-name">updated_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">auto-updated via trigger</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>availabilities <span class="db-table-desc">— Disponibilités tuteur</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">tutor_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references tutor_profiles(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">day_of_week</span><span class="db-col-type">integer</span><span class="db-col-notes">0=Dimanche ... 6=Samedi</span></div>
+    <div class="db-col"><span class="db-col-name">start_time<span class="db-nn">NN</span></span><span class="db-col-type">time</span><span class="db-col-notes">Heure début du créneau</span></div>
+    <div class="db-col"><span class="db-col-name">end_time<span class="db-nn">NN</span></span><span class="db-col-type">time</span><span class="db-col-notes">Heure fin. CHECK (end_time &gt; start_time)</span></div>
+    <div class="db-col"><span class="db-col-name">is_available</span><span class="db-col-type">boolean</span><span class="db-col-notes">default true. false = bloqué (vacances)</span></div>
+    <div class="db-col"><span class="db-col-name">specific_date</span><span class="db-col-type">date</span><span class="db-col-notes">NULL = récurrent. Date précise = exception ponctuelle.</span></div>
+  </div>
+
+  <h3>4.3 Tables Paiement</h3>
+  <div class="db-table">
+    <div class="db-table-header"><span>payments <span class="db-table-desc">— Transactions de paiement</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle · Critique</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">session_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references sessions(id)</span></div>
+    <div class="db-col"><span class="db-col-name">payer_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id)</span></div>
+    <div class="db-col"><span class="db-col-name">amount_ariary<span class="db-nn">NN</span></span><span class="db-col-type">integer</span><span class="db-col-notes">Montant total en Ariary</span></div>
+    <div class="db-col"><span class="db-col-name">commission_ariary</span><span class="db-col-type">integer</span><span class="db-col-notes">Commission MIABO (10%). Calculé automatiquement.</span></div>
+    <div class="db-col"><span class="db-col-name">payment_method<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">'mvola'|'orange_money'|'wallet'</span></div>
+    <div class="db-col"><span class="db-col-name">status</span><span class="db-col-type">payment_status ENUM</span><span class="db-col-notes">'pending'|'processing'|'completed'|'failed'|'refunded'</span></div>
+    <div class="db-col"><span class="db-col-name">external_ref</span><span class="db-col-type">text</span><span class="db-col-notes">Référence transaction MVola/Orange Money</span></div>
+    <div class="db-col"><span class="db-col-name">phone_number<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Numéro Mobile Money utilisé</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+    <div class="db-col"><span class="db-col-name">completed_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">Horodatage confirmation finale</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>escrow_transactions <span class="db-table-desc">— Fonds en séquestre</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">payment_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid UNIQUE</span><span class="db-col-notes">references payments(id)</span></div>
+    <div class="db-col"><span class="db-col-name">tutor_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">Bénéficiaire</span></div>
+    <div class="db-col"><span class="db-col-name">amount_ariary</span><span class="db-col-type">integer</span><span class="db-col-notes">Montant net (total - commission)</span></div>
+    <div class="db-col"><span class="db-col-name">status</span><span class="db-col-type">text</span><span class="db-col-notes">'held'|'released'|'disputed'|'refunded'</span></div>
+    <div class="db-col"><span class="db-col-name">release_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">Date déblocage automatique (session_end + 24h)</span></div>
+    <div class="db-col"><span class="db-col-name">released_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">NULL si pas encore débloqué</span></div>
+  </div>
+
+  <h3>4.4 Tables Messagerie, Évaluations &amp; Notifications</h3>
+  <div class="db-table">
+    <div class="db-table-header"><span>conversations <span class="db-table-desc">— Fils de discussion</span></span><span style="font-size:8pt;opacity:0.5;">Existante · Améliorée</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">type</span><span class="db-col-type">text</span><span class="db-col-notes">'student_tutor'|'parent_tutor' — default 'student_tutor'</span></div>
+    <div class="db-col"><span class="db-col-name">session_id</span><span class="db-col-type">uuid</span><span class="db-col-notes">references sessions(id) — optionnel</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+    <div class="db-col"><span class="db-col-name">updated_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">Mis à jour à chaque nouveau message (trigger)</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>messages <span class="db-table-desc">— Messages individuels</span></span><span style="font-size:8pt;opacity:0.5;">Existante · Améliorée</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">conversation_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references conversations(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">sender_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references auth.users(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">content<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Contenu texte. CHECK char_length &gt; 0.</span></div>
+    <div class="db-col"><span class="db-col-name">message_type</span><span class="db-col-type">text</span><span class="db-col-notes">'text'|'image'|'file'|'system' — default 'text'</span></div>
+    <div class="db-col"><span class="db-col-name">file_url</span><span class="db-col-type">text</span><span class="db-col-notes">URL Supabase Storage si type=image/file</span></div>
+    <div class="db-col"><span class="db-col-name">is_deleted</span><span class="db-col-type">boolean</span><span class="db-col-notes">Soft delete. default false.</span></div>
+    <div class="db-col"><span class="db-col-name">created_at<span class="db-idx">IDX</span></span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>message_reads <span class="db-table-desc">— Accusés de lecture (correction v1 : remplace messages.read booléen)</span></span><span style="font-size:8pt;opacity:0.5;">Correction</span></div>
+    <div class="db-col"><span class="db-col-name">message_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references messages(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">user_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">PK composite (message_id, user_id)</span></div>
+    <div class="db-col"><span class="db-col-name">read_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>message_reactions <span class="db-table-desc">— Réactions emoji</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">message_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references messages(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">user_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">PK composite (message_id, user_id, emoji)</span></div>
+    <div class="db-col"><span class="db-col-name">emoji<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">CHECK (emoji IN ('👍','❤️','😊','✅','😮','😢'))</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>reviews <span class="db-table-desc">— Avis post-session</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">session_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid UNIQUE</span><span class="db-col-notes">1 avis par session</span></div>
+    <div class="db-col"><span class="db-col-name">reviewer_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">Auteur de l'avis</span></div>
+    <div class="db-col"><span class="db-col-name">reviewee_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">Cible de l'avis (tuteur ou élève)</span></div>
+    <div class="db-col"><span class="db-col-name">rating<span class="db-nn">NN</span></span><span class="db-col-type">integer</span><span class="db-col-notes">CHECK (rating BETWEEN 1 AND 5)</span></div>
+    <div class="db-col"><span class="db-col-name">comment</span><span class="db-col-type">text</span><span class="db-col-notes">Max 500 caractères</span></div>
+    <div class="db-col"><span class="db-col-name">is_public</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false. Modéré avant publication.</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>notifications <span class="db-table-desc">— Notifications in-app</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">user_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">Destinataire</span></div>
+    <div class="db-col"><span class="db-col-name">type<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">'session_request'|'payment'|'message'|'review'|'system'</span></div>
+    <div class="db-col"><span class="db-col-name">title<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Titre court (max 100 chars)</span></div>
+    <div class="db-col"><span class="db-col-name">body</span><span class="db-col-type">text</span><span class="db-col-notes">Description détaillée</span></div>
+    <div class="db-col"><span class="db-col-name">link</span><span class="db-col-type">text</span><span class="db-col-notes">URL relative pour redirection</span></div>
+    <div class="db-col"><span class="db-col-name">is_read</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>resources <span class="db-table-desc">— Ressources CANOPE</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">publisher_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id) — rôle canope</span></div>
+    <div class="db-col"><span class="db-col-name">title_fr<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Titre en français</span></div>
+    <div class="db-col"><span class="db-col-name">title_mg</span><span class="db-col-type">text</span><span class="db-col-notes">Titre en malgache</span></div>
+    <div class="db-col"><span class="db-col-name">type</span><span class="db-col-type">text</span><span class="db-col-notes">'pdf'|'video'|'audio'|'quiz'|'exercise'</span></div>
+    <div class="db-col"><span class="db-col-name">subject<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Matière</span></div>
+    <div class="db-col"><span class="db-col-name">grade_level</span><span class="db-col-type">text</span><span class="db-col-notes">Niveau cible</span></div>
+    <div class="db-col"><span class="db-col-name">file_url</span><span class="db-col-type">text</span><span class="db-col-notes">Supabase Storage URL</span></div>
+    <div class="db-col"><span class="db-col-name">is_premium</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false</span></div>
+    <div class="db-col"><span class="db-col-name">is_published</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+</div>
+
+<!-- ======== PART 4 ======== -->
+<!-- SECTION 5 : USER FLOWS -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">5</div>
+    <div><div class="section-title">User Flows Clés</div><div class="section-subtitle">5 scénarios principaux — parcours complets de bout en bout</div></div>
+  </div>
+
+  <h3>Flow 1 — Élève trouve et réserve un tuteur (avec validation parent)</h3>
+  <div class="callout callout-info"><div class="callout-title">Acteurs</div><span class="role role-eleve">Élève (mineur)</span> · <span class="role role-parent">Parent</span> · <span class="role role-tuteur">Tuteur</span> · Système MIABO</div>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-content"><div class="flow-actor">Élève</div><div class="flow-title">Complétion du profil &amp; test VARK</div><div class="flow-desc">L'élève complète son profil (classe, matières, localisation) et passe le test VARK. Les scores (V:70, A:20, R:10, K:0) sont sauvegardés et activent le matching personnalisé.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-content"><div class="flow-actor">Élève</div><div class="flow-title">Recherche &amp; filtrage de tuteurs</div><div class="flow-desc">Recherche "mathématiques 3ème". Filtre : disponible samedi matin, &lt;15 000 Ar/h, note ≥ 4/5. Le système affiche 6 tuteurs triés par score de compatibilité VARK.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-content"><div class="flow-actor">Élève</div><div class="flow-title">Consultation profil tuteur &amp; sélection créneau</div><div class="flow-desc">Visite profil de "Rakoto Jean" (93% compatibilité). Lecture des avis, certifications CANOPE. Sélection créneau : samedi 09h-11h. Créneau verrouillé 10 minutes.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-content"><div class="flow-actor">Système</div><div class="flow-title">Détection mineur → demande validation parent</div><div class="flow-desc">Date de naissance &lt;18 ans détectée. Statut session → <code>pending_parent</code>. Notification push + email envoyés au parent lié.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">5</div><div class="flow-content green"><div class="flow-actor">Parent</div><div class="flow-title">Validation &amp; paiement MVola</div><div class="flow-desc">Parent reçoit notification. Clique "Approuver". Redirigé vers formulaire de paiement MVola. Saisit son numéro (+261 34 XX XX XX). Valide sur son téléphone. Paiement confirmé par webhook.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">6</div><div class="flow-content orange"><div class="flow-actor">Tuteur</div><div class="flow-title">Acceptation de la session</div><div class="flow-desc">Tuteur reçoit notification. Consulte le profil élève. Clique "Accepter". Statut → <code>confirmed</code>. URL Jitsi Meet générée et envoyée aux deux parties.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">7</div><div class="flow-content"><div class="flow-actor">Système</div><div class="flow-title">Rappels automatiques</div><div class="flow-desc">J-1 et H-1 : push + email à l'élève, au parent et au tuteur avec lien direct vers la salle de visio.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">8</div><div class="flow-content green"><div class="flow-actor">Tuteur + Élève</div><div class="flow-title">Session &amp; complétion</div><div class="flow-desc">Session via Jitsi Meet. Tuteur clique "Terminer" → statut <code>completed</code>. Escrow programmé pour déblocage dans 24h. Les deux parties invitées à noter la session.</div></div></div>
+
+  <h3>Flow 2 — Tuteur s'inscrit et obtient sa certification CANOPE</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-content"><div class="flow-actor">Tuteur</div><div class="flow-title">Inscription et complétion du profil</div><div class="flow-desc">Sélection rôle "Tuteur". Complétion : bio, matières (Maths, Physique), niveaux (3ème, Lycée), tarif (12 000 Ar/h), localisation (Antananarivo-Ampefiloha), photo.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-content"><div class="flow-actor">Tuteur</div><div class="flow-title">Upload des justificatifs</div><div class="flow-desc">Upload diplôme (PDF), CNI (image), extrait casier judiciaire (PDF). Stockés Supabase Storage, visibles Admin/CANOPE uniquement.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-content orange"><div class="flow-actor">Admin / CANOPE</div><div class="flow-title">Vérification &amp; validation (délai max 72h)</div><div class="flow-desc">Interface de review : documents, profil, vérification identité. Clic "Valider". Email automatique au tuteur. Statut → <code>validated</code>.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-content"><div class="flow-actor">Tuteur</div><div class="flow-title">Parcours de formation CANOPE (4 modules)</div><div class="flow-desc">4 modules : Introduction MIABO, Méthodes pédagogiques, Évaluation des élèves, Communication parents. Vidéos + quiz (score ≥ 70% requis).</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">5</div><div class="flow-content green"><div class="flow-actor">Système / CANOPE</div><div class="flow-title">Certification &amp; badge profil</div><div class="flow-desc">100% modules validés → certificat PDF généré (QR code vérifiable), badge "Certifié CANOPE" sur profil public, boost de classement dans les résultats de recherche.</div></div></div>
+</div>
+
+<div class="section page-break">
+  <h3>Flow 3 — Parent suit la progression de son enfant</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-content"><div class="flow-actor">Parent</div><div class="flow-title">Accès dashboard parent</div><div class="flow-desc">Connexion, dashboard multi-enfants avec onglets. KPIs : 8h tutorat ce mois, 3 sessions à venir, 1 facture en attente.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-content"><div class="flow-actor">Parent</div><div class="flow-title">Consultation progression par matière</div><div class="flow-desc">Clic sur "Rabe Feno" → graphique progression Maths sur 3 mois (50% → 72%). Détail sessions : dates, durées, notes tuteur.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-content green"><div class="flow-actor">Parent</div><div class="flow-title">Contact direct du tuteur</div><div class="flow-desc">Clic "Contacter Rakoto Jean" → canal messagerie parent-tuteur dédié (séparé du chat élève). Échange sur les objectifs du mois.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-content"><div class="flow-actor">Système</div><div class="flow-title">Réception rapport mensuel automatique</div><div class="flow-desc">Fin du mois : rapport PDF généré, validé par le tuteur, envoyé par email au parent. Accessible aussi dans l'espace "Documents".</div></div></div>
+
+  <h3>Flow 4 — Admin modère un tuteur et gère un litige</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-content red"><div class="flow-actor">Élève</div><div class="flow-title">Signalement d'un problème post-session</div><div class="flow-desc">Élève ouvre un litige : "Le tuteur ne s'est pas connecté". Formulaire : motif, description, captures d'écran optionnelles.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-content"><div class="flow-actor">Système</div><div class="flow-title">Gel des fonds escrow</div><div class="flow-desc">Statut escrow → <code>disputed</code>. Fonds bloqués. Notification au tuteur et à l'Admin. Délai réponse tuteur : 48h.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-content orange"><div class="flow-actor">Admin</div><div class="flow-title">Review du litige</div><div class="flow-desc">Interface Admin : timeline de la session (logs connexion Jitsi), échanges messages. Admin décide : remboursement total élève (tuteur absent confirmé).</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-content green"><div class="flow-actor">Système</div><div class="flow-title">Remboursement &amp; sanctions</div><div class="flow-desc">Remboursement déclenché vers le payeur (MVola/Orange Money, délai 24h). Alerte au tuteur : 1ère absence non justifiée. Récidive : suspension 30 jours.</div></div></div>
+
+  <h3>Flow 5 — Élève obtient un bilan d'orientation COSP</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div class="flow-content"><div class="flow-actor">Élève (Terminale)</div><div class="flow-title">Découverte du module COSP</div><div class="flow-desc">Depuis le dashboard, bannière "Orientation : Prépare ton avenir" → espace COSP. Présentation du service, calendrier conseillers.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">2</div><div class="flow-content"><div class="flow-actor">Élève</div><div class="flow-title">Test d'orientation RIASEC</div><div class="flow-desc">Questionnaire 30 questions. Résultats : profil "Social-Investigatif". Filières suggérées : Médecine, Sciences de l'Éducation, Psychologie.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">3</div><div class="flow-content"><div class="flow-actor">Élève + Parent</div><div class="flow-title">Réservation bilan avec conseiller</div><div class="flow-desc">Sélection conseiller COSP. Créneau : mercredi 14h-15h (visio). Validation parent. Gratuit pour élèves de Terminale.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">4</div><div class="flow-content green"><div class="flow-actor">Conseiller COSP</div><div class="flow-title">Bilan + recommandations tuteurs</div><div class="flow-desc">Session visio 45 minutes. Rapport rédigé. Recommande 2 tuteurs spécialisés : SVT + Philosophie. Liens directs vers leurs profils.</div></div></div>
+  <div class="flow-arrow">&#x2193;</div>
+  <div class="flow-step"><div class="flow-num">5</div><div class="flow-content"><div class="flow-actor">Système</div><div class="flow-title">Rapport &amp; suivi</div><div class="flow-desc">Rapport PDF envoyé à l'élève et au parent. Tuteurs recommandés apparaissent en haut du dashboard élève. Suivi trimestriel proposé.</div></div></div>
+</div>
+
+<!-- SECTION 6 : UX -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">6</div>
+    <div><div class="section-title">Corrections UX &amp; Écrans Manquants</div><div class="section-subtitle">Audit des maquettes v1 — problèmes identifiés et solutions v2</div></div>
+  </div>
+
+  <h3>6.1 Corrections des Écrans Existants (v1 → v2)</h3>
+  <div class="ux-card">
+    <div class="ux-screen">🔐 LoginPage — Connexion</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>Boutons démo exposent des identifiants fictifs à l'interface. Pas de feedback visuel sur les erreurs. Pas d'option "Continuer avec Google". Formulaire non accessible (labels manquants).</div>
+    <div class="ux-solution"><div class="ux-solution-label">Solution v2</div>Supprimer les boutons démo en production. Erreurs spécifiques ("Email invalide", "Mot de passe incorrect"). Bouton OAuth Google. Labels accessibles (aria-label). Indicateur de force du mot de passe à l'inscription.</div>
+  </div>
+  <div class="ux-card">
+    <div class="ux-screen">🔍 MatchingPage — Recherche de tuteurs</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>4 tuteurs hardcodés sans pagination. Filtres ne persistent pas après navigation. Pas de message "Aucun résultat". Score de compatibilité affiché sans explication. Sur mobile, cartes tuteurs mal lisibles.</div>
+    <div class="ux-solution"><div class="ux-solution-label">Solution v2</div>Pagination curseur (12 tuteurs/page). Filtres persistants en URL. Empty state explicite avec suggestions. Tooltip "Comment ce score est calculé". Cartes mobile full-width. Skeleton loader pendant chargement.</div>
+  </div>
+  <div class="ux-card">
+    <div class="ux-screen">📅 Réservation — Formulaire de session (manquant en v1)</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>Le flow de réservation est entièrement absent. Après le clic "Réserver" sur la carte tuteur, aucune page n'existe.</div>
+    <div class="ux-solution"><div class="ux-solution-label">Solution v2 — Écran à créer</div><strong>Étape 1</strong> : Sélection créneau (calendrier visuel). <strong>Étape 2</strong> : Détails session (matière, durée, mode, objectif). <strong>Étape 3</strong> : Récapitulatif + paiement. <strong>Étape 4</strong> : Confirmation avec numéro de réservation. Progress stepper en haut.</div>
+  </div>
+  <div class="ux-card">
+    <div class="ux-screen">💬 MessagingPage — Messagerie</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>Données 100% mock. Sur mobile, panneau latéral et zone de chat se superposent. Pas de gestion des messages longs. Réactions déclenchent un re-render complet. Pas d'indication "Message envoyé/lu".</div>
+    <div class="ux-solution"><div class="ux-solution-label">Solution v2</div>Connexion Supabase Realtime. Layout mobile avec tabs (Conversations / Chat). Scroll infini. Optimistic updates. Statut double tick WhatsApp-style.</div>
+  </div>
+  <div class="ux-card">
+    <div class="ux-screen">📊 StudentDashboard — Dashboard élève</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>Toutes les données hardcodées. Graphique affiche Maths/Français uniquement. Tuteur recommandé fixe. Sur mobile, StatCards en grille 4 colonnes (illisible).</div>
+    <div class="ux-solution"><div class="ux-solution-label">Solution v2</div>Données Supabase temps réel. Graphique dynamique avec sélection de matières. Recommandations basées sur profil VARK réel. StatCards en grille 2x2 sur mobile. Section "Prochaine session" avec compte à rebours.</div>
+  </div>
+  <div class="ux-card">
+    <div class="ux-screen">💳 Paiement — Écran manquant en v1</div>
+    <div class="ux-problem"><div class="ux-problem-label">Problèmes v1</div>L'onglet "Paiement" dans les paramètres est un placeholder vide. Aucun flow de paiement n'existe.</div>
+    <div class="ux-solution"><div class="ux-solution-label">Écrans à créer en v2</div><strong>PaymentPage</strong> : Choix MVola/Orange Money, saisie numéro, confirmation push. <strong>WalletPage (tuteur)</strong> : Solde, historique, bouton "Virer mes gains". <strong>HistoryPage (parent)</strong> : Factures, téléchargement PDF.</div>
+  </div>
+
+  <h3>6.2 Nouveaux Écrans Requis pour v2</h3>
+  <table>
+    <thead><tr><th>Écran</th><th>Rôle(s)</th><th>Description</th><th>Priorité</th></tr></thead>
+    <tbody>
+      <tr><td>Profil tuteur public</td><td>Tous (public)</td><td>Page SEO avec avis, certifications, calendrier, bouton réservation</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td>Réservation step-by-step</td><td>Élève / Parent</td><td>Wizard 4 étapes : créneau → détails → paiement → confirmation</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td>Dashboard Admin back-office</td><td>Admin</td><td>KPIs globaux, file modération tuteurs, gestion litiges, banissement</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td>Espace CANOPE</td><td>CANOPE</td><td>Upload ressources, gestion tuteurs à valider, stats utilisation</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td>Wallet tuteur</td><td>Tuteur</td><td>Solde, historique transactions, demande virement Mobile Money</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td>Paramètres notifications</td><td>Tous</td><td>Granularité par type d'événement et par canal</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td>Espace COSP</td><td>COSP</td><td>Calendrier bilans, gestion rapports, recommandation tuteurs</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td>Module orientation RIASEC</td><td>Élève</td><td>Questionnaire, résultats, filières suggérées, lien vers COSP</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td>Rapport mensuel PDF preview</td><td>Tuteur / Parent</td><td>Interface création/validation du rapport mensuel élève</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td>Page onboarding interactive</td><td>Nouveau utilisateur</td><td>Wizard de bienvenue 3 steps par rôle</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 7 : PLANNING -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">7</div>
+    <div><div class="section-title">Planning MoSCoW &amp; Sprints MVP</div><div class="section-subtitle">MVP 3 mois en 6 sprints de 2 semaines — priorisé MoSCoW</div></div>
+  </div>
+
+  <h3>7.1 Priorisation MoSCoW</h3>
+  <div class="moscow must"><div class="moscow-header">M — Must Have (bloquant pour le MVP)</div><div class="moscow-body"><div class="moscow-items">
+    <div class="moscow-item">Inscription multi-rôle (élève, tuteur, parent)</div>
+    <div class="moscow-item">Authentification email + JWT Supabase</div>
+    <div class="moscow-item">Profil élève avec test VARK</div>
+    <div class="moscow-item">Profil tuteur avec disponibilités</div>
+    <div class="moscow-item">Validation tuteur par Admin/CANOPE</div>
+    <div class="moscow-item">Recherche &amp; filtres tuteurs</div>
+    <div class="moscow-item">Score de compatibilité VARK</div>
+    <div class="moscow-item">Réservation de session (wizard 4 étapes)</div>
+    <div class="moscow-item">Validation réservation par le parent</div>
+    <div class="moscow-item">Paiement MVola</div>
+    <div class="moscow-item">Paiement Orange Money</div>
+    <div class="moscow-item">Système d'escrow</div>
+    <div class="moscow-item">Messagerie temps réel (Supabase Realtime)</div>
+    <div class="moscow-item">Canal parent-tuteur dédié</div>
+    <div class="moscow-item">Dashboard élève (données réelles)</div>
+    <div class="moscow-item">Dashboard tuteur</div>
+    <div class="moscow-item">Dashboard parent (multi-enfants)</div>
+    <div class="moscow-item">Dashboard Admin back-office</div>
+    <div class="moscow-item">Notifications in-app + email transactionnel</div>
+    <div class="moscow-item">Push Web (PWA)</div>
+    <div class="moscow-item">Rappels de session automatiques</div>
+    <div class="moscow-item">Notation bidirectionnelle post-session</div>
+    <div class="moscow-item">Bibliothèque ressources CANOPE</div>
+    <div class="moscow-item">Formation tuteur CANOPE (4 modules)</div>
+    <div class="moscow-item">RLS Supabase sur toutes les tables</div>
+    <div class="moscow-item">i18n FR/MG (next-intl)</div>
+    <div class="moscow-item">Mobile-first responsive</div>
+  </div></div></div>
+
+  <div class="moscow should"><div class="moscow-header">S — Should Have (forte valeur, post-MVP immédiat)</div><div class="moscow-body"><div class="moscow-items">
+    <div class="moscow-item">SSO Google (OAuth)</div>
+    <div class="moscow-item">2FA par SMS pour parents</div>
+    <div class="moscow-item">Sessions récurrentes (abonnement)</div>
+    <div class="moscow-item">Session visio Jitsi Meet intégrée</div>
+    <div class="moscow-item">Wallet tuteur + virements</div>
+    <div class="moscow-item">Factures PDF automatiques</div>
+    <div class="moscow-item">Gestion des litiges</div>
+    <div class="moscow-item">Rapport mensuel élève PDF</div>
+    <div class="moscow-item">Partage de fichiers en messagerie</div>
+    <div class="moscow-item">Paramètres notifications granulaires</div>
+    <div class="moscow-item">Ressources CANOPE offline (cache PWA)</div>
+    <div class="moscow-item">Stats utilisation ressources CANOPE</div>
+    <div class="moscow-item">Évaluation compétences élève par tuteur</div>
+    <div class="moscow-item">Tuteurs favoris</div>
+  </div></div></div>
+
+  <div class="moscow could"><div class="moscow-header">C — Could Have (valeur ajoutée, si temps disponible)</div><div class="moscow-body"><div class="moscow-items">
+    <div class="moscow-item">Module orientation COSP (RIASEC)</div>
+    <div class="moscow-item">RDV bilan COSP</div>
+    <div class="moscow-item">Recommandation tuteurs par IA</div>
+    <div class="moscow-item">Quiz CANOPE intégrés dans ressources</div>
+    <div class="moscow-item">SMS fallback pour zones offline</div>
+    <div class="moscow-item">Onboarding interactif par rôle</div>
+    <div class="moscow-item">Export analytics CSV Admin</div>
+    <div class="moscow-item">Page profil tuteur SEO (ISR)</div>
+  </div></div></div>
+
+  <div class="moscow wont"><div class="moscow-header">W — Won't Have (hors périmètre v2)</div><div class="moscow-body"><div class="moscow-items">
+    <div class="moscow-item">Application mobile native (iOS/Android)</div>
+    <div class="moscow-item">Tableau blanc collaboratif temps réel</div>
+    <div class="moscow-item">IA générative de contenu pédagogique</div>
+    <div class="moscow-item">Paiement carte bancaire internationale</div>
+    <div class="moscow-item">Forum communautaire tuteurs</div>
+    <div class="moscow-item">Marketplace de cours enregistrés</div>
+    <div class="moscow-item">Intégration ENT établissements scolaires</div>
+    <div class="moscow-item">Gamification (points, classements)</div>
+  </div></div></div>
+
+  <h3>7.2 Sprints MVP (6 × 2 semaines)</h3>
+  <div class="sprint sprint-1"><div class="sprint-header"><div class="sprint-name">Sprint 1 — Fondations</div><div class="sprint-dates">Semaines 1-2</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Architecture en place, authentification fonctionnelle, profils créables</div><div class="sprint-items"><div class="sprint-item">Setup Next.js 14 App Router + FastAPI + Supabase</div><div class="sprint-item">Migration schéma BDD (20 tables + RLS)</div><div class="sprint-item">Inscription/connexion multi-rôle (email + JWT)</div><div class="sprint-item">Middleware auth Next.js + route protection</div><div class="sprint-item">Profil élève complet (VARK inclus)</div><div class="sprint-item">Profil tuteur (infos + disponibilités)</div><div class="sprint-item">Design system Tailwind + Shadcn/ui</div><div class="sprint-item">PWA manifest + Service Worker de base</div><div class="sprint-item">i18n next-intl FR/MG (structure)</div><div class="sprint-item">CI/CD GitHub Actions (lint, test, deploy)</div></div></div></div>
+
+  <div class="sprint sprint-2"><div class="sprint-header"><div class="sprint-name">Sprint 2 — Matching &amp; Recherche</div><div class="sprint-dates">Semaines 3-4</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Un élève peut trouver et consulter des tuteurs pertinents</div><div class="sprint-items"><div class="sprint-item">Recherche full-text tuteurs (PostgreSQL tsvector)</div><div class="sprint-item">Filtres avancés (matière, tarif, dispo, note)</div><div class="sprint-item">Algorithme scoring VARK (FastAPI endpoint)</div><div class="sprint-item">Carte tuteur avec % compatibilité</div><div class="sprint-item">Page profil public tuteur (SSR + slug)</div><div class="sprint-item">Calendrier disponibilités temps réel</div><div class="sprint-item">Test VARK (migration mock → BDD)</div><div class="sprint-item">Validation tuteur Admin/CANOPE interface</div><div class="sprint-item">Dashboards élève/tuteur/parent (données réelles)</div><div class="sprint-item">StatCards + graphiques progression (Recharts)</div></div></div></div>
+
+  <div class="sprint sprint-3"><div class="sprint-header"><div class="sprint-name">Sprint 3 — Réservation &amp; Validation Parent</div><div class="sprint-dates">Semaines 5-6</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Flow de réservation complet, validation parent, confirmation tuteur</div><div class="sprint-items"><div class="sprint-item">Wizard réservation 4 étapes</div><div class="sprint-item">Verrouillage créneau 10 min (Supabase Realtime)</div><div class="sprint-item">Détection mineur → demande validation parent</div><div class="sprint-item">Interface validation/refus parent</div><div class="sprint-item">Interface acceptation/refus tuteur</div><div class="sprint-item">États session (machine à états)</div><div class="sprint-item">Politique d'annulation avec remboursement auto</div><div class="sprint-item">Rappels automatiques J-1 et H-1 (APScheduler)</div><div class="sprint-item">Notifications in-app (Supabase Realtime)</div><div class="sprint-item">Emails transactionnels (SendGrid / Resend)</div></div></div></div>
+
+  <div class="sprint sprint-4"><div class="sprint-header"><div class="sprint-name">Sprint 4 — Paiement Mobile Money</div><div class="sprint-dates">Semaines 7-8</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Paiement MVola et Orange Money opérationnel avec escrow</div><div class="sprint-items"><div class="sprint-item">Intégration API MVola marchands</div><div class="sprint-item">Intégration API Orange Money MG</div><div class="sprint-item">UI paiement (saisie numéro, confirmation push)</div><div class="sprint-item">Système escrow (hold → released/disputed)</div><div class="sprint-item">Déblocage automatique 24h post-session</div><div class="sprint-item">Webhooks paiement (Supabase Edge Functions)</div><div class="sprint-item">Wallet tuteur (solde en temps réel)</div><div class="sprint-item">Dashboard Admin (KPIs + litiges)</div><div class="sprint-item">Push Web (PWA) pour paiements</div><div class="sprint-item">Tests intégration paiement (sandbox MVola)</div></div></div></div>
+
+  <div class="sprint sprint-5"><div class="sprint-header"><div class="sprint-name">Sprint 5 — Messagerie &amp; Ressources CANOPE</div><div class="sprint-dates">Semaines 9-10</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Messagerie temps réel opérationnelle, bibliothèque CANOPE accessible</div><div class="sprint-items"><div class="sprint-item">Migration messagerie Zustand mock → Supabase Realtime</div><div class="sprint-item">Canal parent-tuteur dédié</div><div class="sprint-item">Partage fichiers (Supabase Storage)</div><div class="sprint-item">Read receipts (table message_reads)</div><div class="sprint-item">Réactions emoji (table message_reactions)</div><div class="sprint-item">Bibliothèque ressources CANOPE (filtres, search)</div><div class="sprint-item">Interface publication ressources (rôle CANOPE)</div><div class="sprint-item">Formation tuteur 4 modules (migration BDD)</div><div class="sprint-item">Certification tuteur (badge profil + PDF)</div><div class="sprint-item">Espace CANOPE complet</div></div></div></div>
+
+  <div class="sprint sprint-6"><div class="sprint-header"><div class="sprint-name">Sprint 6 — Notation, QA &amp; Lancement</div><div class="sprint-dates">Semaines 11-12</div></div><div class="sprint-body"><div class="sprint-goal">Objectif : Système d'évaluation complet, corrections bugs, optimisation, déploiement production</div><div class="sprint-items"><div class="sprint-item">Notation bidirectionnelle post-session</div><div class="sprint-item">Modération avis (workflow Admin)</div><div class="sprint-item">Rapport mensuel élève PDF (WeasyPrint/FastAPI)</div><div class="sprint-item">Optimisation performances (Lighthouse ≥ 85)</div><div class="sprint-item">Tests E2E Playwright (flows critiques)</div><div class="sprint-item">Tests de charge (paiement, recherche)</div><div class="sprint-item">Audit sécurité RLS (revue complète)</div><div class="sprint-item">Traductions MG complètes (validation native speakers)</div><div class="sprint-item">Déploiement production (Vercel + Railway/Render)</div><div class="sprint-item">Documentation API (Swagger FastAPI)</div></div></div></div>
+
+  <div class="callout callout-success"><div class="callout-title">Définition de "Done" pour le MVP</div>Un élève peut s'inscrire, passer le test VARK, trouver un tuteur compatible, réserver une session, payer en MVola ou Orange Money, échanger des messages avec le tuteur, et suivre sa progression. Le parent peut valider et payer. Le tuteur reçoit ses gains en escrow. L'Admin peut modérer.</div>
+</div>
+
+<!-- SECTION 8 : GLOSSAIRE -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">8</div>
+    <div><div class="section-title">Glossaire</div><div class="section-subtitle">Termes métier, techniques et réglementaires utilisés dans ce CDC</div></div>
+  </div>
+
+  <h3>8.1 Termes Métier</h3>
+  <div class="glossary-item"><div class="glossary-term">MIABO</div><div class="glossary-def">Plateforme malgache de tutorat personnalisé. Le nom évoque le soutien, l'accompagnement et la croissance en malgache.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Tuteur</div><div class="glossary-def">Enseignant ou étudiant avancé proposant des sessions de soutien scolaire individuel ou en petit groupe. Doit être validé par CANOPE/Admin avant de pratiquer sur la plateforme.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Élève</div><div class="glossary-def">Utilisateur inscrit sur MIABO pour recevoir un soutien scolaire. Peut être mineur (nécessite validation parentale) ou majeur.</div></div>
+  <div class="glossary-item"><div class="glossary-term">CANOPE <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></div><div class="glossary-def">Réseau de Création et d'Accompagnement Pédagogique. Rôle intégré à MIABO donnant accès à un dashboard dédié pour administrer les tests VAK/RIASEC/DISC, gérer les jeunes (Option A : élèves MIABO, Option B : jeunes externes), envoyer du contenu de formation et planifier des séances. Identifié par un code SESAME format CANOPE-XXXX.</div></div>
+  <div class="glossary-item"><div class="glossary-term">COSP <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></div><div class="glossary-def">Centre d'Orientation Scolaire et Professionnelle. Rôle intégré à MIABO héritant de toutes les fonctionnalités CANOPE, avec en plus la capacité de rédiger des bilans d'orientation personnalisés, recommander des tuteurs et partager des rapports avec les élèves et parents. Code SESAME format COSP-XXXX. Profil inclut les dates de formations COSP.</div></div>
+  <div class="glossary-item"><div class="glossary-term">SESAME <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></div><div class="glossary-def">Système d'identification des acteurs CANOPE et COSP. Attribue des codes uniques (CANOPE-XXXX, COSP-XXXX) requis à l'inscription sur MIABO pour activer les droits correspondants. Fournit également la charte graphique appliquée sur les rapports de tests.</div></div>
+  <div class="glossary-item"><div class="glossary-term">VAK <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></div><div class="glossary-def">Visuel, Auditif, Kinesthésique. Test de style d'apprentissage basé sur 30 affirmations (Oui/Non). Administré par CANOPE/COSP. Remplace l'ancien test VARK (sans la dimension Lecture/Écriture). Source : document SESAME "Test VAKOG - Style d'apprentissage".</div></div>
+  <div class="glossary-item"><div class="glossary-term">DISC <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></div><div class="glossary-def">Profil de communication en 4 dimensions : Dominant (D), Influent (I), Stable (S), Consciencieux (C). Test administré par CANOPE/COSP en 3ème position après VAK et RIASEC. Questions reproduites visuellement depuis le document scanné SESAME.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Option A / Option B <span style="font-size:7pt;color:#2563EB;font-weight:700;">[AJOUTÉ]</span></div><div class="glossary-def">Deux modes de création de test pour CANOPE/COSP. Option A : le jeune est un élève déjà inscrit sur MIABO (profil pré-rempli, résultats visibles par l'élève et son parent). Option B : le jeune n'a pas de compte MIABO (saisie manuelle complète, résultats visibles uniquement par CANOPE/COSP).</div></div>
+  <div class="glossary-item"><div class="glossary-term">Session</div><div class="glossary-def">Séance de tutorat planifiée entre un élève et un tuteur. Peut être en présentiel ou en visioconférence. Durée : 1h à 3h.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Escrow</div><div class="glossary-def">Mécanisme de séquestre des fonds. Le paiement est retenu par MIABO entre le moment du paiement et la confirmation de fin de session, protégeant les deux parties.</div></div>
+  <div class="glossary-item"><div class="glossary-term">MVola</div><div class="glossary-def">Service de mobile banking de Telma Madagascar. Principal moyen de paiement mobile au Madagascar.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Orange Money</div><div class="glossary-def">Service de mobile banking d'Orange Madagascar. Deuxième opérateur de mobile money après MVola.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Ariary (Ar)</div><div class="glossary-def">Monnaie nationale malgache. Toutes les transactions MIABO sont en Ariary. 1 EUR ≈ 4 700 Ar (2026).</div></div>
+  <div class="glossary-item"><div class="glossary-term">Score de compatibilité</div><div class="glossary-def">Pourcentage (0-100%) calculé par l'algorithme MIABO indiquant l'adéquation entre le profil d'apprentissage d'un élève et la méthode pédagogique d'un tuteur.</div></div>
+  <div class="glossary-item"><div class="glossary-term">KYC</div><div class="glossary-def">Know Your Customer. Vérification d'identité des tuteurs avant qu'ils puissent effectuer des virements de leur wallet MIABO.</div></div>
+
+  <h3>8.2 Termes Techniques</h3>
+  <div class="glossary-item"><div class="glossary-term">VARK</div><div class="glossary-def">Visual, Auditory, Read/Write, Kinesthetic. Modèle de styles d'apprentissage de Neil Fleming utilisé pour le matching élève-tuteur sur MIABO.</div></div>
+  <div class="glossary-item"><div class="glossary-term">RIASEC <span style="font-size:7pt;color:#D97706;font-weight:700;">[MODIFIÉ]</span></div><div class="glossary-def">Modèle d'orientation de John Holland (Réaliste, Investigateur, Artistique, Social, Entreprenant, Conventionnel). Sur MIABO, le test RIASEC comprend 66 activités (11 par lettre). Administré par CANOPE/COSP en 2ème position. Le résultat est un code à 2 lettres (ex: "SE"). Source : "Test RIASEC U-MAGIS" SESAME.</div></div>
+  <div class="glossary-item"><div class="glossary-term">RLS</div><div class="glossary-def">Row Level Security. Mécanisme PostgreSQL/Supabase permettant de définir des règles d'accès ligne par ligne. Garantit qu'un utilisateur ne voit que les données autorisées.</div></div>
+  <div class="glossary-item"><div class="glossary-term">SSR / SSG / ISR</div><div class="glossary-def">Server-Side Rendering / Static Site Generation / Incremental Static Regeneration. Modes de rendu Next.js 14 choisis selon le besoin SEO et la fraîcheur des données.</div></div>
+  <div class="glossary-item"><div class="glossary-term">PWA</div><div class="glossary-def">Progressive Web App. Application web installable sur mobile comme une app native, fonctionnant partiellement hors connexion grâce au Service Worker.</div></div>
+  <div class="glossary-item"><div class="glossary-term">JWT</div><div class="glossary-def">JSON Web Token. Token signé utilisé par Supabase Auth pour authentifier les requêtes API. Validé par FastAPI à chaque endpoint protégé.</div></div>
+  <div class="glossary-item"><div class="glossary-term">Supabase Realtime</div><div class="glossary-def">Fonctionnalité Supabase permettant d'écouter les changements de BDD en temps réel via WebSocket. Utilisé pour la messagerie, notifications et disponibilités.</div></div>
+  <div class="glossary-item"><div class="glossary-term">App Router</div><div class="glossary-def">Système de routage de Next.js 14 basé sur le système de fichiers dans le dossier <code>app/</code>. Remplace le Pages Router des versions antérieures.</div></div>
+  <div class="glossary-item"><div class="glossary-term">next-intl</div><div class="glossary-def">Bibliothèque d'internationalisation pour Next.js App Router. Gère les traductions FR/MG, la détection de langue et le routage localisé.</div></div>
+  <div class="glossary-item"><div class="glossary-term">APScheduler</div><div class="glossary-def">Bibliothèque Python pour la planification de tâches. Utilisée dans FastAPI pour les rappels de sessions, déblocages d'escrow et rapports mensuels.</div></div>
+  <div class="glossary-item"><div class="glossary-term">tsvector</div><div class="glossary-def">Type PostgreSQL pour la recherche full-text. Utilisé sur les profils tuteurs (nom, matières, bio) pour la recherche instantanée.</div></div>
+
+  <h3>8.3 Abréviations du CDC</h3>
+  <div class="glossary-item"><div class="glossary-term">CDC</div><div class="glossary-def">Cahier des Charges. Document de référence définissant les besoins fonctionnels et techniques d'un projet informatique.</div></div>
+  <div class="glossary-item"><div class="glossary-term">MVP</div><div class="glossary-def">Minimum Viable Product. Version minimale de la plateforme suffisamment complète pour être lancée. Correspond aux 6 premiers sprints (3 mois).</div></div>
+  <div class="glossary-item"><div class="glossary-term">MoSCoW</div><div class="glossary-def">Must/Should/Could/Won't. Méthode de priorisation des fonctionnalités utilisée en gestion de projet agile.</div></div>
+  <div class="glossary-item"><div class="glossary-term">RBAC</div><div class="glossary-def">Role-Based Access Control. Chaque rôle MIABO (élève, tuteur, parent, admin, canope, cosp) a des permissions distinctes.</div></div>
+  <div class="glossary-item"><div class="glossary-term">KPI</div><div class="glossary-def">Key Performance Indicator. Sur MIABO : taux d'occupation tuteurs, taux de complétion sessions, NPS, chiffre d'affaires mensuel.</div></div>
+
+  <!-- FOOTER -->
+  <div style="margin-top: 50px; padding: 24px; background: #111827; color: white; border-radius: 12px; text-align: center;">
+    <div style="font-size: 18pt; font-weight: 800; letter-spacing: -1px; margin-bottom: 4px;">MIABO <span style="color: #FCD34D;">v2</span></div>
+    <div style="font-size: 9pt; opacity: 0.6; margin-bottom: 8px;">Cahier des Charges Fonctionnel &amp; Technique — Refonte Totale</div>
+    <div style="font-size: 8.5pt; opacity: 0.5;">Version 2.0.0 · Mars 2026 · Equipe Dev MIABO · Confidentiel — Usage interne</div>
+    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 8pt; opacity: 0.4;">Stack : Next.js 14 · FastAPI · Supabase · PWA · FR/MG · Mobile-first · Madagascar</div>
+  </div>
+</div>
+
+</body>
+</html>

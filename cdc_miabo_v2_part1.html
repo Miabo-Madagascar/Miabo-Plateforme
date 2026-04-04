@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CDC MIABO v2 — Cahier des Charges</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --primary: #1E40AF;
+    --primary-light: #3B82F6;
+    --primary-pale: #EFF6FF;
+    --secondary: #059669;
+    --secondary-pale: #ECFDF5;
+    --accent: #DC2626;
+    --accent-pale: #FEF2F2;
+    --orange: #D97706;
+    --orange-pale: #FFFBEB;
+    --gray-50: #F9FAFB;
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-300: #D1D5DB;
+    --gray-500: #6B7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --text: #1F2937;
+    --text-light: #6B7280;
+    --border: #E5E7EB;
+  }
+
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.6;
+    color: var(--text);
+    background: white;
+  }
+
+  pre, code { font-family: 'Courier New', Courier, monospace; }
+
+  .page-break { page-break-after: always; break-after: page; }
+  .no-break { page-break-inside: avoid; break-inside: avoid; }
+
+  .cover {
+    min-height: 800px;
+    background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 40%, #2563EB 70%, #3B82F6 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 60px 40px;
+    color: white;
+  }
+  .cover-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 30px;
+    padding: 8px 24px;
+    font-size: 11pt;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+  .cover-logo {
+    font-size: 72pt;
+    font-weight: 800;
+    letter-spacing: -3px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .cover-logo span { color: #FCD34D; }
+  .cover-tagline {
+    font-size: 16pt;
+    font-weight: 300;
+    opacity: 0.85;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+  }
+  .cover-title {
+    font-size: 28pt;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    max-width: 700px;
+  }
+  .cover-subtitle {
+    font-size: 14pt;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-bottom: 50px;
+    max-width: 600px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 30px;
+    width: 100%;
+    max-width: 700px;
+  }
+  .cover-meta-item { text-align: center; }
+  .cover-meta-item .label { font-size: 9pt; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
+  .cover-meta-item .value { font-size: 13pt; font-weight: 600; margin-top: 4px; }
+  .cover-version {
+    margin-top: 30px;
+    font-size: 9pt;
+    opacity: 0.5;
+  }
+
+  .document { padding: 0; }
+
+  .section {
+    padding: 50px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 3px solid var(--primary);
+  }
+  .section-number {
+    background: var(--primary);
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18pt;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 22pt;
+    font-weight: 700;
+    color: var(--gray-900);
+    line-height: 1.2;
+  }
+  .section-subtitle {
+    font-size: 11pt;
+    color: var(--text-light);
+    margin-top: 3px;
+  }
+
+  h3 {
+    font-size: 14pt;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 28px 0 12px 0;
+    padding-left: 12px;
+    border-left: 4px solid var(--primary-light);
+  }
+  h4 {
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin: 20px 0 8px 0;
+  }
+
+  p { margin-bottom: 10px; color: var(--text); }
+
+  .callout {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-left: 5px solid;
+  }
+  .callout-info { background: var(--primary-pale); border-color: var(--primary-light); }
+  .callout-success { background: var(--secondary-pale); border-color: var(--secondary); }
+  .callout-warning { background: var(--orange-pale); border-color: var(--orange); }
+  .callout-danger { background: var(--accent-pale); border-color: var(--accent); }
+  .callout-title { font-weight: 700; font-size: 10pt; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .callout-info .callout-title { color: var(--primary); }
+  .callout-success .callout-title { color: var(--secondary); }
+  .callout-warning .callout-title { color: var(--orange); }
+  .callout-danger .callout-title { color: var(--accent); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 9.5pt;
+    page-break-inside: auto;
+  }
+  thead th {
+    background: var(--primary);
+    color: white;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  tbody tr:nth-child(even) { background: var(--gray-50); }
+  tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 8pt;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-mvp { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+  .badge-v2 { background: #DBEAFE; color: #1E40AF; border: 1px solid #93C5FD; }
+  .badge-v3 { background: #F3F4F6; color: #6B7280; border: 1px solid #D1D5DB; }
+
+  .role {
+    display: inline-block; padding: 1px 6px; border-radius: 4px;
+    font-size: 7.5pt; font-weight: 600; margin: 1px;
+  }
+  .role-eleve { background: #EDE9FE; color: #5B21B6; }
+  .role-tuteur { background: #D1FAE5; color: #065F46; }
+  .role-parent { background: #FEE2E2; color: #991B1B; }
+  .role-admin { background: #1F2937; color: white; }
+  .role-canope { background: #FEF3C7; color: #92400E; }
+  .role-cosp { background: #E0F2FE; color: #0C4A6E; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    page-break-inside: avoid;
+  }
+  .card-title { font-size: 11pt; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; }
+  .card-icon { font-size: 22pt; margin-bottom: 8px; }
+
+  .stats-row { display: flex; gap: 16px; flex-wrap: wrap; margin: 20px 0; }
+  .stat-box {
+    flex: 1; min-width: 150px;
+    background: var(--primary);
+    color: white;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .stat-box.green { background: var(--secondary); }
+  .stat-box.orange { background: #D97706; }
+  .stat-box.dark { background: var(--gray-900); }
+  .stat-value { font-size: 24pt; font-weight: 800; line-height: 1; }
+  .stat-label { font-size: 8.5pt; opacity: 0.85; margin-top: 4px; }
+
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px dotted var(--gray-200);
+    font-size: 10.5pt;
+  }
+  .toc-item:last-child { border-bottom: none; }
+  .toc-section { font-weight: 700; color: var(--primary); }
+  .toc-page { color: var(--text-light); font-size: 9.5pt; }
+  .toc-sub { padding-left: 20px; font-size: 9.5pt; color: var(--gray-700); }
+
+  pre {
+    background: #1E2937;
+    color: #E2E8F0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 8.5pt;
+    line-height: 1.5;
+    overflow: auto;
+    margin: 12px 0;
+    page-break-inside: avoid;
+  }
+  code {
+    font-size: 8.5pt;
+    background: var(--gray-100);
+    padding: 2px 5px;
+    border-radius: 4px;
+    color: var(--accent);
+  }
+
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { margin-bottom: 4px; }
+  ul li::marker { color: var(--primary-light); }
+
+  /* DB SCHEMA */
+  .db-table { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 18px; page-break-inside: avoid; }
+  .db-table-header { background: var(--gray-900); color: white; padding: 10px 14px; font-weight: 700; font-size: 10pt; display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+  .db-table-desc { opacity: 0.5; font-size: 8.5pt; font-weight: 400; }
+  .db-col { display: flex; gap: 8px; padding: 7px 14px; border-bottom: 1px solid var(--gray-100); font-size: 8.5pt; align-items: baseline; }
+  .db-col:last-child { border-bottom: none; }
+  .db-col:nth-child(even) { background: var(--gray-50); }
+  .db-col-name { font-weight: 600; color: var(--primary); min-width: 200px; }
+  .db-col-type { color: var(--secondary); min-width: 130px; font-size: 8pt; }
+  .db-col-notes { color: var(--text-light); font-size: 8.5pt; flex: 1; }
+  .db-pk { background: #FCD34D; color: #78350F; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+  .db-fk { background: #A5F3FC; color: #0C4A6E; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+  .db-idx { background: #BBF7D0; color: #14532D; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+  .db-nn { background: #FEE2E2; color: #991B1B; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+
+  /* SPRINT */
+  .sprint { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 14px; page-break-inside: avoid; }
+  .sprint-header { padding: 12px 16px; color: white; display: flex; justify-content: space-between; align-items: center; }
+  .sprint-1 .sprint-header { background: #1E3A8A; }
+  .sprint-2 .sprint-header { background: #1E40AF; }
+  .sprint-3 .sprint-header { background: #2563EB; }
+  .sprint-4 .sprint-header { background: #3B82F6; }
+  .sprint-5 .sprint-header { background: #059669; }
+  .sprint-6 .sprint-header { background: #047857; }
+  .sprint-name { font-weight: 700; font-size: 11pt; }
+  .sprint-dates { font-size: 9pt; opacity: 0.8; }
+  .sprint-body { padding: 12px 16px; }
+  .sprint-items { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+  .sprint-item { font-size: 9pt; display: flex; align-items: baseline; gap: 6px; }
+  .sprint-item::before { content: '▸'; color: var(--primary-light); flex-shrink: 0; }
+  .sprint-goal { font-size: 9.5pt; font-style: italic; color: var(--text-light); margin-bottom: 8px; padding: 8px 12px; background: var(--gray-50); border-radius: 6px; }
+
+  /* MOSCOW */
+  .moscow { border-radius: 10px; overflow: hidden; margin-bottom: 16px; page-break-inside: avoid; }
+  .moscow-header { padding: 12px 16px; color: white; font-weight: 700; font-size: 12pt; }
+  .must .moscow-header { background: #DC2626; }
+  .should .moscow-header { background: #D97706; }
+  .could .moscow-header { background: #059669; }
+  .wont .moscow-header { background: #6B7280; }
+  .moscow-body { padding: 12px 16px; border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; }
+  .moscow-items { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; }
+  .moscow-item { font-size: 9.5pt; padding: 3px 0; display: flex; align-items: baseline; gap: 6px; }
+  .moscow-item::before { content: '✓'; font-weight: 700; flex-shrink: 0; }
+  .must .moscow-item::before { color: #DC2626; }
+  .should .moscow-item::before { color: #D97706; }
+  .could .moscow-item::before { color: #059669; }
+  .wont .moscow-item::before { color: #9CA3AF; }
+
+  /* FLOW */
+  .flow-step { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 4px; page-break-inside: avoid; }
+  .flow-num { background: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 10pt; flex-shrink: 0; margin-top: 2px; }
+  .flow-num.green { background: var(--secondary); }
+  .flow-num.orange { background: var(--orange); }
+  .flow-num.red { background: var(--accent); }
+  .flow-content { flex: 1; padding: 8px 14px; background: var(--primary-pale); border-radius: 8px; border-left: 3px solid var(--primary-light); }
+  .flow-content.green { background: var(--secondary-pale); border-color: var(--secondary); }
+  .flow-content.orange { background: var(--orange-pale); border-color: var(--orange); }
+  .flow-content.red { background: var(--accent-pale); border-color: var(--accent); }
+  .flow-title { font-weight: 600; font-size: 10pt; color: var(--gray-900); }
+  .flow-desc { font-size: 9pt; color: var(--text-light); margin-top: 2px; }
+  .flow-actor { font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary); }
+  .flow-arrow { color: var(--gray-300); font-size: 14pt; margin: 2px 0 2px 14px; }
+
+  /* UX */
+  .ux-card { border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 14px; page-break-inside: avoid; }
+  .ux-screen { font-size: 10pt; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+  .ux-problem { background: var(--accent-pale); border-radius: 6px; padding: 8px 12px; margin-bottom: 6px; font-size: 9pt; }
+  .ux-problem-label { font-weight: 700; color: var(--accent); font-size: 8pt; text-transform: uppercase; margin-bottom: 3px; }
+  .ux-solution { background: var(--secondary-pale); border-radius: 6px; padding: 8px 12px; font-size: 9pt; }
+  .ux-solution-label { font-weight: 700; color: var(--secondary); font-size: 8pt; text-transform: uppercase; margin-bottom: 3px; }
+
+  /* ARCH */
+  .arch-box { background: var(--primary-pale); border: 2px solid var(--primary-light); border-radius: 10px; padding: 16px; margin: 8px 0; page-break-inside: avoid; }
+  .arch-box h4 { color: var(--primary); margin: 0 0 8px 0; }
+  .arch-arrow { text-align: center; font-size: 18pt; color: var(--primary-light); margin: 4px 0; }
+
+  /* GLOSSAIRE */
+  .glossary-item { padding: 10px 0; border-bottom: 1px solid var(--gray-100); display: flex; gap: 16px; align-items: baseline; }
+  .glossary-item:last-child { border-bottom: none; }
+  .glossary-term { font-weight: 700; color: var(--primary); min-width: 160px; font-size: 10pt; }
+  .glossary-def { font-size: 9.5pt; color: var(--text); flex: 1; }
+
+  @media print {
+    body { font-size: 10pt; }
+    .section { padding: 40px 50px; }
+  }
+</style>
+</head>
+<body>
+<div class="document">
+
+<!-- ===== COVER ===== -->
+<div class="cover page-break">
+  <div class="cover-badge">Cahier des Charges — Version 2.0</div>
+  <div class="cover-logo">MI<span>A</span>BO</div>
+  <div class="cover-tagline">Plateforme de tutorat personnalisé · Madagascar</div>
+  <div class="cover-title">Cahier des Charges Fonctionnel &amp; Technique — Refonte Totale v2</div>
+  <div class="cover-subtitle">Next.js 14 · FastAPI · Supabase · PWA · Bilingue FR/MG</div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="label">Version</div><div class="value">2.0.0</div></div>
+    <div class="cover-meta-item"><div class="label">Date</div><div class="value">Mars 2026</div></div>
+    <div class="cover-meta-item"><div class="label">Statut</div><div class="value">Draft — Review</div></div>
+    <div class="cover-meta-item"><div class="label">Équipe</div><div class="value">Dev MIABO</div></div>
+    <div class="cover-meta-item"><div class="label">MVP cible</div><div class="value">3 mois</div></div>
+  </div>
+  <div class="cover-version">CONFIDENTIEL — usage interne équipe dev</div>
+</div>
+
+<!-- ===== TABLE DES MATIÈRES ===== -->
+<div class="section page-break">
+  <div class="section-header">
+    <div style="width:44px;height:44px;background:var(--gray-900);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:18pt;font-weight:800;flex-shrink:0;">≡</div>
+    <div><div class="section-title">Table des Matières</div><div class="section-subtitle">Cahier des Charges MIABO v2 — Structure complète</div></div>
+  </div>
+  <div class="toc-item"><span class="toc-section">1. Présentation &amp; Proposition de Valeur</span><span class="toc-page">3</span></div>
+  <div class="toc-item toc-sub"><span>1.1 Contexte &amp; genèse du projet</span><span class="toc-page">3</span></div>
+  <div class="toc-item toc-sub"><span>1.2 Problèmes résolus</span><span class="toc-page">3</span></div>
+  <div class="toc-item toc-sub"><span>1.3 Proposition de valeur par rôle</span><span class="toc-page">3</span></div>
+  <div class="toc-item toc-sub"><span>1.4 Périmètre v1 → v2</span><span class="toc-page">4</span></div>
+  <div class="toc-item"><span class="toc-section">2. Fonctionnalités par Module</span><span class="toc-page">5</span></div>
+  <div class="toc-item toc-sub"><span>Auth &amp; Profils · Recherche &amp; Matching · Réservation · Paiement</span><span class="toc-page">5</span></div>
+  <div class="toc-item toc-sub"><span>Ressources CANOPE · Orientation COSP · Messagerie · Dashboards</span><span class="toc-page">9</span></div>
+  <div class="toc-item toc-sub"><span>Évaluations · Notifications</span><span class="toc-page">12</span></div>
+  <div class="toc-item"><span class="toc-section">3. Spécifications Techniques</span><span class="toc-page">15</span></div>
+  <div class="toc-item toc-sub"><span>Architecture · Sécurité RLS · PWA · i18n · API</span><span class="toc-page">15</span></div>
+  <div class="toc-item"><span class="toc-section">4. Schéma BDD Amélioré</span><span class="toc-page">19</span></div>
+  <div class="toc-item"><span class="toc-section">5. User Flows Clés</span><span class="toc-page">25</span></div>
+  <div class="toc-item"><span class="toc-section">6. Corrections UX &amp; Écrans Manquants</span><span class="toc-page">28</span></div>
+  <div class="toc-item"><span class="toc-section">7. Planning MoSCoW &amp; Sprints MVP</span><span class="toc-page">31</span></div>
+  <div class="toc-item"><span class="toc-section">8. Glossaire</span><span class="toc-page">35</span></div>
+</div>
+
+<!-- ===== SECTION 1 ===== -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">1</div>
+    <div><div class="section-title">Présentation &amp; Proposition de Valeur</div><div class="section-subtitle">Contexte, vision stratégique et périmètre de la refonte</div></div>
+  </div>
+
+  <h3>1.1 Contexte &amp; Genèse du Projet</h3>
+  <p>MIABO est une plateforme malgache de tutorat personnalisé, née du constat que <strong>78% des élèves malgaches à besoins de soutien scolaire</strong> n'y ont pas accès faute de disponibilité, d'information ou de moyens financiers adaptés. La v1 (React + Vite + Supabase) a validé les concepts clés : matching tuteur-élève, tests VARK, messagerie. La v2 constitue une refonte totale vers une architecture production-ready (Next.js 14 + FastAPI + Supabase), PWA mobile-first, bilingue français/malgache.</p>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-value">6</div><div class="stat-label">Rôles utilisateurs</div></div>
+    <div class="stat-box green"><div class="stat-value">10</div><div class="stat-label">Modules fonctionnels</div></div>
+    <div class="stat-box orange"><div class="stat-value">3</div><div class="stat-label">Mois MVP</div></div>
+    <div class="stat-box dark"><div class="stat-value">FR/MG</div><div class="stat-label">Bilinguisme natif</div></div>
+  </div>
+
+  <h3>1.2 Problèmes Résolus</h3>
+  <div class="grid-2">
+    <div class="card"><div class="card-icon">🔍</div><div class="card-title">Accès opaque aux tuteurs</div><p style="font-size:9.5pt">Aucun annuaire structuré. La v2 introduit une recherche géolocalisée avec matching intelligent (VARK + style pédagogique + disponibilités).</p></div>
+    <div class="card"><div class="card-icon">💳</div><div class="card-title">Paiement informel non sécurisé</div><p style="font-size:9.5pt">Les règlements se font en cash. La v2 intègre MVola &amp; Orange Money avec escrow et facturation automatique.</p></div>
+    <div class="card"><div class="card-icon">👨‍👩‍👧</div><div class="card-title">Parents exclus du suivi</div><p style="font-size:9.5pt">Pas de visibilité sur la progression. La v2 donne aux parents un dashboard dédié avec validation et paiement.</p></div>
+    <div class="card"><div class="card-icon">📚</div><div class="card-title">Ressources pédagogiques dispersées</div><p style="font-size:9.5pt">CANOPE Madagascar produit des ressources non centralisées. La v2 intègre un espace ressources certifié.</p></div>
+    <div class="card"><div class="card-icon">🧭</div><div class="card-title">Orientation scolaire absente</div><p style="font-size:9.5pt">Le COSP n'a pas de canal numérique. La v2 intègre bilans d'orientation et recommandations tuteurs.</p></div>
+    <div class="card"><div class="card-icon">📶</div><div class="card-title">Faible bande passante</div><p style="font-size:9.5pt">Réseau 2G/3G majoritaire. La v2 est PWA avec cache offline, images compressées et lazy loading agressif.</p></div>
+  </div>
+
+  <h3>1.3 Proposition de Valeur par Rôle</h3>
+  <table>
+    <thead><tr><th>Rôle</th><th>Problème principal</th><th>Valeur MIABO v2</th></tr></thead>
+    <tbody>
+      <tr><td><span class="role role-eleve">Élève</span></td><td>Trouver un tuteur adapté à son style d'apprentissage</td><td>Matching IA VARK, progression visible, accès ressources CANOPE, orientation COSP</td></tr>
+      <tr><td><span class="role role-tuteur">Tuteur</span></td><td>Gérer son activité, être payé sécurisé, se former</td><td>Agenda intégré, paiement escrow, modules de formation CANOPE, certification officielle</td></tr>
+      <tr><td><span class="role role-parent">Parent</span></td><td>Payer en confiance, suivre la progression enfant</td><td>Paiement Mobile Money, validation réservation, dashboard progression, messagerie tuteur</td></tr>
+      <tr><td><span class="role role-admin">Admin</span></td><td>Modérer la plateforme et analyser les KPIs</td><td>Back-office complet, modération tuteurs, analytics temps réel, gestion litiges</td></tr>
+      <tr><td><span class="role role-canope">CANOPE</span></td><td>Diffuser des ressources pédagogiques officielles</td><td>Espace éditorial dédié, certification tuteurs, suivi d'utilisation des ressources</td></tr>
+      <tr><td><span class="role role-cosp">COSP</span></td><td>Proposer des bilans d'orientation digitaux</td><td>Module bilan intégré, recommandation de tuteurs spécialisés, suivi post-bilan</td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.4 Delta v1 → v2</h3>
+  <table>
+    <thead><tr><th>Composant</th><th>v1 (actuel)</th><th>v2 (cible)</th></tr></thead>
+    <tbody>
+      <tr><td>Framework frontend</td><td>React 18 + Vite</td><td><strong>Next.js 14 App Router + SSR/SSG</strong></td></tr>
+      <tr><td>Backend</td><td>Aucun (mock localStorage)</td><td><strong>FastAPI (Python) — REST + WebSocket</strong></td></tr>
+      <tr><td>Base de données</td><td>Supabase migrations partielles (4 tables)</td><td><strong>Supabase PostgreSQL — 20+ tables, RLS complet</strong></td></tr>
+      <tr><td>Authentification</td><td>Mock (3 comptes démo)</td><td><strong>Supabase Auth + JWT + RBAC + 2FA parents</strong></td></tr>
+      <tr><td>Rôles</td><td>3 (élève, tuteur, parent)</td><td><strong>6 (+ admin, CANOPE, COSP)</strong></td></tr>
+      <tr><td>Paiement</td><td>Placeholder</td><td><strong>MVola + Orange Money + escrow</strong></td></tr>
+      <tr><td>Temps réel</td><td>State Zustand local</td><td><strong>Supabase Realtime + FastAPI WebSocket</strong></td></tr>
+      <tr><td>PWA / Offline</td><td>Non</td><td><strong>Service Worker + cache stratégique</strong></td></tr>
+      <tr><td>i18n</td><td>Français uniquement</td><td><strong>next-intl FR + MG</strong></td></tr>
+      <tr><td>Notifications</td><td>Non</td><td><strong>Push Web + SMS (Twilio/Nexmo)</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">⚠️ Décision d'architecture critique</div>
+    La migration de Vite vers Next.js 14 nécessite une réécriture complète du routage (React Router → App Router). Le contexte d'auth (UserContext.tsx) sera remplacé par Supabase Auth + middleware Next.js. Les composants UI peuvent être réutilisés avec adaptation des imports.
+  </div>
+</div>
+
+</div>
+</body>
+</html>

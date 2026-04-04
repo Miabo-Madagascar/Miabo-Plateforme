@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><title>Part2</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #1E40AF; --primary-light: #3B82F6; --primary-pale: #EFF6FF;
+  --secondary: #059669; --secondary-pale: #ECFDF5;
+  --accent: #DC2626; --accent-pale: #FEF2F2;
+  --orange: #D97706; --orange-pale: #FFFBEB;
+  --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB; --gray-500: #6B7280; --gray-700: #374151;
+  --gray-900: #111827; --text: #1F2937; --text-light: #6B7280; --border: #E5E7EB;
+}
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10.5pt; line-height: 1.6; color: var(--text); background: white; }
+pre, code { font-family: 'Courier New', Courier, monospace; }
+.page-break { page-break-after: always; break-after: page; }
+.section { padding: 50px 60px; max-width: 1100px; margin: 0 auto; }
+.section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 3px solid var(--primary); }
+.section-number { background: var(--primary); color: white; width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18pt; font-weight: 800; flex-shrink: 0; }
+.section-title { font-size: 22pt; font-weight: 700; color: var(--gray-900); }
+.section-subtitle { font-size: 11pt; color: var(--text-light); margin-top: 3px; }
+h3 { font-size: 14pt; font-weight: 700; color: var(--primary); margin: 28px 0 12px 0; padding-left: 12px; border-left: 4px solid var(--primary-light); }
+h4 { font-size: 11pt; font-weight: 600; color: var(--gray-700); margin: 16px 0 6px 0; }
+p { margin-bottom: 10px; }
+.callout { border-radius: 10px; padding: 16px 20px; margin: 16px 0; border-left: 5px solid; }
+.callout-info { background: var(--primary-pale); border-color: var(--primary-light); }
+.callout-title { font-weight: 700; font-size: 10pt; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.callout-info .callout-title { color: var(--primary); }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 9pt; }
+thead th { background: var(--primary); color: white; padding: 9px 10px; text-align: left; font-weight: 600; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.5px; }
+tbody tr:nth-child(even) { background: var(--gray-50); }
+tbody td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.4; }
+tbody tr:last-child td { border-bottom: none; }
+.badge { display: inline-block; padding: 2px 7px; border-radius: 12px; font-size: 7.5pt; font-weight: 700; white-space: nowrap; }
+.badge-mvp { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+.badge-v2 { background: #DBEAFE; color: #1E40AF; border: 1px solid #93C5FD; }
+.badge-v3 { background: #F3F4F6; color: #6B7280; border: 1px solid #D1D5DB; }
+.role { display: inline-block; padding: 1px 5px; border-radius: 4px; font-size: 7pt; font-weight: 700; margin: 1px; }
+.role-eleve { background: #EDE9FE; color: #5B21B6; }
+.role-tuteur { background: #D1FAE5; color: #065F46; }
+.role-parent { background: #FEE2E2; color: #991B1B; }
+.role-admin { background: #1F2937; color: white; }
+.role-canope { background: #FEF3C7; color: #92400E; }
+.role-cosp { background: #E0F2FE; color: #0C4A6E; }
+code { font-size: 8pt; background: var(--gray-100); padding: 1px 4px; border-radius: 3px; color: var(--accent); }
+ul { padding-left: 18px; margin-bottom: 8px; }
+li { margin-bottom: 3px; font-size: 9.5pt; }
+</style></head><body>
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">2</div>
+    <div><div class="section-title">Fonctionnalités par Module</div><div class="section-subtitle">Tableau exhaustif — ID · Feature · Rôles · Description · Règles métier · Priorité</div></div>
+  </div>
+  <div class="callout callout-info">
+    <div class="callout-title">Convention de priorité</div>
+    <strong>MVP</strong> = Sprint 1-6 (3 mois) · <strong>V2</strong> = Sprint 7-12 · <strong>V3</strong> = Backlog futur. Les IDs suivent le format <code>MOD-NNN</code>.
+  </div>
+
+  <h3>Module AUTH — Authentification &amp; Profils</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>AUTH-001</code></td><td>Inscription multi-rôle</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span><span class="role role-parent">Parent</span><span class="role role-canope">CANOPE</span><span class="role role-cosp">COSP</span></td><td>Formulaire avec sélection de rôle en step 1. Email + mot de passe + nom complet. Validation email obligatoire avant accès.</td><td>Confirmation email via Supabase Auth. Tuteur = statut "en attente validation". Mineurs : email parent requis.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-002</code></td><td>Connexion sécurisée</td><td>Tous</td><td>Login email/password avec option "se souvenir de moi". Redirection vers dashboard rôle-specific.</td><td>JWT Supabase Auth. Session 7j si "remember me", 24h sinon. Lockout après 5 tentatives (15 min).</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-003</code></td><td>Récupération mot de passe</td><td>Tous</td><td>Lien de réinitialisation par email. Formulaire de nouveau mot de passe sécurisé.</td><td>Lien valide 1h. Invalidation après usage. Notification email de confirmation.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-004</code></td><td>2FA pour Parents</td><td><span class="role role-parent">Parent</span></td><td>Authentification deux facteurs par SMS/email pour toute action de paiement ou validation impliquant un mineur.</td><td>TOTP ou OTP SMS (Twilio). Obligatoire pour montants > 10 000 Ar. Conformité RGPD enfants.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>AUTH-005</code></td><td>Profil élève complet</td><td><span class="role role-eleve">Élève</span></td><td>Classe, matières, établissement, style d'apprentissage (VARK), photo, objectifs.</td><td>Profil 80% minimum pour accéder au matching. VARK mis à jour après chaque test.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-006</code></td><td>Profil tuteur complet</td><td><span class="role role-tuteur">Tuteur</span></td><td>Matières, niveaux, tarif horaire, disponibilités, bio, diplômes, photo, méthodes pédagogiques, localisation.</td><td>Publication conditionnée à validation Admin/CANOPE. Tarif min 2 000 Ar/h.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-007</code></td><td>Profil parent</td><td><span class="role role-parent">Parent</span></td><td>Informations personnelles, liste des enfants liés, méthode de paiement préférée, préférences de notification.</td><td>Un parent peut gérer N enfants. Lien enfant-parent vérifié par email.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-008</code></td><td>SSO Google</td><td>Tous (sauf Admin)</td><td>Connexion via compte Google pour simplifier l'onboarding.</td><td>Supabase OAuth Google. Rôle choisi au premier login. Compte existant fusionné si même email.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>AUTH-009</code></td><td>Validation tuteur Admin</td><td><span class="role role-admin">Admin</span><span class="role role-canope">CANOPE</span></td><td>File de tuteurs en attente. Vérification diplômes, identité, casier judiciaire. Approbation ou rejet avec motif.</td><td>Statut : pending → validated/rejected. Email auto à chaque changement. Délai max 72h.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>AUTH-010</code></td><td>Suspension de compte</td><td><span class="role role-admin">Admin</span></td><td>Désactivation temporaire ou permanente avec motif. Notifications des parties impactées.</td><td>Sessions en cours annulées et remboursées. Historique conservé 5 ans.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module MATCH — Recherche &amp; Matching Intelligent</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>MATCH-001</code></td><td>Recherche tuteur</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Barre de recherche full-text par matière, nom, niveau, localisation. Résultats paginés.</td><td>Full-text search PostgreSQL (tsvector). Tuteurs non validés exclus. Filtres persistants en session.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MATCH-002</code></td><td>Filtres avancés</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Filtres : matière, niveau, tarif (fourchette), disponibilité, style pédagogique, note minimale, distance, genre.</td><td>Filtres combinables. Cache Redis 5min. Pas de filtre ethnique ou religieux.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MATCH-003</code></td><td>Score de compatibilité</td><td><span class="role role-eleve">Élève</span></td><td>Algorithme calculant un score (0–100%) basé sur : style VARK, matières, disponibilités, note tuteur, budget.</td><td>Score = 40% style + 25% matières + 20% disponibilité + 15% note. Recalculé si profil modifié.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MATCH-004</code></td><td>Profil tuteur public</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Page publique : bio, matières, tarifs, disponibilités, avis, ressources publiées, certifications CANOPE.</td><td>URL canonique <code>/tuteurs/[slug]</code>. Meta SEO générée. Avis visibles après session terminée.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MATCH-005</code></td><td>Tuteurs recommandés IA</td><td><span class="role role-eleve">Élève</span></td><td>Bandeau "Recommandés pour vous" basé sur historique sessions, résultats tests, matières en difficulté.</td><td>Collaborative filtering (FastAPI). Mise à jour hebdomadaire. Min 3 sessions pour activer.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>MATCH-006</code></td><td>Favoris tuteurs</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Bookmark tuteurs pour accès rapide. Liste "Mes tuteurs favoris" dans le profil.</td><td>Max 20 favoris. Notification si tuteur favori modifie disponibilités ou tarifs.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>MATCH-007</code></td><td>Disponibilités temps réel</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Calendrier tuteur mis à jour en temps réel. Créneaux disponibles en vert, occupés en gris.</td><td>Supabase Realtime sur table <code>availabilities</code>. Créneau verrouillé 10min lors d'une demande.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module RES — Réservation de Sessions</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>RES-001</code></td><td>Demande de réservation</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Sélection créneau via calendrier tuteur. Choix matière, durée (1h-3h), mode (présentiel/visio), objectif. Message optionnel au tuteur.</td><td>Créneau bloqué 10min. Tuteur doit accepter sous 24h. Élève &lt;18 ans : validation parent obligatoire.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>RES-002</code></td><td>Validation parent</td><td><span class="role role-parent">Parent</span></td><td>Notification push/email au parent avec détails. Boutons Approuver / Refuser avec commentaire.</td><td>Obligatoire si élève &lt;18 ans. Parent a 12h sinon demande annulée. Paiement déclenché après validation.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>RES-003</code></td><td>Acceptation tuteur</td><td><span class="role role-tuteur">Tuteur</span></td><td>Dashboard tuteur : liste demandes entrantes. Accepter, Décliner (motif), Proposer autre créneau.</td><td>Taux d'acceptation impacte classement. 3 refus consécutifs = notification Admin. Réponse sous 24h.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>RES-004</code></td><td>Annulation &amp; politique</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span><span class="role role-parent">Parent</span></td><td>Annulation libre jusqu'à 24h avant. 24h-2h : remboursement 50%. Moins 2h : pas de remboursement.</td><td>Politique paramétrable Admin. Remboursement automatique Mobile Money.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>RES-005</code></td><td>Sessions récurrentes</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Planification abonnement hebdomadaire ou bi-hebdomadaire sur 1 à 3 mois.</td><td>Paiement mensuel par abonnement. Annulation préavis 7 jours. Max 3 abonnements actifs.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>RES-006</code></td><td>Rappels automatiques</td><td>Tous</td><td>Notification 24h et 1h avant la session. Canal configurable : push, email, SMS.</td><td>Cron FastAPI (APScheduler). SMS via Twilio pour zones à faible connectivité.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>RES-007</code></td><td>Session visio intégrée</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Lien visioconférence généré automatiquement (Jitsi Meet). Accessible depuis le dashboard 30min avant.</td><td>Jitsi Meet self-hosted. Enregistrement optionnel (consentement requis). Liens expirés après 2h post-session.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section page-break">
+  <h3>Module PAY — Paiement Mobile Money</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>PAY-001</code></td><td>Paiement MVola</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Initiation paiement via API MVola (Telma). L'utilisateur reçoit une notification push sur son téléphone MVola pour valider.</td><td>API MVola marchands. Montant min 1 000 Ar, max 500 000 Ar/transaction. Commission MIABO 10%.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>PAY-002</code></td><td>Paiement Orange Money</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span></td><td>Initiation paiement via API Orange Money Madagascar.</td><td>Mêmes plafonds que MVola. Fallback manuel si API indisponible.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>PAY-003</code></td><td>Escrow &amp; déblocage</td><td><span class="role role-tuteur">Tuteur</span><span class="role role-admin">Admin</span></td><td>Fonds retenus en escrow après paiement. Déblocage automatique 24h après confirmation de fin de session.</td><td>Auto-déblocage si aucun litige après 48h. Commission prélevée au déblocage.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>PAY-004</code></td><td>Wallet tuteur</td><td><span class="role role-tuteur">Tuteur</span></td><td>Solde disponible en temps réel. Historique transactions. Virement vers compte Mobile Money à la demande.</td><td>Virement min 5 000 Ar. Max 2 virements/semaine. KYC obligatoire avant premier virement.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>PAY-005</code></td><td>Factures automatiques</td><td>Tous</td><td>Génération PDF de facture pour chaque transaction. Accès dans l'historique. Envoi email auto.</td><td>Numérotation <code>MIABO-YYYY-NNNN</code>. Conservation 10 ans (conformité fiscale MG).</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>PAY-006</code></td><td>Gestion des litiges</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span><span class="role role-admin">Admin</span></td><td>Formulaire de litige avec preuves. Admin arbitre. Remboursement ou déblocage selon décision.</td><td>Litige ouvert sous 48h post-session. Admin répond sous 72h. Fonds gelés pendant procédure.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module CANOPE — Ressources Pédagogiques</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>CAN-001</code></td><td>Bibliothèque ressources</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Catalogue ressources CANOPE : fiches, exercices, vidéos, podcasts. Filtrable par matière, niveau, type, langue.</td><td>Ressources publiques et premium (abonnement). Licences Creative Commons affichées.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>CAN-002</code></td><td>Publication ressources CANOPE</td><td><span class="role role-canope">CANOPE</span></td><td>Interface d'édition pour uploader, catégoriser, décrire et publier des ressources.</td><td>Formats acceptés : PDF, MP4, MP3, DOCX, images. Taille max 50 MB/fichier.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>CAN-003</code></td><td>Certification tuteurs CANOPE</td><td><span class="role role-canope">CANOPE</span><span class="role role-tuteur">Tuteur</span></td><td>Parcours de formation tuteur : modules vidéo + quiz. Badge de certification sur profil public.</td><td>4 modules. Validation quiz >= 70%. Certificat PDF avec QR code. Renouvellement annuel.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>CAN-004</code></td><td>Ressources offline PWA</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Téléchargement ressources pour consultation hors ligne. Gestion cache Service Worker.</td><td>Max 200 MB en cache. Priorité aux PDF et images. Synchronisation à la reconnexion.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>CAN-005</code></td><td>Stats utilisation ressources</td><td><span class="role role-canope">CANOPE</span></td><td>Dashboard CANOPE : vues, téléchargements, partages par ressource. Cartographie d'usage par région.</td><td>Données anonymisées. Agrégation journalière. Export CSV. Pas de tracking individuel élèves.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module COSP — Orientation Scolaire &amp; Professionnelle</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>COSP-001</code></td><td>Prise de RDV bilan</td><td><span class="role role-eleve">Élève</span><span class="role role-parent">Parent</span><span class="role role-cosp">COSP</span></td><td>Calendrier conseillers COSP disponibles. Réservation bilan d'orientation (45min-1h). Visio ou présentiel.</td><td>Gratuit pour élèves de terminale. Payant sinon. Validation parent si &lt;16 ans.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>COSP-002</code></td><td>Tests d'orientation</td><td><span class="role role-eleve">Élève</span></td><td>Questionnaire d'orientation (intérêts, aptitudes, valeurs). Résultats : filières, métiers, points forts.</td><td>Basé sur modèle RIASEC (Holland). Résultats sauvegardés en profil. Partageable avec conseiller COSP.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>COSP-003</code></td><td>Recommandation tuteurs COSP</td><td><span class="role role-cosp">COSP</span></td><td>Suite au bilan, le conseiller recommande 2-3 tuteurs spécialisés dans les matières prioritaires.</td><td>Recommandation manuelle via interface COSP. Notification élève/parent. Lien direct vers profil tuteur.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>COSP-004</code></td><td>Suivi post-bilan</td><td><span class="role role-cosp">COSP</span><span class="role role-eleve">Élève</span></td><td>Rapport de bilan envoyé par email/PDF. Suivi trimestriel optionnel. Notes du conseiller accessibles.</td><td>Rapport structuré. Conservé 3 ans. Confidentialité RGPD.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module MSG — Messagerie Temps Réel</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>MSG-001</code></td><td>Messagerie directe</td><td>Tous</td><td>Chat 1:1 entre élève/tuteur, parent/tuteur. Interface type WhatsApp migrée vers Supabase Realtime.</td><td>Conversation créée automatiquement lors d'une réservation. Messages chiffrés en transit. Archivage après 1 an.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MSG-002</code></td><td>Partage de fichiers</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Upload et partage fichiers en conversation : PDF, images, documents. Aperçu inline.</td><td>Taille max 10 MB/fichier. Formats : PDF, JPG, PNG, DOCX. Suppression après 90 jours si non épinglé.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MSG-003</code></td><td>Indicateurs de présence</td><td>Tous</td><td>Statut en ligne/hors ligne. Indicateur de frappe. Lu/non lu avec horodatage.</td><td>Supabase Realtime presence. Statut "en ligne" si activité &lt;5 min. Option "mode discret".</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MSG-004</code></td><td>Réactions aux messages</td><td>Tous</td><td>Réactions emoji sur les messages (👍❤️😊✅). Compteur visible. Retrait possible.</td><td>Max 6 types. Stockées en table <code>message_reactions</code>. Pas de notification pour les réactions.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>MSG-005</code></td><td>Modération messages</td><td><span class="role role-admin">Admin</span></td><td>Signalement messages par les utilisateurs. Interface Admin de review. Suppression et blocage.</td><td>Signalement >3 fois = review automatique. Blocage = fin de toutes les conversations actives.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>MSG-006</code></td><td>Canal parent-tuteur</td><td><span class="role role-parent">Parent</span><span class="role role-tuteur">Tuteur</span></td><td>Conversation dédiée entre parent et tuteur, indépendante du chat élève-tuteur.</td><td>Créée à la première réservation validée par le parent. L'élève n'y a pas accès.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module DASH — Dashboards &amp; Progression</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>DASH-001</code></td><td>Dashboard élève</td><td><span class="role role-eleve">Élève</span></td><td>KPIs : heures, sessions, matières, prochaine session. Graphique progression. Style VARK. Tuteurs recommandés.</td><td>Données réelles Supabase. Migration depuis mock. Mise à jour post-session automatique.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>DASH-002</code></td><td>Dashboard tuteur</td><td><span class="role role-tuteur">Tuteur</span></td><td>Sessions à venir, revenus du mois, taux d'occupation, avis reçus, élèves actifs, demandes en attente.</td><td>Revenu affiché net (après commission). Taux occupation = sessions confirmées / disponibilités.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>DASH-003</code></td><td>Dashboard parent</td><td><span class="role role-parent">Parent</span></td><td>Progression de chaque enfant, sessions à venir, factures, messages non lus, réservations à valider.</td><td>Multi-enfants avec onglets. Alertes prioritaires. Vue synthétique et détaillée.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>DASH-004</code></td><td>Dashboard Admin</td><td><span class="role role-admin">Admin</span></td><td>KPIs globaux, tuteurs en validation, sessions du jour, revenus plateforme, litiges ouverts.</td><td>Supabase Realtime. Accès IP whitelist. Export CSV/Excel. Audit log de toutes les actions Admin.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>DASH-005</code></td><td>Rapport progression élève</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span><span class="role role-parent">Parent</span></td><td>Rapport mensuel PDF : sessions, objectifs atteints, évaluation tuteur, points forts, recommandations.</td><td>Généré si >= 2 sessions/mois. Tuteur valide avant envoi. Partagé automatiquement au parent si mineur.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module EVAL — Évaluations &amp; Tests</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>EVAL-001</code></td><td>Test VARK</td><td><span class="role role-eleve">Élève</span></td><td>5 questions (extensible 16) déterminant le style : Visuel, Auditif, Kinesthésique, Lecture/Écriture. Résultats avec recommandations.</td><td>Persistés en profil. Impactent le matching. Retest tous les 3 mois. Historique conservé.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>EVAL-002</code></td><td>Test de personnalité</td><td><span class="role role-eleve">Élève</span></td><td>Questionnaire personnalité (Big Five simplifié). Résultats : profil appenant, forces, conseils.</td><td>Composant existant (v1) à connecter à la BDD. Résultats non utilisés pour le matching. Optionnel.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>EVAL-003</code></td><td>Notation bidirectionnelle</td><td><span class="role role-eleve">Élève</span><span class="role role-tuteur">Tuteur</span></td><td>Post-session : élève note tuteur (1-5 étoiles + commentaire). Tuteur évalue élève (note privée + commentaire parent).</td><td>Notation disponible sous 24h. Obligatoire avant session suivante. Avis publiés après modération (48h).</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>EVAL-004</code></td><td>Évaluation compétences élève</td><td><span class="role role-tuteur">Tuteur</span></td><td>Grille d'évaluation par matière. Tuteur renseigne après chaque session : niveau, progrès observés.</td><td>Alimentent le graphique de progression. Partagés au parent. Format JSON structuré.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>EVAL-005</code></td><td>Quiz CANOPE intégrés</td><td><span class="role role-eleve">Élève</span></td><td>Accès aux quiz attachés aux ressources CANOPE. Résultats sauvegardés. Badges de réussite.</td><td>QCM et vrai/faux. Score >= 60% = badge. Max 3 tentatives par quiz.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Module NOTIF — Notifications Multi-Canal</h3>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th style="width:140px">Feature</th><th style="width:130px">Rôle(s)</th><th>Description</th><th style="width:200px">Règles métier</th><th style="width:60px">Priorité</th></tr></thead>
+    <tbody>
+      <tr><td><code>NOTIF-001</code></td><td>Notifications in-app</td><td>Tous</td><td>Centre de notifications en haut de l'interface. Badge compteur. Clic redirige vers l'élément. Marquer lu.</td><td>Supabase Realtime sur table <code>notifications</code>. Conservation 30 jours.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>NOTIF-002</code></td><td>Email transactionnel</td><td>Tous</td><td>Emails pour : inscription, confirmation réservation, rappel session, paiement, annulation. Templates FR et MG.</td><td>SendGrid ou Resend. Unsubscribe conforme CAN-SPAM. Emails critiques non désactivables.</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>NOTIF-003</code></td><td>Push Web (PWA)</td><td>Tous</td><td>Notifications push via Service Worker même quand l'app est fermée. Opt-in à la première connexion.</td><td>Web Push API. VAPID keys sécurisées. Silencieux entre 22h et 7h (heure Madagascar).</td><td><span class="badge badge-mvp">MVP</span></td></tr>
+      <tr><td><code>NOTIF-004</code></td><td>SMS pour zones offline</td><td>Tous</td><td>SMS de fallback pour rappels session et confirmations paiement.</td><td>Twilio/Vonage. &lt;160 caractères. Numéro Madagascar (+261). Opt-in explicite.</td><td><span class="badge badge-v2">V2</span></td></tr>
+      <tr><td><code>NOTIF-005</code></td><td>Préférences notification</td><td>Tous</td><td>Paramétrage fin par type d'événement et par canal (push, email, SMS).</td><td>Certains types non désactivables (paiement, sécurité). Paramètres stockés en BDD.</td><td><span class="badge badge-v2">V2</span></td></tr>
+    </tbody>
+  </table>
+</div>
+</body></html>

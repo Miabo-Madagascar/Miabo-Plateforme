@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><title>Part3</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #1E40AF; --primary-light: #3B82F6; --primary-pale: #EFF6FF;
+  --secondary: #059669; --secondary-pale: #ECFDF5;
+  --accent: #DC2626; --accent-pale: #FEF2F2;
+  --orange: #D97706; --orange-pale: #FFFBEB;
+  --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB; --gray-500: #6B7280; --gray-700: #374151;
+  --gray-900: #111827; --text: #1F2937; --text-light: #6B7280; --border: #E5E7EB;
+}
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10.5pt; line-height: 1.6; color: var(--text); background: white; }
+pre, code { font-family: 'Courier New', Courier, monospace; }
+.page-break { page-break-after: always; break-after: page; }
+.section { padding: 50px 60px; max-width: 1100px; margin: 0 auto; }
+.section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 3px solid var(--primary); }
+.section-number { background: var(--primary); color: white; width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18pt; font-weight: 800; flex-shrink: 0; }
+.section-title { font-size: 22pt; font-weight: 700; color: var(--gray-900); }
+.section-subtitle { font-size: 11pt; color: var(--text-light); margin-top: 3px; }
+h3 { font-size: 14pt; font-weight: 700; color: var(--primary); margin: 28px 0 12px 0; padding-left: 12px; border-left: 4px solid var(--primary-light); }
+h4 { font-size: 11pt; font-weight: 600; color: var(--gray-700); margin: 16px 0 6px 0; }
+p { margin-bottom: 10px; }
+.callout { border-radius: 10px; padding: 16px 20px; margin: 16px 0; border-left: 5px solid; }
+.callout-info { background: var(--primary-pale); border-color: var(--primary-light); }
+.callout-warning { background: var(--orange-pale); border-color: var(--orange); }
+.callout-danger { background: var(--accent-pale); border-color: var(--accent); }
+.callout-title { font-weight: 700; font-size: 10pt; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.callout-info .callout-title { color: var(--primary); }
+.callout-warning .callout-title { color: var(--orange); }
+.callout-danger .callout-title { color: var(--accent); }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 9pt; }
+thead th { background: var(--primary); color: white; padding: 9px 10px; text-align: left; font-weight: 600; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.5px; }
+tbody tr:nth-child(even) { background: var(--gray-50); }
+tbody td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tbody tr:last-child td { border-bottom: none; }
+pre { background: #1E2937; color: #E2E8F0; border-radius: 8px; padding: 16px 20px; font-size: 8.5pt; line-height: 1.5; margin: 12px 0; page-break-inside: avoid; }
+code { font-size: 8pt; background: var(--gray-100); padding: 1px 4px; border-radius: 3px; color: var(--accent); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0; }
+.card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px; page-break-inside: avoid; }
+.card-title { font-size: 11pt; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; }
+ul { padding-left: 18px; margin-bottom: 8px; }
+li { margin-bottom: 3px; font-size: 9.5pt; }
+.arch-box { background: var(--primary-pale); border: 2px solid var(--primary-light); border-radius: 10px; padding: 16px; margin: 8px 0; page-break-inside: avoid; }
+.arch-box h4 { color: var(--primary); margin: 0 0 8px 0; }
+.arch-arrow { text-align: center; font-size: 18pt; color: var(--primary-light); margin: 4px 0; }
+.db-table { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 18px; page-break-inside: avoid; }
+.db-table-header { background: var(--gray-900); color: white; padding: 10px 14px; font-weight: 700; font-size: 10pt; display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.db-table-desc { opacity: 0.5; font-size: 8.5pt; font-weight: 400; }
+.db-col { display: flex; gap: 8px; padding: 7px 14px; border-bottom: 1px solid var(--gray-100); font-size: 8.5pt; align-items: baseline; }
+.db-col:last-child { border-bottom: none; }
+.db-col:nth-child(even) { background: var(--gray-50); }
+.db-col-name { font-weight: 600; color: var(--primary); min-width: 200px; }
+.db-col-type { color: var(--secondary); min-width: 130px; font-size: 8pt; }
+.db-col-notes { color: var(--text-light); font-size: 8.5pt; flex: 1; }
+.db-pk { background: #FCD34D; color: #78350F; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+.db-fk { background: #A5F3FC; color: #0C4A6E; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+.db-idx { background: #BBF7D0; color: #14532D; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+.db-nn { background: #FEE2E2; color: #991B1B; font-size: 6.5pt; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; }
+</style></head><body>
+
+<!-- SECTION 3 -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">3</div>
+    <div><div class="section-title">Spécifications Techniques</div><div class="section-subtitle">Architecture, sécurité, PWA, i18n, API — Stack Next.js 14 · FastAPI · Supabase</div></div>
+  </div>
+
+  <h3>3.1 Architecture Globale</h3>
+  <div class="arch-box">
+    <h4>Couche Client (Next.js 14 App Router)</h4>
+    <ul>
+      <li><strong>Framework :</strong> Next.js 14 avec App Router, Server Components + Client Components</li>
+      <li><strong>Rendu :</strong> SSR pour pages SEO-sensibles (profils tuteurs, landing) · SSG pour pages statiques · CSR pour dashboards dynamiques</li>
+      <li><strong>Styling :</strong> Tailwind CSS 3.x · Shadcn/ui (remplacement UI custom v1)</li>
+      <li><strong>State Management :</strong> Zustand (messaging) + TanStack Query (server state)</li>
+      <li><strong>i18n :</strong> next-intl avec dictionnaires FR / MG</li>
+      <li><strong>PWA :</strong> next-pwa (Service Worker, manifest, cache stratégique)</li>
+    </ul>
+  </div>
+  <div class="arch-arrow">&#x21D5;</div>
+  <div class="arch-box" style="background: #ECFDF5; border-color: #059669;">
+    <h4 style="color: #059669;">Couche API (FastAPI Python)</h4>
+    <ul>
+      <li><strong>Framework :</strong> FastAPI 0.110+ · Python 3.12 · Uvicorn/Gunicorn</li>
+      <li><strong>Endpoints REST :</strong> Logique métier complexe (scoring matching, calcul escrow, analytics)</li>
+      <li><strong>WebSocket :</strong> Signaling pour la visioconférence (Jitsi Meet integration)</li>
+      <li><strong>Tâches asynchrones :</strong> APScheduler (rappels session, rapports mensuels, nettoyage escrow)</li>
+      <li><strong>Auth :</strong> Validation JWT Supabase en middleware FastAPI</li>
+      <li><strong>Paiement :</strong> Intégration MVola API + Orange Money API</li>
+    </ul>
+  </div>
+  <div class="arch-arrow">&#x21D5;</div>
+  <div class="arch-box" style="background: #F5F3FF; border-color: #7C3AED;">
+    <h4 style="color: #5B21B6;">Couche Données (Supabase)</h4>
+    <ul>
+      <li><strong>PostgreSQL 15 :</strong> 20+ tables, Row Level Security (RLS) sur toutes les tables sensibles</li>
+      <li><strong>Auth :</strong> Supabase Auth (JWT, sessions, email confirm, OAuth Google)</li>
+      <li><strong>Realtime :</strong> WebSocket Supabase pour messagerie, notifications, présence</li>
+      <li><strong>Storage :</strong> Supabase Storage pour avatars, ressources CANOPE, fichiers messages</li>
+      <li><strong>Edge Functions :</strong> Webhooks paiement Mobile Money, triggers post-session</li>
+    </ul>
+  </div>
+
+  <h3>3.2 Structure de Projet Next.js 14</h3>
+  <pre>miabo-frontend/
+&#9500;&#9472;&#9472; app/
+&#9474;   &#9500;&#9472;&#9472; [locale]/                 # i18n routing (fr / mg)
+&#9474;   &#9474;   &#9500;&#9472;&#9472; (public)/             # Landing, profils tuteurs, auth
+&#9474;   &#9474;   &#9492;&#9472;&#9472; (dashboard)/          # Dashboards proteges par middleware
+&#9474;   &#9474;       &#9500;&#9472;&#9472; eleve/
+&#9474;   &#9474;       &#9500;&#9472;&#9472; tuteur/
+&#9474;   &#9474;       &#9500;&#9472;&#9472; parent/
+&#9474;   &#9474;       &#9500;&#9472;&#9472; admin/
+&#9474;   &#9474;       &#9500;&#9472;&#9472; canope/
+&#9474;   &#9474;       &#9492;&#9472;&#9472; cosp/
+&#9500;&#9472;&#9472; components/
+&#9474;   &#9500;&#9472;&#9472; ui/           # Shadcn/ui primitives
+&#9474;   &#9500;&#9472;&#9472; dashboard/    # StatCard, ProgressChart, TutorCard
+&#9474;   &#9500;&#9472;&#9472; matching/     # SearchBar, FilterPanel, TutorGrid
+&#9474;   &#9500;&#9472;&#9472; messaging/    # ChatWindow, MessageBubble, Presence
+&#9474;   &#9492;&#9472;&#9472; payment/      # MVolaForm, OrangeMoneyForm, Wallet
+&#9500;&#9472;&#9472; lib/
+&#9474;   &#9500;&#9472;&#9472; supabase/     # Client browser + server + middleware
+&#9474;   &#9500;&#9472;&#9472; api/          # Wrappers FastAPI
+&#9474;   &#9492;&#9472;&#9472; utils/        # Formatters, validators, i18n helpers
+&#9500;&#9472;&#9472; messages/
+&#9474;   &#9500;&#9472;&#9472; fr.json
+&#9474;   &#9492;&#9472;&#9472; mg.json
+&#9500;&#9472;&#9472; stores/
+&#9474;   &#9500;&#9472;&#9472; messageStore.ts       # (migre depuis v1)
+&#9474;   &#9492;&#9472;&#9472; notificationStore.ts
+&#9500;&#9472;&#9472; middleware.ts              # Auth guard + locale detection
+&#9492;&#9472;&#9472; public/
+    &#9500;&#9472;&#9472; manifest.json            # PWA manifest
+    &#9492;&#9472;&#9472; sw.js                    # Service Worker</pre>
+
+  <h3>3.3 Sécurité &amp; Row Level Security (RLS)</h3>
+  <div class="callout callout-danger">
+    <div class="callout-title">Principe de sécurité fondamental</div>
+    Toutes les tables Supabase ont RLS activé. Aucune table n'est accessible sans politique explicite. Les données des mineurs bénéficient d'une protection renforcée. Le backend FastAPI valide le JWT Supabase sur chaque requête.
+  </div>
+  <table>
+    <thead><tr><th>Table</th><th>Politique RLS</th><th>Règle</th></tr></thead>
+    <tbody>
+      <tr><td><code>profiles</code></td><td>SELECT, UPDATE</td><td>Utilisateur voit/modifie uniquement son propre profil. Admin peut tout voir.</td></tr>
+      <tr><td><code>tutor_profiles</code></td><td>SELECT public, INSERT/UPDATE propriétaire</td><td>Profil validé = visible par tous. Non validé = tuteur + Admin/CANOPE seulement.</td></tr>
+      <tr><td><code>sessions</code></td><td>SELECT élève+tuteur+parent, INSERT élève/parent</td><td>Session visible uniquement par les participants (élève, tuteur, parent lié).</td></tr>
+      <tr><td><code>messages</code></td><td>SELECT participants, INSERT participant</td><td>Message visible uniquement par les participants de la conversation.</td></tr>
+      <tr><td><code>payments</code></td><td>SELECT payeur+tuteur+Admin</td><td>Transaction visible par le payeur, tuteur bénéficiaire et Admin.</td></tr>
+      <tr><td><code>minor_profiles</code></td><td>SELECT parent+tuteur actif+Admin</td><td>Données élève mineur visibles uniquement par le parent lié ET tuteur avec session active.</td></tr>
+      <tr><td><code>notifications</code></td><td>SELECT destinataire uniquement</td><td>Notification strictement privée.</td></tr>
+      <tr><td><code>admin_*</code></td><td>SELECT/UPDATE Admin seulement</td><td>Tables d'administration inaccessibles sans rôle Admin.</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Exemple politique RLS — table sessions</h4>
+  <pre>-- SELECT : visible par les participants directs
+CREATE POLICY "sessions_select_participants"
+ON sessions FOR SELECT
+USING (
+  auth.uid() = student_id
+  OR auth.uid() = tutor_id
+  OR auth.uid() IN (
+    SELECT parent_id FROM parent_student_links
+    WHERE student_id = sessions.student_id
+  )
+  OR EXISTS (
+    SELECT 1 FROM profiles
+    WHERE id = auth.uid() AND role = 'admin'
+  )
+);
+
+-- INSERT : eleve ou parent uniquement
+CREATE POLICY "sessions_insert_student_parent"
+ON sessions FOR INSERT
+WITH CHECK (
+  auth.uid() = student_id
+  OR auth.uid() IN (
+    SELECT parent_id FROM parent_student_links
+    WHERE student_id = sessions.student_id
+  )
+);</pre>
+
+  <h3>3.4 Progressive Web App (PWA)</h3>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Cache Strategy</div>
+      <ul>
+        <li><strong>Network First</strong> : API calls (sessions, messages)</li>
+        <li><strong>Cache First</strong> : assets statiques (images, fonts, CSS)</li>
+        <li><strong>Stale While Revalidate</strong> : ressources CANOPE</li>
+        <li><strong>Background Sync</strong> : messages envoyés offline</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Optimisations Bande Passante</div>
+      <ul>
+        <li>Images WebP + lazy loading (next/image)</li>
+        <li>Code splitting automatique (App Router)</li>
+        <li>Compression Brotli/GZIP (Nginx)</li>
+        <li>Pagination curseur (pas d'offset SQL)</li>
+        <li>Debounce 300ms sur recherche tuteurs</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>3.5 Internationalisation (FR/MG)</h3>
+  <pre>// messages/fr.json
+{
+  "nav": { "search": "Rechercher un tuteur", "login": "Connexion" },
+  "dashboard": {
+    "welcome": "Bonjour, {name} !",
+    "next_session": "Prochaine session",
+    "stats": { "hours": "Heures de tutorat", "sessions": "Sessions completees" }
+  }
+}
+
+// messages/mg.json
+{
+  "nav": { "search": "Hikaroka mpampianatra", "login": "Hiditra" },
+  "dashboard": {
+    "welcome": "Manao ahoana, {name}!",
+    "next_session": "Fihaonana manaraka",
+    "stats": { "hours": "Ora fanampiana", "sessions": "Fihaonana vita" }
+  }
+}</pre>
+
+  <h3>3.6 API FastAPI — Endpoints Clés</h3>
+  <table>
+    <thead><tr><th>Endpoint</th><th>Méthode</th><th>Description</th><th>Auth</th></tr></thead>
+    <tbody>
+      <tr><td><code>/api/v1/matching/score</code></td><td>POST</td><td>Calcul score compatibilité élève-tuteur</td><td>JWT élève</td></tr>
+      <tr><td><code>/api/v1/matching/recommendations</code></td><td>GET</td><td>Tuteurs recommandés pour l'élève connecté</td><td>JWT élève</td></tr>
+      <tr><td><code>/api/v1/sessions</code></td><td>POST</td><td>Créer une demande de réservation</td><td>JWT élève/parent</td></tr>
+      <tr><td><code>/api/v1/sessions/{id}/confirm</code></td><td>PUT</td><td>Tuteur accepte/refuse la session</td><td>JWT tuteur</td></tr>
+      <tr><td><code>/api/v1/sessions/{id}/complete</code></td><td>PUT</td><td>Marquer session terminée (débloque escrow)</td><td>JWT tuteur</td></tr>
+      <tr><td><code>/api/v1/payments/mvola/initiate</code></td><td>POST</td><td>Initier paiement MVola</td><td>JWT payeur</td></tr>
+      <tr><td><code>/api/v1/payments/mvola/callback</code></td><td>POST</td><td>Webhook confirmation MVola</td><td>HMAC signé</td></tr>
+      <tr><td><code>/api/v1/payments/orange/initiate</code></td><td>POST</td><td>Initier paiement Orange Money</td><td>JWT payeur</td></tr>
+      <tr><td><code>/api/v1/wallet/withdraw</code></td><td>POST</td><td>Demande virement tuteur</td><td>JWT tuteur KYC</td></tr>
+      <tr><td><code>/api/v1/analytics/platform</code></td><td>GET</td><td>KPIs plateforme pour Admin</td><td>JWT admin</td></tr>
+      <tr><td><code>/api/v1/canope/resources</code></td><td>GET</td><td>Liste ressources CANOPE avec filtres</td><td>Public / JWT</td></tr>
+      <tr><td><code>/api/v1/tutors/{id}/validate</code></td><td>PUT</td><td>Validation/rejet tuteur</td><td>JWT admin/canope</td></tr>
+      <tr><td><code>/api/v1/reports/monthly/{student_id}</code></td><td>GET</td><td>Génération rapport mensuel PDF</td><td>JWT tuteur/parent</td></tr>
+      <tr><td><code>/ws/presence</code></td><td>WS</td><td>Présence en ligne (messagerie)</td><td>JWT via param</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section page-break">
+  <div class="section-header">
+    <div class="section-number">4</div>
+    <div><div class="section-title">Schéma BDD Amélioré</div><div class="section-subtitle">PostgreSQL via Supabase — reprise + corrections + nouvelles tables (20 tables)</div></div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Corrections apportées au schéma v1</div>
+    <ul>
+      <li>Ajout rôles <code>admin</code>, <code>canope</code>, <code>cosp</code> dans l'enum <code>user_role</code></li>
+      <li>Séparation <code>profiles</code> (auth) et <code>tutor_profiles</code> / <code>student_profiles</code> (données métier)</li>
+      <li>Tables manquantes créées : <code>sessions</code>, <code>payments</code>, <code>escrow_transactions</code>, <code>availabilities</code></li>
+      <li>Correction : <code>messages.read</code> (booléen) → table <code>message_reads</code> séparée (multi-utilisateurs)</li>
+      <li>Ajout <code>ON DELETE CASCADE</code> manquants et indexes sur toutes les clés étrangères</li>
+      <li>Colonne <code>updated_at</code> + trigger automatique sur toutes les tables</li>
+    </ul>
+  </div>
+
+  <h3>4.1 Tables Utilisateurs</h3>
+  <div class="db-table">
+    <div class="db-table-header"><span>profiles <span class="db-table-desc">— Table centrale utilisateurs (liée à auth.users)</span></span><span style="font-size:8pt;opacity:0.5;">Existante · Améliorée</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references auth.users(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">role<span class="db-nn">NN</span></span><span class="db-col-type">user_role ENUM</span><span class="db-col-notes">'student' | 'tutor' | 'parent' | 'admin' | 'canope' | 'cosp'</span></div>
+    <div class="db-col"><span class="db-col-name">full_name<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Nom complet de l'utilisateur</span></div>
+    <div class="db-col"><span class="db-col-name">email<span class="db-nn">NN</span></span><span class="db-col-type">text UNIQUE</span><span class="db-col-notes">Synchronisé avec auth.users.email</span></div>
+    <div class="db-col"><span class="db-col-name">phone</span><span class="db-col-type">text</span><span class="db-col-notes">Format international +261XXXXXXXXX</span></div>
+    <div class="db-col"><span class="db-col-name">avatar_url</span><span class="db-col-type">text</span><span class="db-col-notes">URL Supabase Storage. Redimensionné à 200x200.</span></div>
+    <div class="db-col"><span class="db-col-name">preferred_language</span><span class="db-col-type">text</span><span class="db-col-notes">'fr' | 'mg' — default 'fr'</span></div>
+    <div class="db-col"><span class="db-col-name">is_active</span><span class="db-col-type">boolean</span><span class="db-col-notes">default true. false = compte suspendu</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+    <div class="db-col"><span class="db-col-name">updated_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">auto-updated via trigger</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>student_profiles <span class="db-table-desc">— Données métier élève</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">profile_id<span class="db-fk">FK</span><span class="db-nn">NN</span></span><span class="db-col-type">uuid UNIQUE</span><span class="db-col-notes">references profiles(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">grade_level<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">'6eme'|'5eme'|'4eme'|'3eme'|'2nde'|'1ere'|'Tle'|'superieur'</span></div>
+    <div class="db-col"><span class="db-col-name">school_name</span><span class="db-col-type">text</span><span class="db-col-notes">Nom de l'établissement scolaire</span></div>
+    <div class="db-col"><span class="db-col-name">date_of_birth</span><span class="db-col-type">date</span><span class="db-col-notes">Pour déterminer statut mineur (&lt;18 ans)</span></div>
+    <div class="db-col"><span class="db-col-name">vark_visual</span><span class="db-col-type">integer</span><span class="db-col-notes">Score VARK Visuel (0-100)</span></div>
+    <div class="db-col"><span class="db-col-name">vark_auditory</span><span class="db-col-type">integer</span><span class="db-col-notes">Score VARK Auditif</span></div>
+    <div class="db-col"><span class="db-col-name">vark_read_write</span><span class="db-col-type">integer</span><span class="db-col-notes">Score VARK Lecture/Ecriture</span></div>
+    <div class="db-col"><span class="db-col-name">vark_kinesthetic</span><span class="db-col-type">integer</span><span class="db-col-notes">Score VARK Kinesthésique</span></div>
+    <div class="db-col"><span class="db-col-name">personality_type</span><span class="db-col-type">text</span><span class="db-col-notes">Résultat test personnalité (ex: "INTJ")</span></div>
+    <div class="db-col"><span class="db-col-name">subjects_needed</span><span class="db-col-type">text[]</span><span class="db-col-notes">Matières nécessitant soutien ['maths','francais',...]</span></div>
+    <div class="db-col"><span class="db-col-name">location</span><span class="db-col-type">text</span><span class="db-col-notes">Ville/quartier pour matching géographique</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>tutor_profiles <span class="db-table-desc">— Données métier tuteur</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">profile_id<span class="db-fk">FK</span><span class="db-nn">NN</span></span><span class="db-col-type">uuid UNIQUE</span><span class="db-col-notes">references profiles(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">validation_status</span><span class="db-col-type">tutor_status ENUM</span><span class="db-col-notes">'pending'|'validated'|'rejected'|'suspended' — default 'pending'</span></div>
+    <div class="db-col"><span class="db-col-name">bio</span><span class="db-col-type">text</span><span class="db-col-notes">Présentation du tuteur (max 1000 caractères)</span></div>
+    <div class="db-col"><span class="db-col-name">subjects</span><span class="db-col-type">text[]</span><span class="db-col-notes">Matières enseignées</span></div>
+    <div class="db-col"><span class="db-col-name">grade_levels</span><span class="db-col-type">text[]</span><span class="db-col-notes">Niveaux enseignés</span></div>
+    <div class="db-col"><span class="db-col-name">hourly_rate<span class="db-nn">NN</span></span><span class="db-col-type">integer</span><span class="db-col-notes">Tarif en Ariary. Min 2000.</span></div>
+    <div class="db-col"><span class="db-col-name">teaching_methods</span><span class="db-col-type">text[]</span><span class="db-col-notes">Méthodes pédagogiques ['visuel','pratique','magistral',...]</span></div>
+    <div class="db-col"><span class="db-col-name">location</span><span class="db-col-type">text</span><span class="db-col-notes">Ville/quartier (Antananarivo, Toamasina, etc.)</span></div>
+    <div class="db-col"><span class="db-col-name">avg_rating</span><span class="db-col-type">numeric(3,2)</span><span class="db-col-notes">Note moyenne calculée. Mise à jour via trigger.</span></div>
+    <div class="db-col"><span class="db-col-name">total_sessions</span><span class="db-col-type">integer</span><span class="db-col-notes">Compteur sessions confirmées. default 0.</span></div>
+    <div class="db-col"><span class="db-col-name">canope_certified</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false. Mis à jour par CANOPE après formation.</span></div>
+    <div class="db-col"><span class="db-col-name">kyc_verified</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false. Requis pour virements wallet.</span></div>
+    <div class="db-col"><span class="db-col-name">wallet_balance</span><span class="db-col-type">integer</span><span class="db-col-notes">Solde en Ariary. default 0.</span></div>
+    <div class="db-col"><span class="db-col-name">slug<span class="db-idx">IDX</span></span><span class="db-col-type">text UNIQUE</span><span class="db-col-notes">URL-friendly : "nom-prenom-123". Généré automatiquement.</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>parent_student_links <span class="db-table-desc">— Lien parent-enfant</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">parent_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id) — rôle 'parent'</span></div>
+    <div class="db-col"><span class="db-col-name">student_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id) — PK composite (parent_id, student_id)</span></div>
+    <div class="db-col"><span class="db-col-name">relationship</span><span class="db-col-type">text</span><span class="db-col-notes">'parent'|'tuteur_legal'|'autre'</span></div>
+    <div class="db-col"><span class="db-col-name">verified</span><span class="db-col-type">boolean</span><span class="db-col-notes">Lien vérifié par email. default false.</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+
+  <h3>4.2 Tables Sessions &amp; Réservations</h3>
+  <div class="db-table">
+    <div class="db-table-header"><span>sessions <span class="db-table-desc">— Réservations et sessions de tutorat</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle · Critique</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">student_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id)</span></div>
+    <div class="db-col"><span class="db-col-name">tutor_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id)</span></div>
+    <div class="db-col"><span class="db-col-name">status</span><span class="db-col-type">session_status ENUM</span><span class="db-col-notes">'pending_parent'|'pending_tutor'|'confirmed'|'in_progress'|'completed'|'cancelled'|'disputed'</span></div>
+    <div class="db-col"><span class="db-col-name">subject<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Matière de la session</span></div>
+    <div class="db-col"><span class="db-col-name">mode</span><span class="db-col-type">text</span><span class="db-col-notes">'in_person'|'online' — default 'online'</span></div>
+    <div class="db-col"><span class="db-col-name">scheduled_at<span class="db-nn">NN</span><span class="db-idx">IDX</span></span><span class="db-col-type">timestamptz</span><span class="db-col-notes">Date/heure de début planifiée</span></div>
+    <div class="db-col"><span class="db-col-name">duration_minutes<span class="db-nn">NN</span></span><span class="db-col-type">integer</span><span class="db-col-notes">CHECK (IN (60, 90, 120, 180))</span></div>
+    <div class="db-col"><span class="db-col-name">amount_ariary<span class="db-nn">NN</span></span><span class="db-col-type">integer</span><span class="db-col-notes">Montant = tarif_horaire × (durée/60)</span></div>
+    <div class="db-col"><span class="db-col-name">student_objectives</span><span class="db-col-type">text</span><span class="db-col-notes">Objectifs définis par l'élève à la réservation</span></div>
+    <div class="db-col"><span class="db-col-name">tutor_notes</span><span class="db-col-type">text</span><span class="db-col-notes">Notes du tuteur (privées pour le parent)</span></div>
+    <div class="db-col"><span class="db-col-name">meeting_url</span><span class="db-col-type">text</span><span class="db-col-notes">URL Jitsi Meet générée à la confirmation</span></div>
+    <div class="db-col"><span class="db-col-name">cancelled_by</span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id). NULL si non annulée.</span></div>
+    <div class="db-col"><span class="db-col-name">parent_approved_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">Horodatage validation parent. NULL si non requis.</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+    <div class="db-col"><span class="db-col-name">updated_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">auto-updated via trigger</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>availabilities <span class="db-table-desc">— Disponibilités tuteur</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">tutor_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references tutor_profiles(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">day_of_week</span><span class="db-col-type">integer</span><span class="db-col-notes">0=Dimanche ... 6=Samedi</span></div>
+    <div class="db-col"><span class="db-col-name">start_time<span class="db-nn">NN</span></span><span class="db-col-type">time</span><span class="db-col-notes">Heure début du créneau</span></div>
+    <div class="db-col"><span class="db-col-name">end_time<span class="db-nn">NN</span></span><span class="db-col-type">time</span><span class="db-col-notes">Heure fin. CHECK (end_time &gt; start_time)</span></div>
+    <div class="db-col"><span class="db-col-name">is_available</span><span class="db-col-type">boolean</span><span class="db-col-notes">default true. false = bloqué (vacances)</span></div>
+    <div class="db-col"><span class="db-col-name">specific_date</span><span class="db-col-type">date</span><span class="db-col-notes">NULL = récurrent. Date précise = exception ponctuelle.</span></div>
+  </div>
+
+  <h3>4.3 Tables Paiement</h3>
+  <div class="db-table">
+    <div class="db-table-header"><span>payments <span class="db-table-desc">— Transactions de paiement</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle · Critique</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">session_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references sessions(id)</span></div>
+    <div class="db-col"><span class="db-col-name">payer_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id)</span></div>
+    <div class="db-col"><span class="db-col-name">amount_ariary<span class="db-nn">NN</span></span><span class="db-col-type">integer</span><span class="db-col-notes">Montant total en Ariary</span></div>
+    <div class="db-col"><span class="db-col-name">commission_ariary</span><span class="db-col-type">integer</span><span class="db-col-notes">Commission MIABO (10%). Calculé automatiquement.</span></div>
+    <div class="db-col"><span class="db-col-name">payment_method<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">'mvola'|'orange_money'|'wallet'</span></div>
+    <div class="db-col"><span class="db-col-name">status</span><span class="db-col-type">payment_status ENUM</span><span class="db-col-notes">'pending'|'processing'|'completed'|'failed'|'refunded'</span></div>
+    <div class="db-col"><span class="db-col-name">external_ref</span><span class="db-col-type">text</span><span class="db-col-notes">Référence transaction MVola/Orange Money</span></div>
+    <div class="db-col"><span class="db-col-name">phone_number<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Numéro Mobile Money utilisé</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+    <div class="db-col"><span class="db-col-name">completed_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">Horodatage confirmation finale</span></div>
+  </div>
+
+  <div class="db-table">
+    <div class="db-table-header"><span>escrow_transactions <span class="db-table-desc">— Fonds en séquestre</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">payment_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid UNIQUE</span><span class="db-col-notes">references payments(id)</span></div>
+    <div class="db-col"><span class="db-col-name">tutor_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">Bénéficiaire</span></div>
+    <div class="db-col"><span class="db-col-name">amount_ariary</span><span class="db-col-type">integer</span><span class="db-col-notes">Montant net (total - commission)</span></div>
+    <div class="db-col"><span class="db-col-name">status</span><span class="db-col-type">text</span><span class="db-col-notes">'held'|'released'|'disputed'|'refunded'</span></div>
+    <div class="db-col"><span class="db-col-name">release_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">Date déblocage automatique (session_end + 24h)</span></div>
+    <div class="db-col"><span class="db-col-name">released_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">NULL si pas encore débloqué</span></div>
+  </div>
+
+  <h3>4.4 Tables Messagerie, Évaluations &amp; Notifications</h3>
+  <div class="db-table">
+    <div class="db-table-header"><span>conversations <span class="db-table-desc">— Fils de discussion</span></span><span style="font-size:8pt;opacity:0.5;">Existante · Améliorée</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">type</span><span class="db-col-type">text</span><span class="db-col-notes">'student_tutor'|'parent_tutor' — default 'student_tutor'</span></div>
+    <div class="db-col"><span class="db-col-name">session_id</span><span class="db-col-type">uuid</span><span class="db-col-notes">references sessions(id) — optionnel</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+    <div class="db-col"><span class="db-col-name">updated_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">Mis à jour à chaque nouveau message (trigger)</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>messages <span class="db-table-desc">— Messages individuels</span></span><span style="font-size:8pt;opacity:0.5;">Existante · Améliorée</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">conversation_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references conversations(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">sender_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references auth.users(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">content<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Contenu texte. CHECK char_length &gt; 0.</span></div>
+    <div class="db-col"><span class="db-col-name">message_type</span><span class="db-col-type">text</span><span class="db-col-notes">'text'|'image'|'file'|'system' — default 'text'</span></div>
+    <div class="db-col"><span class="db-col-name">file_url</span><span class="db-col-type">text</span><span class="db-col-notes">URL Supabase Storage si type=image/file</span></div>
+    <div class="db-col"><span class="db-col-name">is_deleted</span><span class="db-col-type">boolean</span><span class="db-col-notes">Soft delete. default false.</span></div>
+    <div class="db-col"><span class="db-col-name">created_at<span class="db-idx">IDX</span></span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>message_reads <span class="db-table-desc">— Accusés de lecture (correction v1 : remplace messages.read booléen)</span></span><span style="font-size:8pt;opacity:0.5;">Correction</span></div>
+    <div class="db-col"><span class="db-col-name">message_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references messages(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">user_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">PK composite (message_id, user_id)</span></div>
+    <div class="db-col"><span class="db-col-name">read_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>message_reactions <span class="db-table-desc">— Réactions emoji</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">message_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references messages(id) ON DELETE CASCADE</span></div>
+    <div class="db-col"><span class="db-col-name">user_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">PK composite (message_id, user_id, emoji)</span></div>
+    <div class="db-col"><span class="db-col-name">emoji<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">CHECK (emoji IN ('👍','❤️','😊','✅','😮','😢'))</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>reviews <span class="db-table-desc">— Avis post-session</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">session_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid UNIQUE</span><span class="db-col-notes">1 avis par session</span></div>
+    <div class="db-col"><span class="db-col-name">reviewer_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">Auteur de l'avis</span></div>
+    <div class="db-col"><span class="db-col-name">reviewee_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">Cible de l'avis (tuteur ou élève)</span></div>
+    <div class="db-col"><span class="db-col-name">rating<span class="db-nn">NN</span></span><span class="db-col-type">integer</span><span class="db-col-notes">CHECK (rating BETWEEN 1 AND 5)</span></div>
+    <div class="db-col"><span class="db-col-name">comment</span><span class="db-col-type">text</span><span class="db-col-notes">Max 500 caractères</span></div>
+    <div class="db-col"><span class="db-col-name">is_public</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false. Modéré avant publication.</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>notifications <span class="db-table-desc">— Notifications in-app</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">user_id<span class="db-fk">FK</span><span class="db-idx">IDX</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">Destinataire</span></div>
+    <div class="db-col"><span class="db-col-name">type<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">'session_request'|'payment'|'message'|'review'|'system'</span></div>
+    <div class="db-col"><span class="db-col-name">title<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Titre court (max 100 chars)</span></div>
+    <div class="db-col"><span class="db-col-name">body</span><span class="db-col-type">text</span><span class="db-col-notes">Description détaillée</span></div>
+    <div class="db-col"><span class="db-col-name">link</span><span class="db-col-type">text</span><span class="db-col-notes">URL relative pour redirection</span></div>
+    <div class="db-col"><span class="db-col-name">is_read</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+  <div class="db-table">
+    <div class="db-table-header"><span>resources <span class="db-table-desc">— Ressources CANOPE</span></span><span style="font-size:8pt;opacity:0.5;">Nouvelle</span></div>
+    <div class="db-col"><span class="db-col-name">id<span class="db-pk">PK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">default gen_random_uuid()</span></div>
+    <div class="db-col"><span class="db-col-name">publisher_id<span class="db-fk">FK</span></span><span class="db-col-type">uuid</span><span class="db-col-notes">references profiles(id) — rôle canope</span></div>
+    <div class="db-col"><span class="db-col-name">title_fr<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Titre en français</span></div>
+    <div class="db-col"><span class="db-col-name">title_mg</span><span class="db-col-type">text</span><span class="db-col-notes">Titre en malgache</span></div>
+    <div class="db-col"><span class="db-col-name">type</span><span class="db-col-type">text</span><span class="db-col-notes">'pdf'|'video'|'audio'|'quiz'|'exercise'</span></div>
+    <div class="db-col"><span class="db-col-name">subject<span class="db-nn">NN</span></span><span class="db-col-type">text</span><span class="db-col-notes">Matière</span></div>
+    <div class="db-col"><span class="db-col-name">grade_level</span><span class="db-col-type">text</span><span class="db-col-notes">Niveau cible</span></div>
+    <div class="db-col"><span class="db-col-name">file_url</span><span class="db-col-type">text</span><span class="db-col-notes">Supabase Storage URL</span></div>
+    <div class="db-col"><span class="db-col-name">is_premium</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false</span></div>
+    <div class="db-col"><span class="db-col-name">is_published</span><span class="db-col-type">boolean</span><span class="db-col-notes">default false</span></div>
+    <div class="db-col"><span class="db-col-name">created_at</span><span class="db-col-type">timestamptz</span><span class="db-col-notes">default now()</span></div>
+  </div>
+</div>
+</body></html>
